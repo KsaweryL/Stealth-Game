@@ -8,6 +8,7 @@ public class ThirdPersonMovement : MonoBehaviour
     public Transform cam;
 
     //for moving speed
+    //
     public float speed;
     public bool isSprintEnabled = false;
 
