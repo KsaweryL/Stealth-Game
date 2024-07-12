@@ -15,6 +15,9 @@ public class ThirdPersonMovement : MonoBehaviour
     //jumping speed
     public float jumpSpeed = 15;
 
+    //whether we crouch or not
+    bool isSneaking;
+
     //for smoother direction transition
     public float turnSmoothTime = 0.1f;
     public float turnSMoothVelocity;
@@ -27,18 +30,20 @@ public class ThirdPersonMovement : MonoBehaviour
 
     void ApplyGravity()
     {
-
-        if (controller.isGrounded && moveDir.y < 0.0f && (!Input.GetKey(KeyCode.W) || !Input.GetKey(KeyCode.A) ||
-          !Input.GetKey(KeyCode.S) || !Input.GetKey(KeyCode.D)))
-            moveDir.y = -1.0f;
-        //when we move our character in the air, increase the gravity
-        else if (!controller.isGrounded && (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) ||
-          Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D)))
+        if (controller)
         {
-            moveDir.y += gravity * gravityMultiplier * 10 * Time.deltaTime;
+            if (controller.isGrounded && moveDir.y < 0.0f && (!Input.GetKey(KeyCode.W) || !Input.GetKey(KeyCode.A) ||
+              !Input.GetKey(KeyCode.S) || !Input.GetKey(KeyCode.D)))
+                moveDir.y = -1.0f;
+            //when we move our character in the air, increase the gravity
+            else if (!controller.isGrounded && (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) ||
+              Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D)))
+            {
+                moveDir.y += gravity * gravityMultiplier * 10 * Time.deltaTime;
+            }
+            else
+                moveDir.y += gravity * gravityMultiplier * Time.deltaTime;
         }
-        else
-            moveDir.y += gravity * gravityMultiplier * Time.deltaTime;
 
     }
 
@@ -78,7 +83,8 @@ public class ThirdPersonMovement : MonoBehaviour
 
  
         //jumping
-        if (Input.GetButtonDown("Jump"))
+        //jump only when one is not sneaking
+        if (Input.GetButtonDown("Jump") && !isSneaking)
         {
             //if we jumped during movement, make a jump more impactful
             if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) ||
@@ -88,16 +94,43 @@ public class ThirdPersonMovement : MonoBehaviour
                 moveDir.y += jumpSpeed;
         }
 
+        //sneaking
+        if (Input.GetKeyDown(KeyCode.LeftControl))
+        {
+            //sneaking is being turned off
+            if (isSneaking)
+            {
+                speed = 4.0f;
+                isSneaking = false;
+            }
+            //sneaking is being turned on
+            else
+            {
+                speed = 3.0f;
+                isSneaking = true;
+            }
+
+        }
+
         //sprinting
         if (Input.GetKeyDown(KeyCode.LeftShift)) {
 
+            //sprinting is being turned off
             if (isSprintEnabled) {
-                speed = 4.0f;
+                if (isSneaking)
+                    speed = 3.0f;
+                else
+                    speed = 4.0f;
                 isSprintEnabled = false;
             }
+            //sprinting is being turned on
             else
             {
-                speed = 6.0f;
+                if (isSneaking)
+                    speed = 5.0f;
+                else
+                    speed = 6.0f;
+
                 isSprintEnabled = true;
             }
                 
@@ -109,7 +142,7 @@ public class ThirdPersonMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        isSneaking = false;
     }
 
 
@@ -123,7 +156,8 @@ public class ThirdPersonMovement : MonoBehaviour
         ApplyGravity();
 
         //apply movement
-        controller.Move(moveDir.normalized * speed * Time.deltaTime);
+        if (controller)
+            controller.Move(moveDir.normalized * speed * Time.deltaTime);
 
     }
 }
