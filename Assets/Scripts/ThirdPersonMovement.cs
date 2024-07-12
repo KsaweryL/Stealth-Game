@@ -6,6 +6,7 @@ public class ThirdPersonMovement : MonoBehaviour
 {
     public CharacterController controller;
     public Transform cam;
+    Animator animator;
 
     //for moving speed
     //
@@ -89,9 +90,12 @@ public class ThirdPersonMovement : MonoBehaviour
             //if we jumped during movement, make a jump more impactful
             if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) ||
             Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D))
-                moveDir.y += jumpSpeed*10;
+                moveDir.y += jumpSpeed*4;
             else
                 moveDir.y += jumpSpeed;
+
+            // Set the isJumping parameter in the Animator
+            animator.SetBool("jumpPressed", true);
         }
 
         //sneaking

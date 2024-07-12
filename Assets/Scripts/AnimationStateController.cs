@@ -25,7 +25,7 @@ public class AnimationStateController : MonoBehaviour
         isRunning = animator.GetBool("isRunning");
         jumpPressed = animator.GetBool("jumpPressed");
 
-        //initially, there is no jump
+        //initially, there is no jump - toDO - to fix
         animator.SetBool("jumpPressed", false);
         jumpPressed = false;
 
