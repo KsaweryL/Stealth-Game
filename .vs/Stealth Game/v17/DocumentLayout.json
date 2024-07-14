@@ -3,12 +3,16 @@
   "WorkspaceRootPath": "D:\\Studia\\Thesis\\Stealth game\\Stealth Game\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{ED7D511E-50C3-1D8C-8E77-4689D041909E}|Assembly-CSharp.csproj|d:\\studia\\thesis\\stealth game\\stealth game\\assets\\scripts\\animationstatecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{ED7D511E-50C3-1D8C-8E77-4689D041909E}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\animationstatecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{ED7D511E-50C3-1D8C-8E77-4689D041909E}|Assembly-CSharp.csproj|d:\\studia\\thesis\\stealth game\\stealth game\\assets\\scripts\\npc2movement.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{ED7D511E-50C3-1D8C-8E77-4689D041909E}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\npc2movement.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{ED7D511E-50C3-1D8C-8E77-4689D041909E}|Assembly-CSharp.csproj|D:\\Studia\\Thesis\\Stealth game\\Stealth Game\\assets\\scripts\\thirdpersonmovement.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{ED7D511E-50C3-1D8C-8E77-4689D041909E}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\thirdpersonmovement.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{ED7D511E-50C3-1D8C-8E77-4689D041909E}|Assembly-CSharp.csproj|D:\\Studia\\Thesis\\Stealth game\\Stealth Game\\assets\\scripts\\animationstatecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{ED7D511E-50C3-1D8C-8E77-4689D041909E}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\animationstatecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -23,6 +27,19 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "NPC2Movement.cs",
+              "DocumentMoniker": "D:\\Studia\\Thesis\\Stealth game\\Stealth Game\\Assets\\Scripts\\NPC2Movement.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\NPC2Movement.cs",
+              "ToolTip": "D:\\Studia\\Thesis\\Stealth game\\Stealth Game\\Assets\\Scripts\\NPC2Movement.cs",
+              "RelativeToolTip": "Assets\\Scripts\\NPC2Movement.cs",
+              "ViewState": "AQIAABwAAAAAAAAAAAAowCsAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-07-14T14:24:03.797Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
               "Title": "AnimationStateController.cs",
               "DocumentMoniker": "D:\\Studia\\Thesis\\Stealth game\\Stealth Game\\Assets\\Scripts\\AnimationStateController.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\AnimationStateController.cs",
@@ -30,8 +47,7 @@
               "RelativeToolTip": "Assets\\Scripts\\AnimationStateController.cs",
               "ViewState": "AQIAABoAAAAAAAAAAAAAwCoAAAAtAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-12T13:48:51.354Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-07-12T13:48:51.354Z"
             },
             {
               "$type": "Document",
@@ -41,10 +57,9 @@
               "RelativeDocumentMoniker": "Assets\\Scripts\\ThirdPersonMovement.cs",
               "ToolTip": "D:\\Studia\\Thesis\\Stealth game\\Stealth Game\\Assets\\Scripts\\ThirdPersonMovement.cs",
               "RelativeToolTip": "Assets\\Scripts\\ThirdPersonMovement.cs",
-              "ViewState": "AQIAAGMAAAAAAAAAAAAYwGEAAAAyAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAEcAAAA2AAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-03T11:02:34.265Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-07-03T11:02:34.265Z"
             }
           ]
         }

@@ -95,7 +95,8 @@ public class ThirdPersonMovement : MonoBehaviour
                 moveDir.y += jumpSpeed;
 
             // Set the isJumping parameter in the Animator
-            animator.SetBool("jumpPressed", true);
+            if(animator)
+                animator.SetBool("jumpPressed", true);
         }
 
         //sneaking
