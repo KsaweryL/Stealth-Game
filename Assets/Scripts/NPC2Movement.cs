@@ -23,11 +23,44 @@ public class NPC2Movement : MonoBehaviour
 
     public LayerMask whatIsPlayer;
 
+    //waiting a number of frames
+    public int timeToWait;
+    int currentlyWaitingTime;
+
     void PlayerDetection()
     {
         playerInSight = Physics.CheckSphere(transform.position, sightRange, whatIsPlayer);
 
-        Debug.Log(playerInSight);
+    }
+
+    void UpdateWaitingTime()
+    {
+        if (currentlyWaitingTime == 0)
+        {
+            agent.destination = PathPoints[pointNr].transform.position;
+            currentlyWaitingTime = timeToWait;
+        }
+        else
+            currentlyWaitingTime--;
+    }
+
+    void NPCPatrolling()
+    {
+        //agent.destination = player.position;
+
+        actualPosition = agent.transform.position;
+
+        //update only when the NPC reaches a point
+        if (actualPosition == agent.destination && currentlyWaitingTime == 0)
+        {
+            if (pointNr != numberOfPoints - 1)
+                pointNr++;
+            else if (pointNr == numberOfPoints - 1)
+                pointNr = 0;
+
+        }
+
+        UpdateWaitingTime();
     }
 
     // Start is called before the first frame update
@@ -35,25 +68,18 @@ public class NPC2Movement : MonoBehaviour
     {
         agent = GetComponent<NavMeshAgent>();
         pointNr = 0;
+
+        currentlyWaitingTime = 0;
+    }
+
+    private void FixedUpdate()
+    {
+        NPCPatrolling();
     }
 
     // Update is called once per frame
     void Update()
     {
-        //agent.destination = player.position;
-
-        actualPosition = agent.transform.position;
-
-        //update only when the NPC reaches a point
-        if (actualPosition == agent.destination)
-        {
-            if (pointNr != numberOfPoints - 1)
-                pointNr++;
-            else if (pointNr == numberOfPoints - 1)
-                pointNr = 0;
-        }
-
-        agent.destination = PathPoints[pointNr].transform.position;
 
         PlayerDetection();
     }
