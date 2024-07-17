@@ -68,6 +68,7 @@
     <Compile Include="Assets\Scripts\ThirdPersonMovement.cs" />
     <Compile Include="Assets\Scripts\NPC\NPC2Movement.cs" />
     <Compile Include="Assets\BrokenVector\LowPolyBrickHouses\Scripts\ModelCustomizer.cs" />
+    <Compile Include="Assets\Scripts\NPC\ChasingPlayer.cs" />
     <Compile Include="Assets\Scripts\old\PlayerMovement_old.cs" />
   </ItemGroup>
   <ItemGroup>

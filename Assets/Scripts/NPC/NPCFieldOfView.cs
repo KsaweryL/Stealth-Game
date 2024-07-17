@@ -14,6 +14,21 @@ public class NPCFieldOfView : MonoBehaviour
     public LayerMask obstructionMask;
 
     public bool canSeePlayer;
+    public bool playerIsHidden;
+
+    private void UpdateHiddenStatus(bool Hidden)
+    {
+        playerIsHidden = Hidden;
+    }
+
+    private void UpdatePlayerStatus()
+    {
+        if (!playerIsHidden)
+        {
+            FindObjectOfType<ChasingPlayer>().UpdatePlayerStatus(canSeePlayer);
+            FindObjectOfType<NPC2Movement>().UpdatePlayerStatus(canSeePlayer);
+        }
+    }
 
     private void FieldOfViewCheck()
     {
@@ -51,6 +66,7 @@ public class NPCFieldOfView : MonoBehaviour
         while (true) {
             yield return wait;
             FieldOfViewCheck();
+            UpdatePlayerStatus();
         }
     }
 

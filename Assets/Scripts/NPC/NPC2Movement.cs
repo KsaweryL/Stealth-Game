@@ -17,20 +17,21 @@ public class NPC2Movement : MonoBehaviour
     private Vector3 actualPosition;
     private int pointNr;
 
-    //detecting a player
-    public bool playerInSight;
-    public float sightRange;
-
     public LayerMask whatIsPlayer;
 
     //waiting a number of frames
     public int timeToWait;
     int currentlyWaitingTime;
 
-    void PlayerDetection()
-    {
-        playerInSight = Physics.CheckSphere(transform.position, sightRange, whatIsPlayer);
+    //detecting a player
+    public bool wasPlayerDetected;
+    public bool chasePlayer;
 
+    public void UpdatePlayerStatus(bool isPlayerSpotted)
+    {
+        wasPlayerDetected = isPlayerSpotted;
+        if(wasPlayerDetected)
+            chasePlayer = true;
     }
 
     void UpdateWaitingTime()
@@ -74,13 +75,16 @@ public class NPC2Movement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        NPCPatrolling();
+        //Patrol only if player is not detected
+        //once the player is spotted, chase him for a certain period of time,
+        //even if player is not directly detected 
+        if (!chasePlayer)
+            NPCPatrolling();
     }
 
     // Update is called once per frame
     void Update()
     {
 
-        PlayerDetection();
     }
 }

@@ -29,6 +29,12 @@ public class ThirdPersonMovement : MonoBehaviour
     public Vector3 velocity;
     public Vector3 moveDir;
 
+    //for hiding
+    [Header("Hiding mechanics")]
+    public bool playerIsTouchingHidingSpot;
+    public bool playerIsHidden;
+    public LayerMask hidingSpot;
+
     void ApplyGravity()
     {
         if (controller)
@@ -142,6 +148,15 @@ public class ThirdPersonMovement : MonoBehaviour
         }
             
 
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        playerIsTouchingHidingSpot = true;
+        if (collision.gameObject.layer == hidingSpot)
+            playerIsTouchingHidingSpot = true;
+        else
+            playerIsTouchingHidingSpot = false;
     }
 
     // Start is called before the first frame update

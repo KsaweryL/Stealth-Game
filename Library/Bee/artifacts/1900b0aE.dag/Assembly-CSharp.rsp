@@ -367,6 +367,7 @@
 "Assets/BrokenVector/LowPolyBrickHouses/Scripts/ModelCustomizer.cs"
 "Assets/Scripts/AnimationStateController.cs"
 "Assets/Scripts/NPC/AnimationStateControllerNPC.cs"
+"Assets/Scripts/NPC/ChasingPlayer.cs"
 "Assets/Scripts/NPC/FieldOfViewEditor.cs"
 "Assets/Scripts/NPC/NPC2Movement.cs"
 "Assets/Scripts/NPC/NPCFieldOfView.cs"
