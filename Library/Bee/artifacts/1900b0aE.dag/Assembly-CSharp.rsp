@@ -366,6 +366,7 @@
 -analyzer:"C:/Program Files/Unity/Hub/Editor/2022.3.21f1/Editor/Data/Tools/Unity.SourceGenerators/Unity.SourceGenerators.dll"
 "Assets/BrokenVector/LowPolyBrickHouses/Scripts/ModelCustomizer.cs"
 "Assets/Scripts/AnimationStateController.cs"
+"Assets/Scripts/HidingSpot/DetectingPlayerInHidingSpot.cs"
 "Assets/Scripts/NPC/AnimationStateControllerNPC.cs"
 "Assets/Scripts/NPC/ChasingPlayer.cs"
 "Assets/Scripts/NPC/FieldOfViewEditor.cs"

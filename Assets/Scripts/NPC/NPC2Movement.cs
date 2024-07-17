@@ -27,6 +27,10 @@ public class NPC2Movement : MonoBehaviour
     public bool wasPlayerDetected;
     public bool chasePlayer;
 
+    public void StopChasingPlayer()
+    {
+        chasePlayer = false;
+    }
     public void UpdatePlayerStatus(bool isPlayerSpotted)
     {
         wasPlayerDetected = isPlayerSpotted;

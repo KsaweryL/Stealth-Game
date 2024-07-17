@@ -18,6 +18,9 @@ public class ChasingPlayer : MonoBehaviour
     public float timeToWait;
     int currentlyWaitingTime;
 
+    //get previous NPC destination
+    public Vector3 previousDestination;
+
     public void UpdatePlayerStatus(bool isPlayerSpotted)
     {
         wasPlayerSpotted = isPlayerSpotted;
@@ -30,16 +33,28 @@ public class ChasingPlayer : MonoBehaviour
         //if player is spotted, wait a second and start chasing him/her
         if (currentlyWaitingTime == 0)
         {
+            previousDestination = agent.destination;
             agent.destination = player.position;
         }
         else
             currentlyWaitingTime--;
 
+        //if player is hidden, give up the chase nad reset the waiting time
+        if (playerIsHidden)
+        {
+            Debug.Log(playerIsHidden);
+            
+            FindAnyObjectByType<NPC2Movement>().StopChasingPlayer();
+
+            currentlyWaitingTime = (int)Math.Round(timeToWait / 0.02);
+            chasePlayer = false;
+        }
+
     }
 
-    public void UpdateHiddenStatus()
+    public void CheckIfPlayerHidden()
     {
-
+        playerIsHidden = FindObjectOfType<DetectingPlayerInHidingSpot>().IsPlayerHidden();
 
     }
 
@@ -55,12 +70,12 @@ public class ChasingPlayer : MonoBehaviour
         if(chasePlayer)
             ChaseAfterPlayer();
 
-
+       
     }
 
     // Update is called once per frame
     void Update()
     {
-
+        CheckIfPlayerHidden();
     }
 }
