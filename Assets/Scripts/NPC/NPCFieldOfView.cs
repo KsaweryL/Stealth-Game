@@ -16,18 +16,26 @@ public class NPCFieldOfView : MonoBehaviour
     public bool canSeePlayer;
     public bool playerIsHidden;
 
-    private void UpdateHiddenStatus(bool Hidden)
+    [Header("Distance from NPC to Player")]
+    public float distnaceToTarget;
+
+    public void UpdateHiddenStatus(bool Hidden)
     {
         playerIsHidden = Hidden;
     }
 
     private void UpdatePlayerStatus()
     {
-        if (!playerIsHidden)
-        {
+        //Debug.Log(playerIsHidden);
+
             FindObjectOfType<ChasingPlayer>().UpdatePlayerStatus(canSeePlayer);
             FindObjectOfType<NPC2Movement>().UpdatePlayerStatus(canSeePlayer);
-        }
+        
+    }
+
+    public bool GetCanSeePlayer()
+    {
+        return canSeePlayer;
     }
 
     private void FieldOfViewCheck()
@@ -43,18 +51,19 @@ public class NPCFieldOfView : MonoBehaviour
             //if the player is within our sight
             if(Vector3.Angle(transform.forward, directionToTarget) < angle / 2)
             {
-                float distnaceToTarget = Vector3.Distance(transform.position, target.position);
+                distnaceToTarget = Vector3.Distance(transform.position, target.position);
 
-                //returns false if the ray intersects with the collider (any obstruction)
-                if(!Physics.Raycast(transform.position, directionToTarget, distnaceToTarget, obstructionMask))
+                //returns false if the ray intersects with the collider (any obstruction) or if distance to target is 0
+                if(!Physics.Raycast(transform.position, directionToTarget, distnaceToTarget, obstructionMask) || distnaceToTarget<2)
                     canSeePlayer = true;
                 else
                     canSeePlayer = false;
             }
-            else
+            //if it's outside our sight and is not diorectly onto us
+            else if(distnaceToTarget >= 2)
                 canSeePlayer = false;
         }
-        else if(canSeePlayer == true)
+        else if(canSeePlayer == true && distnaceToTarget >= 2)
             canSeePlayer= false;
     }
 
@@ -65,7 +74,9 @@ public class NPCFieldOfView : MonoBehaviour
 
         while (true) {
             yield return wait;
-            FieldOfViewCheck();
+            //check fov only when player is not hidden
+            if(!playerIsHidden)
+                FieldOfViewCheck();
             UpdatePlayerStatus();
         }
     }

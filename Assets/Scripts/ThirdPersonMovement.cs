@@ -140,7 +140,7 @@ public class ThirdPersonMovement : MonoBehaviour
                 if (isSneaking)
                     speed = 5.0f;
                 else
-                    speed = 6.0f;
+                    speed = 8.0f;
 
                 isSprintEnabled = true;
             }

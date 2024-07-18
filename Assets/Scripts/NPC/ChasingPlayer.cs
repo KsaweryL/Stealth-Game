@@ -39,10 +39,9 @@ public class ChasingPlayer : MonoBehaviour
         else
             currentlyWaitingTime--;
 
-        //if player is hidden, give up the chase nad reset the waiting time
-        if (playerIsHidden)
+        //if player is hidden and is not spotted, give up the chase nad reset the waiting time
+        if (playerIsHidden && !wasPlayerSpotted)
         {
-            Debug.Log(playerIsHidden);
             
             FindAnyObjectByType<NPC2Movement>().StopChasingPlayer();
 
