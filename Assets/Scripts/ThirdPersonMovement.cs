@@ -111,13 +111,21 @@ public class ThirdPersonMovement : MonoBehaviour
             //sneaking is being turned off
             if (isSneaking)
             {
-                speed = 4.0f;
+                if(isSprintEnabled)
+                    speed = 8.0f;
+                else
+                    speed = 4.0f;
+
                 isSneaking = false;
             }
             //sneaking is being turned on
             else
             {
-                speed = 3.0f;
+                if (isSprintEnabled)
+                    speed = 5.0f;
+                else
+                    speed = 3.0f;
+
                 isSneaking = true;
             }
 
