@@ -60,26 +60,26 @@
     <Analyzer Include="C:\Program Files\Unity\Hub\Editor\2022.3.21f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.Properties.SourceGenerator.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Samples\AI Navigation\1.1.5\Build And Connect NavMesh Surfaces\Scripts\Despawner.cs" />
-    <Compile Include="Assets\Samples\AI Navigation\1.1.5\Build And Connect NavMesh Surfaces\Scripts\FreeCam.cs" />
-    <Compile Include="Assets\Samples\AI Navigation\1.1.5\Build And Connect NavMesh Surfaces\Scripts\RandomWalk.cs" />
-    <Compile Include="Assets\Samples\AI Navigation\1.1.5\Build And Connect NavMesh Surfaces\Scripts\DestroyOnTrigger.cs" />
-    <Compile Include="Assets\Samples\AI Navigation\1.1.5\Build And Connect NavMesh Surfaces\Scripts\RandomInstancing.cs" />
-    <Compile Include="Assets\Samples\AI Navigation\1.1.5\Build And Connect NavMesh Surfaces\Scripts\Oscillator.cs" />
-    <Compile Include="Assets\Samples\AI Navigation\1.1.5\Build And Connect NavMesh Surfaces\Scripts\GloballyUpdatedNavMeshSurface.cs" />
-    <Compile Include="Assets\Samples\AI Navigation\1.1.5\Build And Connect NavMesh Surfaces\Scripts\AgentLinkMover.cs" />
-    <Compile Include="Assets\Samples\AI Navigation\1.1.5\Build And Connect NavMesh Surfaces\Scripts\ClickToMove.cs" />
-    <Compile Include="Assets\Samples\AI Navigation\1.1.5\Build And Connect NavMesh Surfaces\Scripts\MeshTool.cs" />
-    <Compile Include="Assets\Samples\AI Navigation\1.1.5\Build And Connect NavMesh Surfaces\Scripts\SpawnPrefabOnKeyDown.cs" />
-    <Compile Include="Assets\Samples\AI Navigation\1.1.5\Build And Connect NavMesh Surfaces\Scripts\DynamicNavMeshObject.cs" />
-    <Compile Include="Assets\Samples\AI Navigation\1.1.5\Build And Connect NavMesh Surfaces\Scripts\DungeonManager.cs" />
-    <Compile Include="Assets\Samples\AI Navigation\1.1.5\Build And Connect NavMesh Surfaces\Scripts\NavMeshSurfaceVolumeUpdater.cs" />
-    <Compile Include="Assets\Samples\AI Navigation\1.1.5\Build And Connect NavMesh Surfaces\Scripts\EnableIffSleeping.cs" />
-    <Compile Include="Assets\Samples\AI Navigation\1.1.5\Build And Connect NavMesh Surfaces\Scripts\NavigationLoop.cs" />
-    <Compile Include="Assets\Samples\AI Navigation\1.1.5\Build And Connect NavMesh Surfaces\Scripts\ProjectSettingsUtilities\NavigationSampleInitializer.cs" />
+    <Compile Include="Assets\Assets - grapics\Samples\AI Navigation\1.1.5\Build And Connect NavMesh Surfaces\Scripts\NavMeshSurfaceVolumeUpdater.cs" />
+    <Compile Include="Assets\Assets - grapics\Samples\AI Navigation\1.1.5\Build And Connect NavMesh Surfaces\Scripts\GloballyUpdatedNavMeshSurface.cs" />
+    <Compile Include="Assets\Assets - grapics\Samples\AI Navigation\1.1.5\Build And Connect NavMesh Surfaces\Scripts\AgentLinkMover.cs" />
+    <Compile Include="Assets\Assets - grapics\Samples\AI Navigation\1.1.5\Build And Connect NavMesh Surfaces\Scripts\ProjectSettingsUtilities\NavigationSampleInitializer.cs" />
+    <Compile Include="Assets\Assets - grapics\Samples\AI Navigation\1.1.5\Build And Connect NavMesh Surfaces\Scripts\NavigationLoop.cs" />
+    <Compile Include="Assets\Assets - grapics\Samples\AI Navigation\1.1.5\Build And Connect NavMesh Surfaces\Scripts\DestroyOnTrigger.cs" />
+    <Compile Include="Assets\Assets - grapics\Samples\AI Navigation\1.1.5\Build And Connect NavMesh Surfaces\Scripts\Despawner.cs" />
+    <Compile Include="Assets\Assets - grapics\Samples\AI Navigation\1.1.5\Build And Connect NavMesh Surfaces\Scripts\DynamicNavMeshObject.cs" />
+    <Compile Include="Assets\Assets - grapics\Samples\AI Navigation\1.1.5\Build And Connect NavMesh Surfaces\Scripts\RandomWalk.cs" />
+    <Compile Include="Assets\Assets - grapics\Samples\AI Navigation\1.1.5\Build And Connect NavMesh Surfaces\Scripts\Oscillator.cs" />
+    <Compile Include="Assets\Assets - grapics\Samples\AI Navigation\1.1.5\Build And Connect NavMesh Surfaces\Scripts\FreeCam.cs" />
+    <Compile Include="Assets\Assets - grapics\Samples\AI Navigation\1.1.5\Build And Connect NavMesh Surfaces\Scripts\RandomInstancing.cs" />
+    <Compile Include="Assets\Assets - grapics\Samples\AI Navigation\1.1.5\Build And Connect NavMesh Surfaces\Scripts\MeshTool.cs" />
+    <Compile Include="Assets\Assets - grapics\Samples\AI Navigation\1.1.5\Build And Connect NavMesh Surfaces\Scripts\ClickToMove.cs" />
+    <Compile Include="Assets\Assets - grapics\Samples\AI Navigation\1.1.5\Build And Connect NavMesh Surfaces\Scripts\SpawnPrefabOnKeyDown.cs" />
+    <Compile Include="Assets\Assets - grapics\Samples\AI Navigation\1.1.5\Build And Connect NavMesh Surfaces\Scripts\DungeonManager.cs" />
+    <Compile Include="Assets\Assets - grapics\Samples\AI Navigation\1.1.5\Build And Connect NavMesh Surfaces\Scripts\EnableIffSleeping.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Assets\Samples\AI Navigation\1.1.5\Build And Connect NavMesh Surfaces\Unity.AI.Navigation.Samples.asmdef" />
+    <None Include="Assets\Assets - grapics\Samples\AI Navigation\1.1.5\Build And Connect NavMesh Surfaces\Unity.AI.Navigation.Samples.asmdef" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

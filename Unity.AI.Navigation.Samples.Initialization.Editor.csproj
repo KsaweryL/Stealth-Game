@@ -60,11 +60,11 @@
     <Analyzer Include="C:\Program Files\Unity\Hub\Editor\2022.3.21f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.Properties.SourceGenerator.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Samples\AI Navigation\1.1.5\Build And Connect NavMesh Surfaces\Scripts\ProjectSettingsUtilities\Editor\NavigationSampleProjectSettingsGenerator.cs" />
-    <Compile Include="Assets\Samples\AI Navigation\1.1.5\Build And Connect NavMesh Surfaces\Scripts\ProjectSettingsUtilities\Editor\NavigationSampleSettingsState.cs" />
+    <Compile Include="Assets\Assets - grapics\Samples\AI Navigation\1.1.5\Build And Connect NavMesh Surfaces\Scripts\ProjectSettingsUtilities\Editor\NavigationSampleSettingsState.cs" />
+    <Compile Include="Assets\Assets - grapics\Samples\AI Navigation\1.1.5\Build And Connect NavMesh Surfaces\Scripts\ProjectSettingsUtilities\Editor\NavigationSampleProjectSettingsGenerator.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Assets\Samples\AI Navigation\1.1.5\Build And Connect NavMesh Surfaces\Scripts\ProjectSettingsUtilities\Editor\Unity.AI.Navigation.Samples.Initialization.Editor.asmdef" />
+    <None Include="Assets\Assets - grapics\Samples\AI Navigation\1.1.5\Build And Connect NavMesh Surfaces\Scripts\ProjectSettingsUtilities\Editor\Unity.AI.Navigation.Samples.Initialization.Editor.asmdef" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

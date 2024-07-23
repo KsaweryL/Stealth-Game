@@ -60,22 +60,25 @@
     <Analyzer Include="C:\Program Files\Unity\Hub\Editor\2022.3.21f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.Properties.SourceGenerator.dll" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Assets - grapics\BrokenVector\LowPolyBrickHouses\Scripts\ModelCustomizer.cs" />
     <Compile Include="Assets\Scripts\AnimationStateController.cs" />
+    <Compile Include="Assets\Scripts\NPC\UI\DetectionBar.cs" />
     <Compile Include="Assets\Scripts\NPC\NPCFieldOfView.cs" />
     <Compile Include="Assets\Scripts\old\PlayerCamera_old.cs" />
     <Compile Include="Assets\Scripts\NPC\AnimationStateControllerNPC.cs" />
+    <Compile Include="Assets\Interfaces\NPCInterface.cs" />
     <Compile Include="Assets\Scripts\NPC\FieldOfViewEditor.cs" />
     <Compile Include="Assets\Scripts\ThirdPersonMovement.cs" />
     <Compile Include="Assets\Scripts\HidingSpot\DetectingPlayerInHidingSpot.cs" />
-    <Compile Include="Assets\Scripts\NPC\NPC2Movement.cs" />
-    <Compile Include="Assets\BrokenVector\LowPolyBrickHouses\Scripts\ModelCustomizer.cs" />
+    <Compile Include="Assets\Scripts\NPC\NPCMovement.cs" />
     <Compile Include="Assets\Scripts\NPC\ChasingPlayer.cs" />
+    <Compile Include="Assets\Scripts\NPC\UI\Billboard.cs" />
     <Compile Include="Assets\Scripts\old\PlayerMovement_old.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Assets\BrokenVector\LowPolyShaders\Shaders\LowPolyUnlitShader.shader" />
-    <None Include="Assets\BrokenVector\LowPolyShaders\Shaders\LowPolyPBRShader.shader" />
-    <None Include="Assets\BrokenVector\LowPolyBrickHouses\Shaders\FoliageShader.shader" />
+    <None Include="Assets\Assets - grapics\BrokenVector\LowPolyShaders\Shaders\LowPolyUnlitShader.shader" />
+    <None Include="Assets\Assets - grapics\BrokenVector\LowPolyShaders\Shaders\LowPolyPBRShader.shader" />
+    <None Include="Assets\Assets - grapics\BrokenVector\LowPolyBrickHouses\Shaders\FoliageShader.shader" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

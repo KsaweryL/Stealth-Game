@@ -1,13 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class NPCFieldOfView : MonoBehaviour
 {
+    [Header("Adjustable variables")]
     public float radius;
-    [Range(0,360)]
+    [Range(0, 360)]
     public float angle;
 
+    [Header("Detecting the player")]
+    public float timeToDetect;
+    int currentlyDetectedTimeReversed;
+    public int currentlyDetectedTime;
+
+    [Header("Other")]
     public GameObject playerRef;
 
     public LayerMask targetMask;
@@ -16,24 +24,38 @@ public class NPCFieldOfView : MonoBehaviour
     public bool canSeePlayer;
     public bool playerIsHidden;
 
+    public bool chasePlayer;
+
+    [Header("Connection with other components")]
+    public ChasingPlayer chasingPlayer;
+
     [Header("Distance from NPC to Player")]
     public float distnaceToTarget;
 
-    public void UpdateHiddenStatus(bool Hidden)
+    public void UpdateChasePlayerStatusNPCFOV(bool chasePlayerVariable)
     {
-        playerIsHidden = Hidden;
+        chasePlayer = chasePlayerVariable;
+    }
+    public void UpdateHiddenStatusNPCFOV()
+    {
+        playerIsHidden = FindObjectOfType<DetectingPlayerInHidingSpot>().IsPlayerHidden(); ;
     }
 
-    private void UpdatePlayerStatus()
+    public int GetCurrentlyDetectedTimeReversedNPCFOV()
     {
-        //Debug.Log(playerIsHidden);
-
-            FindObjectOfType<ChasingPlayer>().UpdatePlayerStatus(canSeePlayer);
-            FindObjectOfType<NPC2Movement>().UpdatePlayerStatus(canSeePlayer);
-        
+        return currentlyDetectedTimeReversed;
     }
 
-    public bool GetCanSeePlayer()
+    public float GetTimeToDetectNPCFOV()
+    {
+        return timeToDetect;
+    }
+    public int GetCurrentlyDetectedTimeNPCFOV()
+    {
+        return currentlyDetectedTime;
+    }
+
+    public bool GetCanSeePlayerNPCFOV()
     {
         return canSeePlayer;
     }
@@ -42,29 +64,75 @@ public class NPCFieldOfView : MonoBehaviour
     {
         Collider[] rangeChecks = Physics.OverlapSphere(transform.position, radius, targetMask);
 
-        if(rangeChecks.Length != 0)
+        if (rangeChecks.Length != 0)
         {
-            //we only get 1 instance since there is only 1 player
+            //since we can opnly detect 1 plr, we will set target to the 0th member of the array
             Transform target = rangeChecks[0].transform;
             Vector3 directionToTarget = (target.position - transform.position).normalized;
+            distnaceToTarget = Vector3.Distance(transform.position, target.position);
 
             //if the player is within our sight
-            if(Vector3.Angle(transform.forward, directionToTarget) < angle / 2)
+            if (Vector3.Angle(transform.forward, directionToTarget) < angle / 2)
             {
-                distnaceToTarget = Vector3.Distance(transform.position, target.position);
 
                 //returns false if the ray intersects with the collider (any obstruction) or if distance to target is 0
-                if(!Physics.Raycast(transform.position, directionToTarget, distnaceToTarget, obstructionMask) || distnaceToTarget<2)
+                if (!Physics.Raycast(transform.position, directionToTarget, distnaceToTarget, obstructionMask) || distnaceToTarget < 2)
                     canSeePlayer = true;
                 else
                     canSeePlayer = false;
             }
             //if it's outside our sight and is not diorectly onto us
-            else if(distnaceToTarget >= 2)
+            else if (distnaceToTarget >= 2)
                 canSeePlayer = false;
         }
-        else if(canSeePlayer == true && distnaceToTarget >= 2)
-            canSeePlayer= false;
+        else if (canSeePlayer == true && distnaceToTarget >= 2)
+            canSeePlayer = false;
+
+
+    }
+
+    public void UpdateDetectedTime()
+    {
+        //update the detection variables only when player is being seen
+        if (canSeePlayer)
+        {
+            if (currentlyDetectedTimeReversed == 0)
+            {
+
+            }
+            else
+            {
+                currentlyDetectedTimeReversed--;
+                currentlyDetectedTime++;
+            }
+        }
+        else if (!chasePlayer)
+        {
+                currentlyDetectedTimeReversed = (int)Math.Round(timeToDetect / 0.02);
+                currentlyDetectedTime = 0;
+
+        }
+        else if (chasePlayer)
+        {
+            currentlyDetectedTime = (int)Math.Round(timeToDetect / 0.02);
+            currentlyDetectedTimeReversed = 0;
+
+        }
+        else if (currentlyDetectedTime > 0)
+        {
+            currentlyDetectedTime--;
+            if (currentlyDetectedTimeReversed != (int)Math.Round(timeToDetect / 0.02)) 
+                currentlyDetectedTimeReversed++;
+        }
+    }
+    private void UpdatePlayerStatus()
+    {
+        //update the status when player is detected
+        UpdateDetectedTime();
+        chasingPlayer.UpdateCanSeePlayerStatusChasingPlayer(canSeePlayer);
+        UpdateHiddenStatusNPCFOV();
+
+
     }
 
     //looks for the player
@@ -72,10 +140,11 @@ public class NPCFieldOfView : MonoBehaviour
     {
         WaitForSeconds wait = new WaitForSeconds(0.2f);
 
-        while (true) {
+        while (true)
+        {
             yield return wait;
             //check fov only when player is not hidden
-            if(!playerIsHidden)
+            if (!playerIsHidden)
                 FieldOfViewCheck();
             UpdatePlayerStatus();
         }
@@ -85,12 +154,19 @@ public class NPCFieldOfView : MonoBehaviour
     void Start()
     {
         playerRef = GameObject.FindGameObjectWithTag("Player");
+        currentlyDetectedTimeReversed = (int)Math.Round(timeToDetect / 0.02);
+        currentlyDetectedTime = 0;
+        chasePlayer = false;
+
+        //connection with other components
+        chasingPlayer = GetComponent<ChasingPlayer>();
+
         StartCoroutine(FOVRoutine());
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 }

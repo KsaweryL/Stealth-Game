@@ -10,44 +10,112 @@ public class ChasingPlayer : MonoBehaviour
     public Transform player;
     private NavMeshAgent agent;
 
-    public bool wasPlayerSpotted;
+    public bool canSeePlayer;
     public bool chasePlayer;
     public bool playerIsHidden;
-
-    //waiting before the chase
-    public float timeToWait;
-    int currentlyWaitingTime;
 
     //get previous NPC destination
     public Vector3 previousDestination;
 
-    public void UpdatePlayerStatus(bool isPlayerSpotted)
+    public bool waitBeforePlayersCover;
+
+    [Header("Time of chasing the player after he/she is lost")]
+    public float timeToWaitAfterLosing;
+    public int currentlyWaitingTimeToWaitAfterLosing;
+
+    [Header("Connection with other components")]
+    public NPCMovement npcMovement;
+    public NPCFieldOfView npcFOV;
+
+    public void UpdateCanSeePlayerStatusChasingPlayer(bool canSeePlayerVariable)
     {
-        wasPlayerSpotted = isPlayerSpotted;
-        if(wasPlayerSpotted)
+        canSeePlayer = canSeePlayerVariable;
+        int currentlyDetectedTimeReversed = npcFOV.GetCurrentlyDetectedTimeReversedNPCFOV();
+        if (canSeePlayer && currentlyDetectedTimeReversed == 0)
             chasePlayer = true;
+    }
+
+    public bool GetWaitBeforePlayersCoverChasingPlayer()
+    {
+        return waitBeforePlayersCover;
     }
 
     public void ChaseAfterPlayer()
     {
-        //if player is spotted, wait a second and start chasing him/her
-        if (currentlyWaitingTime == 0)
-        {
-            previousDestination = agent.destination;
-            agent.destination = player.position;
-        }
-        else
-            currentlyWaitingTime--;
+        //player is being chased
 
-        //if player is hidden and is not spotted, give up the chase nad reset the waiting time
-        if (playerIsHidden && !wasPlayerSpotted)
+        //regarding losing the player from the sight
+        //if player is being hunted but is in the bushes, the enemy should go nearby the last known area
+        if (waitBeforePlayersCover == true)
         {
+            float distnaceToTarget = Vector3.Distance(transform.position, player.position);
+
+            //get out of this waiting state if the countdown reaches 0 or less
+            if (currentlyWaitingTimeToWaitAfterLosing <= 0)
+            {
+                agent.isStopped = false;
+                waitBeforePlayersCover = false;
+
+                npcMovement.StopChasingPlayer();
+
+                chasePlayer = false;
+            }
+            else if (playerIsHidden == false && canSeePlayer == true)
+                waitBeforePlayersCover = false;
+            else if (agent.isStopped == true && currentlyWaitingTimeToWaitAfterLosing > 0)
+            {
+                currentlyWaitingTimeToWaitAfterLosing -= 5;
+            }
+            //if the ~10 units iof distance is reached, wait in the last known spot for some time that depends on currentlyWaitingTimeToWaitAfterLosing
+            else if (distnaceToTarget < 15)
+            {
+                agent.isStopped = true;
+            }
             
-            FindAnyObjectByType<NPC2Movement>().StopChasingPlayer();
+        }
+        //if player is  seen and chasen after, set the currently waiting time to wait after losing to proper value;
+        else if (canSeePlayer == true)
+            currentlyWaitingTimeToWaitAfterLosing = (int)Math.Round(timeToWaitAfterLosing / 0.02);
 
-            currentlyWaitingTime = (int)Math.Round(timeToWait / 0.02);
+        //if player is not seen and countdown is on
+        else if (currentlyWaitingTimeToWaitAfterLosing > 0
+            && canSeePlayer == false)
+        {
+            //if player is hidden, different scenario should play out (waitBeforePlayersCover)
+            if (playerIsHidden == false)
+                currentlyWaitingTimeToWaitAfterLosing--;
+            else
+                waitBeforePlayersCover = true;
+        }
+
+        //if player run away and is lost, also stop the chase, reset the waiting time
+        else if (canSeePlayer == false
+            && currentlyWaitingTimeToWaitAfterLosing <= 0)
+        {
+
+            npcMovement.StopChasingPlayer();
+
             chasePlayer = false;
         }
+
+        //if waitBeforePlayersCover is not true, there is no reason for npc to stop
+        if (!waitBeforePlayersCover)
+            agent.isStopped = false;
+
+
+        //if player is chasen after, isn't hidden and waitBeforePlayersCover is turned off, chase the player
+        if (chasePlayer == true )
+        {
+            if (waitBeforePlayersCover == false && !playerIsHidden)
+            {
+                previousDestination = agent.destination;
+                Debug.Log("Chasing the player");
+                agent.isStopped = false;
+
+                agent.destination = player.position;
+            }
+        }
+
 
     }
 
@@ -61,7 +129,12 @@ public class ChasingPlayer : MonoBehaviour
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
-        currentlyWaitingTime = (int)Math.Round(timeToWait / 0.02);
+        npcMovement = GetComponent<NPCMovement>();
+        npcFOV = GetComponent<NPCFieldOfView>();
+        canSeePlayer = false;
+        waitBeforePlayersCover = false;
+
+        currentlyWaitingTimeToWaitAfterLosing = 0;
     }
 
     private void FixedUpdate()
@@ -69,7 +142,8 @@ public class ChasingPlayer : MonoBehaviour
         if(chasePlayer)
             ChaseAfterPlayer();
 
-       
+        npcMovement.UpdateChasePlayerStatusNPCMovement(chasePlayer);
+        npcFOV.UpdateChasePlayerStatusNPCFOV(chasePlayer);
     }
 
     // Update is called once per frame

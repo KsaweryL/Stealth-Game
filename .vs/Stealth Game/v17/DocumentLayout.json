@@ -3,24 +3,28 @@
   "WorkspaceRootPath": "D:\\Studia\\Thesis\\Stealth game\\Stealth Game\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{ED7D511E-50C3-1D8C-8E77-4689D041909E}|Assembly-CSharp.csproj|D:\\Studia\\Thesis\\Stealth game\\Stealth Game\\assets\\scripts\\thirdpersonmovement.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{ED7D511E-50C3-1D8C-8E77-4689D041909E}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\thirdpersonmovement.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{ED7D511E-50C3-1D8C-8E77-4689D041909E}|Assembly-CSharp.csproj|d:\\studia\\thesis\\stealth game\\stealth game\\assets\\scripts\\npc\\npcfieldofview.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{ED7D511E-50C3-1D8C-8E77-4689D041909E}|Assembly-CSharp.csproj|D:\\Studia\\Thesis\\Stealth game\\Stealth Game\\assets\\scripts\\npc\\npcfieldofview.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{ED7D511E-50C3-1D8C-8E77-4689D041909E}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\npc\\npcfieldofview.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{ED7D511E-50C3-1D8C-8E77-4689D041909E}|Assembly-CSharp.csproj|D:\\Studia\\Thesis\\Stealth game\\Stealth Game\\assets\\scripts\\hidingspot\\detectingplayerinhidingspot.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{ED7D511E-50C3-1D8C-8E77-4689D041909E}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\hidingspot\\detectingplayerinhidingspot.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{ED7D511E-50C3-1D8C-8E77-4689D041909E}|Assembly-CSharp.csproj|D:\\Studia\\Thesis\\Stealth game\\Stealth Game\\assets\\scripts\\npc\\chasingplayer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{ED7D511E-50C3-1D8C-8E77-4689D041909E}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\npc\\chasingplayer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{ED7D511E-50C3-1D8C-8E77-4689D041909E}|Assembly-CSharp.csproj|D:\\Studia\\Thesis\\Stealth game\\Stealth Game\\assets\\scripts\\npc\\npc2movement.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{ED7D511E-50C3-1D8C-8E77-4689D041909E}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\npc\\npc2movement.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{ED7D511E-50C3-1D8C-8E77-4689D041909E}|Assembly-CSharp.csproj|d:\\studia\\thesis\\stealth game\\stealth game\\assets\\scripts\\npc\\npcmovement.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{ED7D511E-50C3-1D8C-8E77-4689D041909E}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\npc\\npcmovement.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{ED7D511E-50C3-1D8C-8E77-4689D041909E}|Assembly-CSharp.csproj|d:\\studia\\thesis\\stealth game\\stealth game\\assets\\scripts\\hidingspot\\detectingplayerinhidingspot.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{ED7D511E-50C3-1D8C-8E77-4689D041909E}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\hidingspot\\detectingplayerinhidingspot.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{ED7D511E-50C3-1D8C-8E77-4689D041909E}|Assembly-CSharp.csproj|D:\\Studia\\Thesis\\Stealth game\\Stealth Game\\assets\\scripts\\npc\\ui\\detectionbar.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{ED7D511E-50C3-1D8C-8E77-4689D041909E}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\npc\\ui\\detectionbar.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{ED7D511E-50C3-1D8C-8E77-4689D041909E}|Assembly-CSharp.csproj|D:\\Studia\\Thesis\\Stealth game\\Stealth Game\\assets\\scripts\\npc\\ui\\billboard.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{ED7D511E-50C3-1D8C-8E77-4689D041909E}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\npc\\ui\\billboard.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -30,56 +34,43 @@
       "DocumentGroups": [
         {
           "DockedWidth": 213,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "ThirdPersonMovement.cs",
-              "DocumentMoniker": "D:\\Studia\\Thesis\\Stealth game\\Stealth Game\\Assets\\Scripts\\ThirdPersonMovement.cs",
-              "RelativeDocumentMoniker": "Assets\\Scripts\\ThirdPersonMovement.cs",
-              "ToolTip": "D:\\Studia\\Thesis\\Stealth game\\Stealth Game\\Assets\\Scripts\\ThirdPersonMovement.cs",
-              "RelativeToolTip": "Assets\\Scripts\\ThirdPersonMovement.cs",
-              "ViewState": "AQIAAGYAAAAAAAAAAAAcwHYAAAAjAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-18T14:51:45.311Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "DetectingPlayerInHidingSpot.cs",
-              "DocumentMoniker": "D:\\Studia\\Thesis\\Stealth game\\Stealth Game\\Assets\\Scripts\\HidingSpot\\DetectingPlayerInHidingSpot.cs",
-              "RelativeDocumentMoniker": "Assets\\Scripts\\HidingSpot\\DetectingPlayerInHidingSpot.cs",
-              "ToolTip": "D:\\Studia\\Thesis\\Stealth game\\Stealth Game\\Assets\\Scripts\\HidingSpot\\DetectingPlayerInHidingSpot.cs",
-              "RelativeToolTip": "Assets\\Scripts\\HidingSpot\\DetectingPlayerInHidingSpot.cs",
-              "ViewState": "AQIAABoAAAAAAAAAAAAgwDAAAAAuAAAA",
+              "Title": "NPCMovement.cs",
+              "DocumentMoniker": "D:\\Studia\\Thesis\\Stealth game\\Stealth Game\\Assets\\Scripts\\NPC\\NPCMovement.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\NPC\\NPCMovement.cs",
+              "ToolTip": "D:\\Studia\\Thesis\\Stealth game\\Stealth Game\\Assets\\Scripts\\NPC\\NPCMovement.cs",
+              "RelativeToolTip": "Assets\\Scripts\\NPC\\NPCMovement.cs",
+              "ViewState": "AQIAAGIAAAAAAAAAAAA0wHIAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-17T18:06:20.042Z",
+              "WhenOpened": "2024-07-22T20:34:40.446Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 1,
               "Title": "ChasingPlayer.cs",
               "DocumentMoniker": "D:\\Studia\\Thesis\\Stealth game\\Stealth Game\\Assets\\Scripts\\NPC\\ChasingPlayer.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\NPC\\ChasingPlayer.cs",
               "ToolTip": "D:\\Studia\\Thesis\\Stealth game\\Stealth Game\\Assets\\Scripts\\NPC\\ChasingPlayer.cs",
               "RelativeToolTip": "Assets\\Scripts\\NPC\\ChasingPlayer.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAwAAAAZAAAA",
+              "ViewState": "AQIAAHsAAAAAAAAAAAAkwCoAAAAiAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-07-17T13:01:53.283Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
               "Title": "NPCFieldOfView.cs",
               "DocumentMoniker": "D:\\Studia\\Thesis\\Stealth game\\Stealth Game\\Assets\\Scripts\\NPC\\NPCFieldOfView.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\NPC\\NPCFieldOfView.cs",
               "ToolTip": "D:\\Studia\\Thesis\\Stealth game\\Stealth Game\\Assets\\Scripts\\NPC\\NPCFieldOfView.cs",
               "RelativeToolTip": "Assets\\Scripts\\NPC\\NPCFieldOfView.cs",
-              "ViewState": "AQIAACYAAAAAAAAAAAAawEwAAAA2AAAA",
+              "ViewState": "AQIAAAUAAAAAAAAAAAA5wC8AAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-07-15T17:47:06.893Z",
               "EditorCaption": ""
@@ -87,14 +78,62 @@
             {
               "$type": "Document",
               "DocumentIndex": 4,
-              "Title": "NPC2Movement.cs",
-              "DocumentMoniker": "D:\\Studia\\Thesis\\Stealth game\\Stealth Game\\Assets\\Scripts\\NPC\\NPC2Movement.cs",
-              "RelativeDocumentMoniker": "Assets\\Scripts\\NPC\\NPC2Movement.cs",
-              "ToolTip": "D:\\Studia\\Thesis\\Stealth game\\Stealth Game\\Assets\\Scripts\\NPC\\NPC2Movement.cs",
-              "RelativeToolTip": "Assets\\Scripts\\NPC\\NPC2Movement.cs",
-              "ViewState": "AQIAABEAAAAAAAAAAAAAwB8AAAAcAAAA",
+              "Title": "DetectionBar.cs",
+              "DocumentMoniker": "D:\\Studia\\Thesis\\Stealth game\\Stealth Game\\Assets\\Scripts\\NPC\\UI\\DetectionBar.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\NPC\\UI\\DetectionBar.cs",
+              "ToolTip": "D:\\Studia\\Thesis\\Stealth game\\Stealth Game\\Assets\\Scripts\\NPC\\UI\\DetectionBar.cs",
+              "RelativeToolTip": "Assets\\Scripts\\NPC\\UI\\DetectionBar.cs",
+              "ViewState": "AQIAAB8AAAAAAAAAAAAuwCcAAAATAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-15T17:47:00.717Z"
+              "WhenOpened": "2024-07-22T19:09:58.37Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Billboard.cs",
+              "DocumentMoniker": "D:\\Studia\\Thesis\\Stealth game\\Stealth Game\\Assets\\Scripts\\NPC\\UI\\Billboard.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\NPC\\UI\\Billboard.cs",
+              "ToolTip": "D:\\Studia\\Thesis\\Stealth game\\Stealth Game\\Assets\\Scripts\\NPC\\UI\\Billboard.cs",
+              "RelativeToolTip": "Assets\\Scripts\\NPC\\UI\\Billboard.cs",
+              "ViewState": "AQIAAAgAAAAAAAAAAAAAwBIAAAAFAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-07-22T18:59:47.391Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "FloatingWindowState": {
+        "Id": "f78f946c-9acf-4079-82b5-f308cf1e1400",
+        "Display": 0,
+        "X": 575,
+        "Y": 313,
+        "Width": 1367,
+        "Height": 577,
+        "WindowState": 0
+      },
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "DetectingPlayerInHidingSpot.cs",
+              "DocumentMoniker": "D:\\Studia\\Thesis\\Stealth game\\Stealth Game\\Assets\\Scripts\\HidingSpot\\DetectingPlayerInHidingSpot.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\HidingSpot\\DetectingPlayerInHidingSpot.cs",
+              "ToolTip": "D:\\Studia\\Thesis\\Stealth game\\Stealth Game\\Assets\\Scripts\\HidingSpot\\DetectingPlayerInHidingSpot.cs",
+              "RelativeToolTip": "Assets\\Scripts\\HidingSpot\\DetectingPlayerInHidingSpot.cs",
+              "ViewState": "AQIAACUAAAAAAAAAAAAkwDYAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-07-22T21:11:26.633Z",
+              "EditorCaption": ""
             }
           ]
         }

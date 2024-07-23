@@ -30,7 +30,6 @@ public class DetectingPlayerInHidingSpot : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        Debug.Log(other.gameObject);
         if (other.gameObject.layer == hidingSpot)
         {
             playerIsTouchingHidingSpot = false;
@@ -54,7 +53,6 @@ public class DetectingPlayerInHidingSpot : MonoBehaviour
         else
             playerIsHidden = false;
 
-        FindObjectOfType<NPCFieldOfView>().UpdateHiddenStatus(playerIsHidden);
     }
 
     // Start is called before the first frame update
