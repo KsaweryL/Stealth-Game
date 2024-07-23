@@ -17,7 +17,9 @@ public class ChasingPlayer : MonoBehaviour
     //get previous NPC destination
     public Vector3 previousDestination;
 
+    [Header("Hiding in a cover")]
     public bool waitBeforePlayersCover;
+    public int distanceToWaitBeforeCover;
 
     [Header("Time of chasing the player after he/she is lost")]
     public float timeToWaitAfterLosing;
@@ -67,7 +69,7 @@ public class ChasingPlayer : MonoBehaviour
                 currentlyWaitingTimeToWaitAfterLosing -= 5;
             }
             //if the ~10 units iof distance is reached, wait in the last known spot for some time that depends on currentlyWaitingTimeToWaitAfterLosing
-            else if (distnaceToTarget < 15)
+            else if (distnaceToTarget < distanceToWaitBeforeCover)
             {
                 agent.isStopped = true;
             }

@@ -39,6 +39,7 @@ public class DetectionBar : MonoBehaviour
     {
         if (NPCFOV)
         {
+            //Needs to be done manually
             //NPCFOV = GetComponentInParent<NPCFieldOfView>();
             currentlyDetectedTime = NPCFOV.GetCurrentlyDetectedTimeNPCFOV();
             slider.value = currentlyDetectedTime;

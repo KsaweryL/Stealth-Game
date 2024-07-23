@@ -366,8 +366,8 @@
 -analyzer:"C:/Program Files/Unity/Hub/Editor/2022.3.21f1/Editor/Data/Tools/Unity.SourceGenerators/Unity.SourceGenerators.dll"
 "Assets/Assets - grapics/BrokenVector/LowPolyBrickHouses/Scripts/ModelCustomizer.cs"
 "Assets/Interfaces/NPCInterface.cs"
-"Assets/Scripts/AnimationStateController.cs"
 "Assets/Scripts/HidingSpot/DetectingPlayerInHidingSpot.cs"
+"Assets/Scripts/Items/Diamond/Diamond.cs"
 "Assets/Scripts/NPC/AnimationStateControllerNPC.cs"
 "Assets/Scripts/NPC/ChasingPlayer.cs"
 "Assets/Scripts/NPC/FieldOfViewEditor.cs"
@@ -377,7 +377,10 @@
 "Assets/Scripts/NPC/UI/DetectionBar.cs"
 "Assets/Scripts/old/PlayerCamera_old.cs"
 "Assets/Scripts/old/PlayerMovement_old.cs"
-"Assets/Scripts/ThirdPersonMovement.cs"
+"Assets/Scripts/Player/AnimationStateController.cs"
+"Assets/Scripts/Player/PlayerInventory.cs"
+"Assets/Scripts/Player/ThirdPersonMovement.cs"
+"Assets/Scripts/Player/UI/InventoryUI.cs"
 -langversion:9.0
 
 /deterministic
