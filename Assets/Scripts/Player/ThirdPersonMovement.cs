@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class ThirdPersonMovement : MonoBehaviour
@@ -9,12 +10,24 @@ public class ThirdPersonMovement : MonoBehaviour
     Animator animator;
 
     //for moving speed
-    //
-    public float speed;
-    public bool isSprintEnabled = false;
+    private float speed;
+    [Header("Speed values")]
+    public float sprintingSpeed;
+    public float walkingSpeed;
+    public float crouchingSpeed;
+    public float crouchingSprintingSpeed;
 
+    [Header("Health")]
+    public float maxHealth;
+    public float currentHealth;
+
+    [Header("Jumping")]
     //jumping speed
-    public float jumpSpeed = 15;
+    public float jumpSpeed;
+    private float ySpeed;
+
+    [Header("Other")]
+    public bool isSprintEnabled = false;
 
     //whether we crouch or not
     bool isSneaking;
@@ -29,27 +42,25 @@ public class ThirdPersonMovement : MonoBehaviour
     public Vector3 velocity;
     public Vector3 moveDir;
 
+    public void TakeDamage(float damage)
+    {
+        currentHealth -= damage;
+        if (currentHealth < 0)
+            currentHealth = 0;
+    }
     public bool IsSneaking()
     {
-
-    return isSneaking; 
+        return isSneaking; 
     }
 
     void ApplyGravity()
     {
         if (controller)
         {
-            if (controller.isGrounded && moveDir.y < 0.0f && (!Input.GetKey(KeyCode.W) || !Input.GetKey(KeyCode.A) ||
-              !Input.GetKey(KeyCode.S) || !Input.GetKey(KeyCode.D)))
-                moveDir.y = -1.0f;
-            //when we move our character in the air, increase the gravity
-            else if (!controller.isGrounded && (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) ||
-              Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D)))
-            {
-                moveDir.y += gravity * gravityMultiplier * 10 * Time.deltaTime;
-            }
+            if (controller.isGrounded && moveDir.y < 0.0f)
+                ySpeed = -1.0f;
             else
-                moveDir.y += gravity * gravityMultiplier * Time.deltaTime;
+                ySpeed += gravity * Time.deltaTime;
         }
 
     }
@@ -93,15 +104,11 @@ public class ThirdPersonMovement : MonoBehaviour
         //jump only when one is not sneaking
         if (Input.GetButtonDown("Jump") && !isSneaking)
         {
-            //if we jumped during movement, make a jump more impactful
-            if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) ||
-            Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D))
-                moveDir.y += jumpSpeed*4;
-            else
-                moveDir.y += jumpSpeed;
+
+            ySpeed = jumpSpeed;
 
             // Set the isJumping parameter in the Animator
-            if(animator)
+            if (animator)
                 animator.SetBool("jumpPressed", true);
         }
 
@@ -112,9 +119,9 @@ public class ThirdPersonMovement : MonoBehaviour
             if (isSneaking)
             {
                 if(isSprintEnabled)
-                    speed = 8.0f;
+                    speed = sprintingSpeed;
                 else
-                    speed = 4.0f;
+                    speed = walkingSpeed;
 
                 isSneaking = false;
             }
@@ -122,9 +129,9 @@ public class ThirdPersonMovement : MonoBehaviour
             else
             {
                 if (isSprintEnabled)
-                    speed = 5.0f;
+                    speed = crouchingSprintingSpeed;
                 else
-                    speed = 3.0f;
+                    speed = crouchingSpeed;
 
                 isSneaking = true;
             }
@@ -137,24 +144,44 @@ public class ThirdPersonMovement : MonoBehaviour
             //sprinting is being turned off
             if (isSprintEnabled) {
                 if (isSneaking)
-                    speed = 3.0f;
+                    speed = crouchingSpeed;
                 else
-                    speed = 4.0f;
+                    speed = walkingSpeed;
                 isSprintEnabled = false;
             }
             //sprinting is being turned on
             else
             {
                 if (isSneaking)
-                    speed = 5.0f;
+                    speed = crouchingSprintingSpeed;
                 else
-                    speed = 8.0f;
+                    speed = sprintingSpeed;
 
                 isSprintEnabled = true;
             }
                 
         }
-            
+
+        moveDir.y = ySpeed;
+    }
+
+    void SetStandardSpeedValues()
+    {
+        if (sprintingSpeed == 0)
+            sprintingSpeed = 8.0f;
+        if (walkingSpeed == 0)
+            walkingSpeed = 4.0f;
+        if (crouchingSpeed == 0)
+            crouchingSpeed = 3.0f;
+        if (crouchingSprintingSpeed == 0)
+            crouchingSprintingSpeed = 5.0f;
+
+        speed = walkingSpeed;
+
+        if (jumpSpeed == 0)
+            jumpSpeed = 3;
+
+        currentHealth = maxHealth;
 
     }
 
@@ -162,6 +189,8 @@ public class ThirdPersonMovement : MonoBehaviour
     void Start()
     {
         isSneaking = false;
+
+        SetStandardSpeedValues();
     }
 
 
@@ -177,6 +206,7 @@ public class ThirdPersonMovement : MonoBehaviour
         //apply movement
         if (controller)
             controller.Move(moveDir.normalized * speed * Time.deltaTime);
+        
 
     }
 }

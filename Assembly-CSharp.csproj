@@ -70,9 +70,11 @@
     <Compile Include="Assets\Interfaces\NPCInterface.cs" />
     <Compile Include="Assets\Scripts\NPC\FieldOfViewEditor.cs" />
     <Compile Include="Assets\Scripts\Player\AnimationStateController.cs" />
+    <Compile Include="Assets\HealthBar.cs" />
     <Compile Include="Assets\Scripts\HidingSpot\DetectingPlayerInHidingSpot.cs" />
     <Compile Include="Assets\Scripts\Player\UI\InventoryUI.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerInventory.cs" />
+    <Compile Include="Assets\Scripts\Player\UI\MiniMap.cs" />
     <Compile Include="Assets\Scripts\NPC\NPCMovement.cs" />
     <Compile Include="Assets\Scripts\NPC\ChasingPlayer.cs" />
     <Compile Include="Assets\Scripts\NPC\UI\Billboard.cs" />

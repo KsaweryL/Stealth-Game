@@ -9,6 +9,7 @@ public class ChasingPlayer : MonoBehaviour
 
     public Transform player;
     private NavMeshAgent agent;
+    public ThirdPersonMovement playerInfo;
 
     public bool canSeePlayer;
     public bool chasePlayer;
@@ -28,6 +29,13 @@ public class ChasingPlayer : MonoBehaviour
     [Header("Connection with other components")]
     public NPCMovement npcMovement;
     public NPCFieldOfView npcFOV;
+
+    [Header("Damage")]
+    public float amountOfDamageToInflict;
+    public float inflictDamageDistance;
+    public float distnaceToTarget;
+    public float timeBetweenHits;
+    float currentTimeBetweenHits;
 
     public void UpdateCanSeePlayerStatusChasingPlayer(bool canSeePlayerVariable)
     {
@@ -121,6 +129,21 @@ public class ChasingPlayer : MonoBehaviour
 
     }
 
+    public void InflictDamage()
+    {
+        distnaceToTarget = Vector3.Distance(transform.position, player.position);
+
+        if (distnaceToTarget > inflictDamageDistance)
+            return;
+        if (currentTimeBetweenHits <= 0)
+        {
+            playerInfo.TakeDamage(amountOfDamageToInflict);
+            currentTimeBetweenHits = timeBetweenHits;
+        }
+        else
+            currentTimeBetweenHits--;
+    }
+
     public void CheckIfPlayerHidden()
     {
         playerIsHidden = FindObjectOfType<DetectingPlayerInHidingSpot>().IsPlayerHidden();
@@ -133,16 +156,22 @@ public class ChasingPlayer : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         npcMovement = GetComponent<NPCMovement>();
         npcFOV = GetComponent<NPCFieldOfView>();
+        playerInfo = player.GetComponent<ThirdPersonMovement>();
+
         canSeePlayer = false;
         waitBeforePlayersCover = false;
 
         currentlyWaitingTimeToWaitAfterLosing = 0;
+        currentTimeBetweenHits = timeBetweenHits;
     }
 
     private void FixedUpdate()
     {
-        if(chasePlayer)
+        if (chasePlayer)
+        {
             ChaseAfterPlayer();
+            InflictDamage();
+        }
 
         npcMovement.UpdateChasePlayerStatusNPCMovement(chasePlayer);
         npcFOV.UpdateChasePlayerStatusNPCFOV(chasePlayer);

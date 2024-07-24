@@ -365,6 +365,7 @@
 -analyzer:"C:/Program Files/Unity/Hub/Editor/2022.3.21f1/Editor/Data/Tools/Unity.SourceGenerators/Unity.Properties.SourceGenerator.dll"
 -analyzer:"C:/Program Files/Unity/Hub/Editor/2022.3.21f1/Editor/Data/Tools/Unity.SourceGenerators/Unity.SourceGenerators.dll"
 "Assets/Assets - grapics/BrokenVector/LowPolyBrickHouses/Scripts/ModelCustomizer.cs"
+"Assets/HealthBar.cs"
 "Assets/Interfaces/NPCInterface.cs"
 "Assets/Scripts/HidingSpot/DetectingPlayerInHidingSpot.cs"
 "Assets/Scripts/Items/Diamond/Diamond.cs"
@@ -381,6 +382,7 @@
 "Assets/Scripts/Player/PlayerInventory.cs"
 "Assets/Scripts/Player/ThirdPersonMovement.cs"
 "Assets/Scripts/Player/UI/InventoryUI.cs"
+"Assets/Scripts/Player/UI/MiniMap.cs"
 -langversion:9.0
 
 /deterministic
