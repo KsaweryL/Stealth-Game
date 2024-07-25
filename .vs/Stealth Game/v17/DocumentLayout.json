@@ -3,32 +3,20 @@
   "WorkspaceRootPath": "D:\\Studia\\Thesis\\Stealth game\\Stealth Game\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{ED7D511E-50C3-1D8C-8E77-4689D041909E}|Assembly-CSharp.csproj|d:\\studia\\thesis\\stealth game\\stealth game\\assets\\healthbar.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{ED7D511E-50C3-1D8C-8E77-4689D041909E}|Assembly-CSharp.csproj|solutionrelative:assets\\healthbar.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{ED7D511E-50C3-1D8C-8E77-4689D041909E}|Assembly-CSharp.csproj|d:\\studia\\thesis\\stealth game\\stealth game\\assets\\scripts\\mlagent\\movetodiamondagent.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{ED7D511E-50C3-1D8C-8E77-4689D041909E}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\mlagent\\movetodiamondagent.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{ED7D511E-50C3-1D8C-8E77-4689D041909E}|Assembly-CSharp.csproj|d:\\studia\\thesis\\stealth game\\stealth game\\assets\\scripts\\npc\\chasingplayer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{ED7D511E-50C3-1D8C-8E77-4689D041909E}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\npc\\chasingplayer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{ED7D511E-50C3-1D8C-8E77-4689D041909E}|Assembly-CSharp.csproj|D:\\Studia\\Thesis\\Stealth game\\Stealth Game\\assets\\scripts\\mlagent\\wall.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{ED7D511E-50C3-1D8C-8E77-4689D041909E}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\mlagent\\wall.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{ED7D511E-50C3-1D8C-8E77-4689D041909E}|Assembly-CSharp.csproj|D:\\Studia\\Thesis\\Stealth game\\Stealth Game\\assets\\scripts\\mlagent\\goal.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{ED7D511E-50C3-1D8C-8E77-4689D041909E}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\mlagent\\goal.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{ED7D511E-50C3-1D8C-8E77-4689D041909E}|Assembly-CSharp.csproj|D:\\Studia\\Thesis\\Stealth game\\Stealth Game\\assets\\scripts\\player\\thirdpersonmovement.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{ED7D511E-50C3-1D8C-8E77-4689D041909E}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\player\\thirdpersonmovement.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{ED7D511E-50C3-1D8C-8E77-4689D041909E}|Assembly-CSharp.csproj|d:\\studia\\thesis\\stealth game\\stealth game\\assets\\scripts\\npc\\ui\\detectionbar.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{ED7D511E-50C3-1D8C-8E77-4689D041909E}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\npc\\ui\\detectionbar.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{ED7D511E-50C3-1D8C-8E77-4689D041909E}|Assembly-CSharp.csproj|D:\\Studia\\Thesis\\Stealth game\\Stealth Game\\assets\\scripts\\player\\playerinventory.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{ED7D511E-50C3-1D8C-8E77-4689D041909E}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\player\\playerinventory.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{ED7D511E-50C3-1D8C-8E77-4689D041909E}|Assembly-CSharp.csproj|D:\\Studia\\Thesis\\Stealth game\\Stealth Game\\assets\\scripts\\items\\diamond\\diamond.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{ED7D511E-50C3-1D8C-8E77-4689D041909E}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\items\\diamond\\diamond.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{ED7D511E-50C3-1D8C-8E77-4689D041909E}|Assembly-CSharp.csproj|D:\\Studia\\Thesis\\Stealth game\\Stealth Game\\assets\\scripts\\hidingspot\\detectingplayerinhidingspot.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{ED7D511E-50C3-1D8C-8E77-4689D041909E}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\hidingspot\\detectingplayerinhidingspot.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -38,116 +26,56 @@
       "DocumentGroups": [
         {
           "DockedWidth": 213,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "HealthBar.cs",
-              "DocumentMoniker": "D:\\Studia\\Thesis\\Stealth game\\Stealth Game\\Assets\\HealthBar.cs",
-              "RelativeDocumentMoniker": "Assets\\HealthBar.cs",
-              "ToolTip": "D:\\Studia\\Thesis\\Stealth game\\Stealth Game\\Assets\\HealthBar.cs",
-              "RelativeToolTip": "Assets\\HealthBar.cs",
-              "ViewState": "AQIAAA4AAAAAAAAAAAAAwBwAAAArAAAA",
+              "DocumentIndex": 1,
+              "Title": "Wall.cs",
+              "DocumentMoniker": "D:\\Studia\\Thesis\\Stealth game\\Stealth Game\\Assets\\Scripts\\MlAgent\\Wall.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\MlAgent\\Wall.cs",
+              "ToolTip": "D:\\Studia\\Thesis\\Stealth game\\Stealth Game\\Assets\\Scripts\\MlAgent\\Wall.cs",
+              "RelativeToolTip": "Assets\\Scripts\\MlAgent\\Wall.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-24T13:41:51.575Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-07-25T15:15:08.695Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
+              "Title": "Goal.cs",
+              "DocumentMoniker": "D:\\Studia\\Thesis\\Stealth game\\Stealth Game\\Assets\\Scripts\\MlAgent\\Goal.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\MlAgent\\Goal.cs",
+              "ToolTip": "D:\\Studia\\Thesis\\Stealth game\\Stealth Game\\Assets\\Scripts\\MlAgent\\Goal.cs",
+              "RelativeToolTip": "Assets\\Scripts\\MlAgent\\Goal.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-07-25T15:15:05.806Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "MoveToDiamondAgent.cs",
+              "DocumentMoniker": "D:\\Studia\\Thesis\\Stealth game\\Stealth Game\\Assets\\Scripts\\MlAgent\\MoveToDiamondAgent.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\MlAgent\\MoveToDiamondAgent.cs",
+              "ToolTip": "D:\\Studia\\Thesis\\Stealth game\\Stealth Game\\Assets\\Scripts\\MlAgent\\MoveToDiamondAgent.cs",
+              "RelativeToolTip": "Assets\\Scripts\\MlAgent\\MoveToDiamondAgent.cs",
+              "ViewState": "AQIAADMAAAAAAAAAAAAowEQAAAAMAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-07-25T13:28:37.185Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
               "Title": "ThirdPersonMovement.cs",
               "DocumentMoniker": "D:\\Studia\\Thesis\\Stealth game\\Stealth Game\\Assets\\Scripts\\Player\\ThirdPersonMovement.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\Player\\ThirdPersonMovement.cs",
               "ToolTip": "D:\\Studia\\Thesis\\Stealth game\\Stealth Game\\Assets\\Scripts\\Player\\ThirdPersonMovement.cs",
               "RelativeToolTip": "Assets\\Scripts\\Player\\ThirdPersonMovement.cs",
-              "ViewState": "AQIAAAgAAAAAAAAAAAAAwLcAAAAiAAAA",
+              "ViewState": "AQIAAE0AAAAAAAAAAAAkwFQAAAAVAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-24T11:14:42.445Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "ChasingPlayer.cs",
-              "DocumentMoniker": "D:\\Studia\\Thesis\\Stealth game\\Stealth Game\\Assets\\Scripts\\NPC\\ChasingPlayer.cs",
-              "RelativeDocumentMoniker": "Assets\\Scripts\\NPC\\ChasingPlayer.cs",
-              "ToolTip": "D:\\Studia\\Thesis\\Stealth game\\Stealth Game\\Assets\\Scripts\\NPC\\ChasingPlayer.cs",
-              "RelativeToolTip": "Assets\\Scripts\\NPC\\ChasingPlayer.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAgAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-23T17:57:18.844Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "DetectingPlayerInHidingSpot.cs",
-              "DocumentMoniker": "D:\\Studia\\Thesis\\Stealth game\\Stealth Game\\Assets\\Scripts\\HidingSpot\\DetectingPlayerInHidingSpot.cs",
-              "RelativeDocumentMoniker": "Assets\\Scripts\\HidingSpot\\DetectingPlayerInHidingSpot.cs",
-              "ToolTip": "D:\\Studia\\Thesis\\Stealth game\\Stealth Game\\Assets\\Scripts\\HidingSpot\\DetectingPlayerInHidingSpot.cs",
-              "RelativeToolTip": "Assets\\Scripts\\HidingSpot\\DetectingPlayerInHidingSpot.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAADoAAAAEAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-23T16:27:14.961Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "PlayerInventory.cs",
-              "DocumentMoniker": "D:\\Studia\\Thesis\\Stealth game\\Stealth Game\\Assets\\Scripts\\Player\\PlayerInventory.cs",
-              "RelativeDocumentMoniker": "Assets\\Scripts\\Player\\PlayerInventory.cs",
-              "ToolTip": "D:\\Studia\\Thesis\\Stealth game\\Stealth Game\\Assets\\Scripts\\Player\\PlayerInventory.cs",
-              "RelativeToolTip": "Assets\\Scripts\\Player\\PlayerInventory.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAgAAAA1AAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-23T16:27:03.285Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "Diamond.cs",
-              "DocumentMoniker": "D:\\Studia\\Thesis\\Stealth game\\Stealth Game\\Assets\\Scripts\\Items\\Diamond\\Diamond.cs",
-              "RelativeDocumentMoniker": "Assets\\Scripts\\Items\\Diamond\\Diamond.cs",
-              "ToolTip": "D:\\Studia\\Thesis\\Stealth game\\Stealth Game\\Assets\\Scripts\\Items\\Diamond\\Diamond.cs",
-              "RelativeToolTip": "Assets\\Scripts\\Items\\Diamond\\Diamond.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAUAAAABAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-23T16:26:38.165Z"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "Orientation": 0,
-      "VerticalTabListWidth": 256,
-      "FloatingWindowState": {
-        "Id": "8074c05e-9a8f-416d-afe7-dc5dff2ecd0b",
-        "Display": 0,
-        "X": 424,
-        "Y": 166,
-        "Width": 1367,
-        "Height": 645,
-        "WindowState": 0
-      },
-      "DocumentGroups": [
-        {
-          "DockedWidth": 200,
-          "SelectedChildIndex": 0,
-          "Children": [
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "DetectionBar.cs",
-              "DocumentMoniker": "D:\\Studia\\Thesis\\Stealth game\\Stealth Game\\Assets\\Scripts\\NPC\\UI\\DetectionBar.cs",
-              "RelativeDocumentMoniker": "Assets\\Scripts\\NPC\\UI\\DetectionBar.cs",
-              "ToolTip": "D:\\Studia\\Thesis\\Stealth game\\Stealth Game\\Assets\\Scripts\\NPC\\UI\\DetectionBar.cs",
-              "RelativeToolTip": "Assets\\Scripts\\NPC\\UI\\DetectionBar.cs",
-              "ViewState": "AQIAAAsAAAAAAAAAAAAAwCAAAAAvAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-24T13:41:59.528Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-07-24T11:14:42.445Z"
             }
           ]
         }

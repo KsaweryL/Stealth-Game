@@ -9,7 +9,7 @@ public class InventoryUI : MonoBehaviour
 
     Diamond[] allDiamonds;
     public int numberOfAllDiamonds;
-
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -23,5 +23,11 @@ public class InventoryUI : MonoBehaviour
     public void UpdateDiamondText(PlayerInventory playerInventory)
     {
         diamondText.text = playerInventory.NumberOfDiamonds.ToString() + "/" + numberOfAllDiamonds;
+        if (playerInventory.NumberOfDiamonds == numberOfAllDiamonds)
+        {
+            FindObjectOfType<GameOver>().UpdateGameOver(true);
+            FindObjectOfType<GameOver>().UpdatePlayerWon(true);
+        }
+
     }
 }

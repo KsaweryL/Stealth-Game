@@ -36,6 +36,10 @@ public class ChasingPlayer : MonoBehaviour
     public float distnaceToTarget;
     public float timeBetweenHits;
     float currentTimeBetweenHits;
+    public bool damageWasInflicted;
+
+    [Header("chase")]
+    public float chaseSpeedMultiplier;
 
     public void UpdateCanSeePlayerStatusChasingPlayer(bool canSeePlayerVariable)
     {
@@ -52,6 +56,7 @@ public class ChasingPlayer : MonoBehaviour
 
     public void ChaseAfterPlayer()
     {
+
         //player is being chased
 
         //regarding losing the player from the sight
@@ -123,6 +128,10 @@ public class ChasingPlayer : MonoBehaviour
                 agent.isStopped = false;
 
                 agent.destination = player.position;
+                if(!damageWasInflicted)
+                    agent.speed = playerInfo.GetSpeed() * chaseSpeedMultiplier;
+                else
+                    agent.speed = playerInfo.GetSpeed() * 0.3f * chaseSpeedMultiplier;
             }
         }
 
@@ -139,9 +148,11 @@ public class ChasingPlayer : MonoBehaviour
         {
             playerInfo.TakeDamage(amountOfDamageToInflict);
             currentTimeBetweenHits = timeBetweenHits;
+            damageWasInflicted = true;
         }
         else
             currentTimeBetweenHits--;
+
     }
 
     public void CheckIfPlayerHidden()
@@ -163,6 +174,8 @@ public class ChasingPlayer : MonoBehaviour
 
         currentlyWaitingTimeToWaitAfterLosing = 0;
         currentTimeBetweenHits = timeBetweenHits;
+
+        damageWasInflicted = false;
     }
 
     private void FixedUpdate()
@@ -172,6 +185,8 @@ public class ChasingPlayer : MonoBehaviour
             ChaseAfterPlayer();
             InflictDamage();
         }
+        else
+            damageWasInflicted = false;
 
         npcMovement.UpdateChasePlayerStatusNPCMovement(chasePlayer);
         npcFOV.UpdateChasePlayerStatusNPCFOV(chasePlayer);

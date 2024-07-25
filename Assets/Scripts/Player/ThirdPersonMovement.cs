@@ -42,6 +42,18 @@ public class ThirdPersonMovement : MonoBehaviour
     public Vector3 velocity;
     public Vector3 moveDir;
 
+    public float GetCurrentHealth()
+    {
+        return currentHealth;
+    }
+    public bool GetIsSnkeaing()
+    {
+        return isSneaking;
+    }
+    public float GetSpeed()
+    {
+        return speed;
+    }
     public void TakeDamage(float damage)
     {
         currentHealth -= damage;

@@ -1797,7 +1797,7 @@ MonoBehaviour:
   - {fileID: 6710266344108201965}
   - {fileID: 8174141325684734086}
   numberOfPoints: 3
-  speed: 1
+  speed: 3
   whatIsPlayer:
     serializedVersion: 2
     m_Bits: 256
@@ -1817,8 +1817,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d83e663f103c87b4a9c4d30409df1883, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  radius: 8
-  angle: 100
+  radius: 7
+  angle: 141
   timeToDetect: 0.2
   currentlyDetectedTime: 0
   playerRef: {fileID: 0}
@@ -1828,6 +1828,9 @@ MonoBehaviour:
   obstructionMask:
     serializedVersion: 2
     m_Bits: 512
+  notFullBarrier:
+    serializedVersion: 2
+    m_Bits: 8192
   canSeePlayer: 0
   playerIsHidden: 0
   chasePlayer: 0
@@ -1861,6 +1864,8 @@ MonoBehaviour:
   inflictDamageDistance: 1.5
   distnaceToTarget: 0
   timeBetweenHits: 50
+  damageWasInflicted: 0
+  chaseSpeedMultiplier: 1.2
 --- !u!1 &8629311414295931600
 GameObject:
   m_ObjectHideFlags: 0

@@ -61,6 +61,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Assets - grapics\BrokenVector\LowPolyBrickHouses\Scripts\ModelCustomizer.cs" />
+    <Compile Include="Assets\Scripts\MlAgent\Wall.cs" />
     <Compile Include="Assets\Scripts\Player\ThirdPersonMovement.cs" />
     <Compile Include="Assets\Scripts\NPC\UI\DetectionBar.cs" />
     <Compile Include="Assets\Scripts\NPC\NPCFieldOfView.cs" />
@@ -70,41 +71,44 @@
     <Compile Include="Assets\Interfaces\NPCInterface.cs" />
     <Compile Include="Assets\Scripts\NPC\FieldOfViewEditor.cs" />
     <Compile Include="Assets\Scripts\Player\AnimationStateController.cs" />
-    <Compile Include="Assets\HealthBar.cs" />
     <Compile Include="Assets\Scripts\HidingSpot\DetectingPlayerInHidingSpot.cs" />
+    <Compile Include="Assets\Scripts\Player\UI\HealthBar.cs" />
+    <Compile Include="Assets\Scripts\Player\UI\GameOver.cs" />
     <Compile Include="Assets\Scripts\Player\UI\InventoryUI.cs" />
+    <Compile Include="Assets\Scripts\MlAgent\Goal.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerInventory.cs" />
     <Compile Include="Assets\Scripts\Player\UI\MiniMap.cs" />
     <Compile Include="Assets\Scripts\NPC\NPCMovement.cs" />
+    <Compile Include="Assets\Scripts\MlAgent\MoveToDiamondAgent.cs" />
     <Compile Include="Assets\Scripts\NPC\ChasingPlayer.cs" />
     <Compile Include="Assets\Scripts\NPC\UI\Billboard.cs" />
     <Compile Include="Assets\Scripts\old\PlayerMovement_old.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
-    <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
-    <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap.shader" />
-    <None Include="Assets\TextMesh Pro\Shaders\TMPro_Mobile.cginc" />
-    <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF SSD.shader" />
-    <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Surface-Mobile.shader" />
-    <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Surface.shader" />
-    <None Include="Assets\TextMesh Pro\Sprites\EmojiOne Attribution.txt" />
-    <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap-Custom-Atlas.shader" />
-    <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF.shader" />
-    <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile SSD.shader" />
-    <None Include="Assets\TextMesh Pro\Resources\LineBreaking Leading Characters.txt" />
+    <None Include="Assets\Assets - grapics\TextMesh Pro\Shaders\TMPro.cginc" />
+    <None Include="Assets\Assets - grapics\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
+    <None Include="Assets\Assets - grapics\TextMesh Pro\Shaders\TMP_Bitmap.shader" />
+    <None Include="Assets\Assets - grapics\TextMesh Pro\Shaders\TMPro_Mobile.cginc" />
+    <None Include="Assets\Assets - grapics\TextMesh Pro\Shaders\TMP_SDF SSD.shader" />
+    <None Include="Assets\Assets - grapics\TextMesh Pro\Shaders\TMP_SDF-Surface-Mobile.shader" />
+    <None Include="Assets\Assets - grapics\TextMesh Pro\Shaders\TMP_SDF-Surface.shader" />
+    <None Include="Assets\Assets - grapics\TextMesh Pro\Sprites\EmojiOne Attribution.txt" />
+    <None Include="Assets\Assets - grapics\TextMesh Pro\Shaders\TMP_Bitmap-Custom-Atlas.shader" />
+    <None Include="Assets\Assets - grapics\TextMesh Pro\Shaders\TMP_SDF.shader" />
+    <None Include="Assets\Assets - grapics\TextMesh Pro\Shaders\TMP_SDF-Mobile SSD.shader" />
+    <None Include="Assets\Assets - grapics\TextMesh Pro\Resources\LineBreaking Leading Characters.txt" />
     <None Include="Assets\Assets - grapics\BrokenVector\LowPolyShaders\Shaders\LowPolyUnlitShader.shader" />
-    <None Include="Assets\TextMesh Pro\Shaders\TMPro_Properties.cginc" />
+    <None Include="Assets\Assets - grapics\TextMesh Pro\Shaders\TMPro_Properties.cginc" />
     <None Include="Assets\Assets - grapics\BrokenVector\LowPolyShaders\Shaders\LowPolyPBRShader.shader" />
-    <None Include="Assets\TextMesh Pro\Shaders\TMPro_Surface.cginc" />
-    <None Include="Assets\TextMesh Pro\Resources\LineBreaking Following Characters.txt" />
-    <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Masking.shader" />
-    <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF Overlay.shader" />
-    <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap-Mobile.shader" />
-    <None Include="Assets\TextMesh Pro\Fonts\LiberationSans - OFL.txt" />
-    <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile.shader" />
+    <None Include="Assets\Assets - grapics\TextMesh Pro\Shaders\TMPro_Surface.cginc" />
+    <None Include="Assets\Assets - grapics\TextMesh Pro\Resources\LineBreaking Following Characters.txt" />
+    <None Include="Assets\Assets - grapics\TextMesh Pro\Shaders\TMP_SDF-Mobile Masking.shader" />
+    <None Include="Assets\Assets - grapics\TextMesh Pro\Shaders\TMP_SDF Overlay.shader" />
+    <None Include="Assets\Assets - grapics\TextMesh Pro\Shaders\TMP_Bitmap-Mobile.shader" />
+    <None Include="Assets\Assets - grapics\TextMesh Pro\Fonts\LiberationSans - OFL.txt" />
+    <None Include="Assets\Assets - grapics\TextMesh Pro\Shaders\TMP_SDF-Mobile.shader" />
     <None Include="Assets\Assets - grapics\BrokenVector\LowPolyBrickHouses\Shaders\FoliageShader.shader" />
-    <None Include="Assets\TextMesh Pro\Shaders\TMP_Sprite.shader" />
+    <None Include="Assets\Assets - grapics\TextMesh Pro\Shaders\TMP_Sprite.shader" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
@@ -445,6 +449,26 @@
     </Reference>
     <Reference Include="Unity.VisualScripting.Antlr3.Runtime">
       <HintPath>Library\PackageCache\com.unity.visualscripting@1.9.1\Runtime\VisualScripting.Flow\Dependencies\NCalc\Unity.VisualScripting.Antlr3.Runtime.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Google.Protobuf">
+      <HintPath>Library\PackageCache\com.unity.barracuda@3.0.0\Barracuda\Runtime\Plugins\ProtoBuffer\Google.Protobuf.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Interactive.Async">
+      <HintPath>Library\PackageCache\com.unity.ml-agents@2.0.1\Plugins\ProtoBuffer\System.Interactive.Async.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.IO.Abstractions.TestingHelpers">
+      <HintPath>Library\PackageCache\com.unity.ml-agents@2.0.1\Plugins\System.IO.Abstractions.TestingHelpers.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.IO.Abstractions">
+      <HintPath>Library\PackageCache\com.unity.ml-agents@2.0.1\Plugins\System.IO.Abstractions.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Grpc.Core">
+      <HintPath>Library\PackageCache\com.unity.ml-agents@2.0.1\Plugins\ProtoBuffer\Grpc.Core.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="netstandard">
@@ -951,6 +975,22 @@
       <HintPath>Library\ScriptAssemblies\Unity.PlasticSCM.Editor.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="Unity.Burst">
+      <HintPath>Library\ScriptAssemblies\Unity.Burst.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Unity.Burst.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.Burst.Editor.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Unity.Barracuda.ONNX">
+      <HintPath>Library\ScriptAssemblies\Unity.Barracuda.ONNX.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Unity.Barracuda.MacBLAS">
+      <HintPath>Library\ScriptAssemblies\Unity.Barracuda.MacBLAS.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.Timeline.Editor.dll</HintPath>
       <Private>False</Private>
@@ -979,8 +1019,16 @@
       <HintPath>Library\ScriptAssemblies\Unity.Rider.Editor.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="Unity.Barracuda">
+      <HintPath>Library\ScriptAssemblies\Unity.Barracuda.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="UnityEngine.UI">
       <HintPath>Library\ScriptAssemblies\UnityEngine.UI.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Unity.Barracuda.BurstBLAS">
+      <HintPath>Library\ScriptAssemblies\Unity.Barracuda.BurstBLAS.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Unity.VisualScripting.Flow">
@@ -995,6 +1043,10 @@
       <HintPath>Library\ScriptAssemblies\Unity.Mathematics.Editor.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="Unity.ML-Agents.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.ML-Agents.Editor.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="Unity.Timeline">
       <HintPath>Library\ScriptAssemblies\Unity.Timeline.dll</HintPath>
       <Private>False</Private>
@@ -1005,6 +1057,10 @@
     </Reference>
     <Reference Include="Unity.Splines.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.Splines.Editor.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Unity.Barracuda.iOSBLAS">
+      <HintPath>Library\ScriptAssemblies\Unity.Barracuda.iOSBLAS.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Unity.VisualScripting.SettingsProvider.Editor">
@@ -1027,6 +1083,14 @@
       <HintPath>Library\ScriptAssemblies\Unity.AI.Navigation.Updater.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="Unity.ML-Agents">
+      <HintPath>Library\ScriptAssemblies\Unity.ML-Agents.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Unity.ML-Agents.CommunicatorObjects">
+      <HintPath>Library\ScriptAssemblies\Unity.ML-Agents.CommunicatorObjects.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="Unity.VisualScripting.State.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.VisualScripting.State.Editor.dll</HintPath>
       <Private>False</Private>
@@ -1045,6 +1109,10 @@
     </Reference>
     <Reference Include="Unity.TextMeshPro.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.TextMeshPro.Editor.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Unity.Barracuda.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.Barracuda.Editor.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Unity.AI.Navigation.Editor">

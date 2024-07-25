@@ -20,6 +20,7 @@ public class NPCFieldOfView : MonoBehaviour
 
     public LayerMask targetMask;
     public LayerMask obstructionMask;
+    public LayerMask notFullBarrier;
 
     public bool canSeePlayer;
     public bool playerIsHidden;
@@ -62,6 +63,7 @@ public class NPCFieldOfView : MonoBehaviour
 
     private void FieldOfViewCheck()
     {
+
         Collider[] rangeChecks = Physics.OverlapSphere(transform.position, radius, targetMask);
 
         if (rangeChecks.Length != 0)
@@ -75,11 +77,24 @@ public class NPCFieldOfView : MonoBehaviour
             if (Vector3.Angle(transform.forward, directionToTarget) < angle / 2)
             {
 
+                //our raycast would differ depending on whether player is crouching or not
+                //bool isPlayerSneakingBehindCover;
+
                 //returns false if the ray intersects with the collider (any obstruction) or if distance to target is 0
                 if (!Physics.Raycast(transform.position, directionToTarget, distnaceToTarget, obstructionMask) || distnaceToTarget < 2)
-                    canSeePlayer = true;
+                {
+                    //if it's a "not full barrier" and player is crouching, we can't see the player
+                    if (Physics.Raycast(transform.position, directionToTarget, distnaceToTarget, notFullBarrier) && FindObjectOfType<ThirdPersonMovement>().GetIsSnkeaing())
+                    {
+                        canSeePlayer = false;
+                    }
+                    else
+                        canSeePlayer = true;
+                }
                 else
+                {
                     canSeePlayer = false;
+                }
             }
             //if it's outside our sight and is not diorectly onto us
             else if (distnaceToTarget >= 2)
@@ -167,6 +182,12 @@ public class NPCFieldOfView : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        //for debugging
+        if(!FindObjectOfType<ThirdPersonMovement>().GetIsSnkeaing())
+            Debug.DrawLine(transform.position + new Vector3(0, 1f, 0),  FindObjectOfType<ThirdPersonMovement>().transform.position + new Vector3(0, 0.5f, 0), Color.green);
+        else
+        {
+            Debug.DrawLine(transform.position + new Vector3(0, 1f, 0), FindObjectOfType<ThirdPersonMovement>().transform.position, Color.green);
+        }
     }
 }

@@ -55,6 +55,7 @@ public class NPCMovement : MonoBehaviour
     {
 
         actualPosition = agent.transform.position;
+        agent.speed = speed;
 
         //update only when the NPC reaches a point
         if (actualPosition == agent.destination && currentlyWaitingTime == 0)
