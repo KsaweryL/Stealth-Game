@@ -84,7 +84,7 @@ public class NPCFieldOfView : MonoBehaviour
                 if (!Physics.Raycast(transform.position, directionToTarget, distnaceToTarget, obstructionMask) || distnaceToTarget < 2)
                 {
                     //if it's a "not full barrier" and player is crouching, we can't see the player
-                    if (Physics.Raycast(transform.position, directionToTarget, distnaceToTarget, notFullBarrier) && FindObjectOfType<ThirdPersonMovement>().GetIsSnkeaing())
+                    if (Physics.Raycast(transform.position, directionToTarget, distnaceToTarget, notFullBarrier) && FindObjectOfType<ThirdPersonMovement>().GetIsSneaking())
                     {
                         canSeePlayer = false;
                     }
@@ -183,7 +183,7 @@ public class NPCFieldOfView : MonoBehaviour
     void Update()
     {
         //for debugging
-        if(!FindObjectOfType<ThirdPersonMovement>().GetIsSnkeaing())
+        if(!FindObjectOfType<ThirdPersonMovement>().GetIsSneaking())
             Debug.DrawLine(transform.position + new Vector3(0, 1f, 0),  FindObjectOfType<ThirdPersonMovement>().transform.position + new Vector3(0, 0.5f, 0), Color.green);
         else
         {

@@ -46,7 +46,7 @@ public class ThirdPersonMovement : MonoBehaviour
     {
         return currentHealth;
     }
-    public bool GetIsSnkeaing()
+    public bool GetIsSneaking()
     {
         return isSneaking;
     }
@@ -59,10 +59,6 @@ public class ThirdPersonMovement : MonoBehaviour
         currentHealth -= damage;
         if (currentHealth < 0)
             currentHealth = 0;
-    }
-    public bool IsSneaking()
-    {
-        return isSneaking; 
     }
 
     void ApplyGravity()
