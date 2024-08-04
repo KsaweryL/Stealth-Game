@@ -742,15 +742,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7731654502637068155, guid: 82697145eb126d442b3474c42dfe7f21, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 3.16222
+      value: 7.899999
       objectReference: {fileID: 0}
     - target: {fileID: 7731654502637068155, guid: 82697145eb126d442b3474c42dfe7f21, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 8.749894
+      value: -0.60670996
       objectReference: {fileID: 0}
     - target: {fileID: 7731654502637068155, guid: 82697145eb126d442b3474c42dfe7f21, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -2.8357754
+      value: 0.24310684
       objectReference: {fileID: 0}
     - target: {fileID: 7731654502637068155, guid: 82697145eb126d442b3474c42dfe7f21, type: 3}
       propertyPath: m_LocalRotation.w
@@ -899,7 +899,11 @@ PrefabInstance:
     - target: {fileID: 7829694308976157361, guid: d01df7235e4892c49856e5019baf4d9d, type: 3}
       propertyPath: m_Model
       value: 
-      objectReference: {fileID: 5022602860645237092, guid: f1fd34c572c6ceb45a005a88d5073037, type: 3}
+      objectReference: {fileID: 5022602860645237092, guid: 1aaefa96c04808247bff2b0d3cb0ea70, type: 3}
+    - target: {fileID: 7829694308976157361, guid: d01df7235e4892c49856e5019baf4d9d, type: 3}
+      propertyPath: m_BehaviorType
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 7829694308976157361, guid: d01df7235e4892c49856e5019baf4d9d, type: 3}
       propertyPath: m_BrainParameters.VectorActionSpaceType
       value: 1

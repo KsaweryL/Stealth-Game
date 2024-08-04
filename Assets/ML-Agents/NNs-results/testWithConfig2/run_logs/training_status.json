@@ -1,0 +1,29 @@
+{
+    "MoveToDiamond": {
+        "checkpoints": [
+            {
+                "steps": 70892,
+                "file_path": "results\\testWithConfig2\\MoveToDiamond\\MoveToDiamond-70892.onnx",
+                "reward": 1.0,
+                "creation_time": 1722798860.479947,
+                "auxillary_file_paths": [
+                    "results\\testWithConfig2\\MoveToDiamond\\MoveToDiamond-70892.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 70892,
+            "file_path": "results\\testWithConfig2\\MoveToDiamond.onnx",
+            "reward": 1.0,
+            "creation_time": 1722798860.479947,
+            "auxillary_file_paths": [
+                "results\\testWithConfig2\\MoveToDiamond\\MoveToDiamond-70892.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "0.30.0",
+        "torch_version": "2.2.2+cu121"
+    }
+}
