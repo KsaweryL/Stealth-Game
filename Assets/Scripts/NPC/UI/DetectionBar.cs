@@ -27,9 +27,6 @@ public class DetectionBar : MonoBehaviour
         //it needs to know which NPC we mean here
         if (NPCFOV)
         {
-            currentlyDetectedTime = NPCFOV.GetCurrentlyDetectedTimeNPCFOV();
-            slider.maxValue = (int)Math.Round(NPCFOV.GetTimeToDetectNPCFOV() / 0.02);
-
             fill.color = gradient.Evaluate(0f);
         }
     }
@@ -39,6 +36,8 @@ public class DetectionBar : MonoBehaviour
     {
         if (NPCFOV)
         {
+            slider.maxValue = (int)Math.Round(NPCFOV.GetTimeToDetectNPCFOV() / 0.02);
+
             //Needs to be done manually
             //NPCFOV = GetComponentInParent<NPCFieldOfView>();
             currentlyDetectedTime = NPCFOV.GetCurrentlyDetectedTimeNPCFOV();

@@ -31,6 +31,10 @@ public class NPCMovement : MonoBehaviour
     public NPCFieldOfView NPCFOV;
     public ChasingPlayer chasingPlayer;
 
+    public GameObject[] GetPathPoints()
+    {
+        return PathPoints;
+    }
     public void StopChasingPlayer()
     {
         chasePlayer = false;
@@ -105,6 +109,8 @@ public class NPCMovement : MonoBehaviour
         pointNr = 0;
 
         currentlyWaitingTime = 0;
+        numberOfPoints = PathPoints.Length;
+        player = FindObjectOfType<ThirdPersonMovement>().transform;
     }
 
     private void FixedUpdate()

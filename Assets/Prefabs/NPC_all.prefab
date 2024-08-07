@@ -1752,11 +1752,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ed465fa956d1b5489ef07fabdf17078, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PathPoints:
-  - {fileID: 1754688499428315440}
-  - {fileID: 6710266344108201965}
-  - {fileID: 8174141325684734086}
-  numberOfPoints: 3
+  PathPoints: []
+  numberOfPoints: 0
 --- !u!195 &1063270400605753325
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -1796,7 +1793,7 @@ MonoBehaviour:
   - {fileID: 1754688499428315440}
   - {fileID: 6710266344108201965}
   - {fileID: 8174141325684734086}
-  numberOfPoints: 3
+  numberOfPoints: 0
   speed: 3
   whatIsPlayer:
     serializedVersion: 2
@@ -1825,9 +1822,11 @@ MonoBehaviour:
   targetMask:
     serializedVersion: 2
     m_Bits: 256
-  obstructionMask:
-    serializedVersion: 2
+  obstructionMasks:
+  - serializedVersion: 2
     m_Bits: 512
+  - serializedVersion: 2
+    m_Bits: 128
   notFullBarrier:
     serializedVersion: 2
     m_Bits: 8192

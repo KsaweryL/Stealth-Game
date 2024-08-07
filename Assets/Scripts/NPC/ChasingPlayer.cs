@@ -167,6 +167,7 @@ public class ChasingPlayer : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         npcMovement = GetComponent<NPCMovement>();
         npcFOV = GetComponent<NPCFieldOfView>();
+        player = FindObjectOfType<ThirdPersonMovement>().transform;
         playerInfo = player.GetComponent<ThirdPersonMovement>();
 
         canSeePlayer = false;

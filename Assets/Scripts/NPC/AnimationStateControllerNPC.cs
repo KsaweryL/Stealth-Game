@@ -13,6 +13,7 @@ public class AnimationStateControllerNPC : MonoBehaviour
 
     private NavMeshAgent NPC;
     public GameObject[] PathPoints;
+    private NPCMovement NPCmovement;
 
     public int numberOfPoints;
 
@@ -21,6 +22,10 @@ public class AnimationStateControllerNPC : MonoBehaviour
     {
         NPC = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
+        NPCmovement = GetComponent<NPCMovement>();
+
+        PathPoints = NPCmovement.GetPathPoints();
+        numberOfPoints = PathPoints.Length;
     }
 
     // Update is called once per frame

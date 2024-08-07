@@ -54,6 +54,11 @@ public class ThirdPersonMovement : MonoBehaviour
     {
         return speed;
     }
+
+    public bool IsSprintEnabled()
+    {
+        return isSprintEnabled;
+    }
     public void TakeDamage(float damage)
     {
         currentHealth -= damage;

@@ -12,14 +12,18 @@ public class NPCFieldOfView : MonoBehaviour
 
     [Header("Detecting the player")]
     public float timeToDetect;
+    public float timeToDetectWhenRunning;
+    public float timeToDetectWhenCrouching;
+    public float timeToDetectWhenCrouchingRunning;
     int currentlyDetectedTimeReversed;
     public int currentlyDetectedTime;
+    private float currentlySetTimeToDetect;
 
     [Header("Other")]
     public GameObject playerRef;
 
     public LayerMask targetMask;
-    public LayerMask obstructionMask;
+    public LayerMask[] obstructionMasks;
     public LayerMask notFullBarrier;
 
     public bool canSeePlayer;
@@ -49,7 +53,7 @@ public class NPCFieldOfView : MonoBehaviour
 
     public float GetTimeToDetectNPCFOV()
     {
-        return timeToDetect;
+        return currentlySetTimeToDetect;
     }
     public int GetCurrentlyDetectedTimeNPCFOV()
     {
@@ -78,22 +82,25 @@ public class NPCFieldOfView : MonoBehaviour
             {
 
                 //our raycast would differ depending on whether player is crouching or not
-                //bool isPlayerSneakingBehindCover;
 
-                //returns false if the ray intersects with the collider (any obstruction) or if distance to target is 0
-                if (!Physics.Raycast(transform.position, directionToTarget, distnaceToTarget, obstructionMask) || distnaceToTarget < 2)
+                //for every obstructionMask
+                for (int obstructionMask = 0; obstructionMask < obstructionMasks.Length; obstructionMask++)
                 {
-                    //if it's a "not full barrier" and player is crouching, we can't see the player
-                    if (Physics.Raycast(transform.position, directionToTarget, distnaceToTarget, notFullBarrier) && FindObjectOfType<ThirdPersonMovement>().GetIsSneaking())
+                    //returns false if the ray intersects with the collider (any obstruction) or if distance to target is 0
+                    if (!Physics.Raycast(transform.position, directionToTarget, distnaceToTarget, obstructionMasks[obstructionMask]) || distnaceToTarget < 2)
+                    {
+                        //if it's a "not full barrier" and player is crouching, we can't see the player
+                        if (Physics.Raycast(transform.position, directionToTarget, distnaceToTarget, notFullBarrier) && FindObjectOfType<ThirdPersonMovement>().GetIsSneaking())
+                        {
+                            canSeePlayer = false;
+                        }
+                        else
+                            canSeePlayer = true;
+                    }
+                    else
                     {
                         canSeePlayer = false;
                     }
-                    else
-                        canSeePlayer = true;
-                }
-                else
-                {
-                    canSeePlayer = false;
                 }
             }
             //if it's outside our sight and is not diorectly onto us
@@ -108,6 +115,21 @@ public class NPCFieldOfView : MonoBehaviour
 
     public void UpdateDetectedTime()
     {
+        //change the time to detect whenever player is not seen
+        if (!canSeePlayer)
+        {
+            //if player is sprinting and is sneaking
+            if (FindObjectOfType<ThirdPersonMovement>().IsSprintEnabled() && FindObjectOfType<ThirdPersonMovement>().GetIsSneaking())
+                currentlySetTimeToDetect = timeToDetectWhenCrouchingRunning;
+            //when player is only sneaking
+            else if (!FindObjectOfType<ThirdPersonMovement>().IsSprintEnabled() && FindObjectOfType<ThirdPersonMovement>().GetIsSneaking())
+                currentlySetTimeToDetect = timeToDetectWhenCrouching;
+            else if (FindObjectOfType<ThirdPersonMovement>().IsSprintEnabled() && !FindObjectOfType<ThirdPersonMovement>().GetIsSneaking())
+                currentlySetTimeToDetect = timeToDetectWhenRunning;
+            else if(!FindObjectOfType<ThirdPersonMovement>().IsSprintEnabled() && !FindObjectOfType<ThirdPersonMovement>().GetIsSneaking())
+                currentlySetTimeToDetect = timeToDetect;
+        }
+
         //update the detection variables only when player is being seen
         if (canSeePlayer)
         {
@@ -123,20 +145,20 @@ public class NPCFieldOfView : MonoBehaviour
         }
         else if (!chasePlayer)
         {
-                currentlyDetectedTimeReversed = (int)Math.Round(timeToDetect / 0.02);
+                currentlyDetectedTimeReversed = (int)Math.Round(currentlySetTimeToDetect / 0.02);
                 currentlyDetectedTime = 0;
 
         }
         else if (chasePlayer)
         {
-            currentlyDetectedTime = (int)Math.Round(timeToDetect / 0.02);
+            currentlyDetectedTime = (int)Math.Round(currentlySetTimeToDetect / 0.02);
             currentlyDetectedTimeReversed = 0;
 
         }
         else if (currentlyDetectedTime > 0)
         {
             currentlyDetectedTime--;
-            if (currentlyDetectedTimeReversed != (int)Math.Round(timeToDetect / 0.02)) 
+            if (currentlyDetectedTimeReversed != (int)Math.Round(currentlySetTimeToDetect / 0.02)) 
                 currentlyDetectedTimeReversed++;
         }
     }
@@ -165,11 +187,38 @@ public class NPCFieldOfView : MonoBehaviour
         }
     }
 
+    private void InitiateTimeToDetect()
+    {
+        //if these values are not manually set, give the normal ones
+        if(timeToDetect <= 0)
+        {
+            timeToDetect = 0.2f;
+        }
+
+        if (timeToDetectWhenRunning <= 0)
+        {
+            timeToDetectWhenRunning = timeToDetect/2;
+        }
+
+        if (timeToDetectWhenCrouching <= 0)
+        {
+            timeToDetectWhenCrouching = timeToDetect * 2;
+        }
+
+        if (timeToDetectWhenCrouchingRunning <= 0)
+        {
+            timeToDetectWhenCrouchingRunning = timeToDetect * 1.5f;
+        }
+
+        currentlySetTimeToDetect = timeToDetect;
+    }
+
     // Start is called before the first frame update
     void Start()
     {
+        InitiateTimeToDetect();
         playerRef = GameObject.FindGameObjectWithTag("Player");
-        currentlyDetectedTimeReversed = (int)Math.Round(timeToDetect / 0.02);
+        currentlyDetectedTimeReversed = (int)Math.Round(currentlySetTimeToDetect / 0.02);
         currentlyDetectedTime = 0;
         chasePlayer = false;
 
