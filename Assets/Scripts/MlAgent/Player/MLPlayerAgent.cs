@@ -4,7 +4,6 @@ using UnityEngine;
 using Unity.MLAgents;
 using Unity.MLAgents.Actuators;
 using Unity.MLAgents.Sensors;
-using UnityEngine.Events;
 
 public class MLPlayerAgent : Agent
 {
@@ -23,19 +22,24 @@ public class MLPlayerAgent : Agent
     float moveSpeed;
     float usedTime;
 
+
     void Start()
     {
         //needs to be dynamic
         diamondsPositions = new List<Vector3>();
 
         //for the player
-        startingPlayerPosition = new Vector3 (-0.11f, -2f, -42.56f);
+        //new Vector3 (-0.11f, -2f, -42.56f)
+        startingPlayerPosition = transform.localPosition;
+        Debug.Log("Starting position: " + startingPlayerPosition);
+
         collectedDiamonds = 0;
         controller = GetComponent<CharacterController>();
         usedTime = Time.deltaTime;
 
-        allDiamonds = FindObjectsOfType<Diamond>();
-        NPCmovement = FindObjectsOfType<NPCMovement>();
+        //toDO - figyure this one out from the parent
+        allDiamonds = GetComponentInParent<Game>().GetDiamonds();
+        NPCmovement = GetComponentInParent<Game>().GetNPCmovements();
 
         //important! I have an absolute posiotion here, not a local one as in the inspecotr
         for (int diamond = 0; diamond < allDiamonds.Length; diamond++)
@@ -49,20 +53,26 @@ public class MLPlayerAgent : Agent
         //we need to disbale controller to avoid collisions
         controller.enabled = false;
         transform.localPosition = startingPlayerPosition;
+        Debug.Log("New position: " + transform.localPosition);
         controller.enabled = true;
 
         //resetting properties
         GetComponent<ThirdPersonMovement>().ResetCurrentHealth();
         GetComponent<PlayerInventory>().ResetProperties();
 
-        for (int npc = 0; npc < NPCmovement.Length; npc++)
-            NPCmovement[npc].ResetPropertiesCall();
+        if (NPCmovement.Length > 0 && allDiamonds.Length > 0)
+        {
+            for (int npc = 0; npc < NPCmovement.Length; npc++)
+                NPCmovement[npc].ResetPropertiesCall();
 
-        for (int diamond = 0; diamond < allDiamonds.Length; diamond++)
-            allDiamonds[diamond].ResetProperties();
+            for (int diamond = 0; diamond < allDiamonds.Length; diamond++)
+                allDiamonds[diamond].ResetProperties();
+        }
+        else
+            EndEpisode();
 
 
-
+       
 
     }
 
@@ -126,8 +136,9 @@ public class MLPlayerAgent : Agent
     public void PlayerHasLost()
     {
         SetReward(-100f);
-        EndEpisode() ;
         Debug.Log(GetCumulativeReward());
+        EndEpisode() ;
+        
     }
 
     public void PlayerWasDetected()

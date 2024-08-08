@@ -28,13 +28,13 @@ public class GameOver : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (FindObjectOfType<ThirdPersonMovement>().GetCurrentHealth() == 0)
+        if (GetComponentInChildren<ThirdPersonMovement>().GetCurrentHealth() == 0)
         {
             gameOver = true;
             playerWon = false;
             //when player looses, inform the mlagent component
-            if(FindObjectOfType<MLPlayerAgent>())
-                FindObjectOfType<MLPlayerAgent>().PlayerHasLost();
+            if(GetComponentInChildren<MLPlayerAgent>())
+                GetComponentInChildren<MLPlayerAgent>().PlayerHasLost();
         }
     }
 }

@@ -60,11 +60,13 @@
     <Analyzer Include="C:\Program Files\Unity\Hub\Editor\2022.3.21f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.Properties.SourceGenerator.dll" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\gameRelated\GameOver.cs" />
     <Compile Include="Assets\Assets - grapics\BrokenVector\LowPolyBrickHouses\Scripts\ModelCustomizer.cs" />
     <Compile Include="Assets\Scripts\Menu\Main menu\MainMenu.cs" />
     <Compile Include="Assets\Scripts\Player\TakeDamageOnObjectsPlayer.cs" />
     <Compile Include="Assets\Scripts\MlAgent\Wall.cs" />
     <Compile Include="Assets\Scripts\MlAgent\Player\MLPlayerAgent.cs" />
+    <Compile Include="Assets\Scripts\Player\HidingSpot\DetectingPlayerInHidingSpot.cs" />
     <Compile Include="Assets\Scripts\Player\ThirdPersonMovement.cs" />
     <Compile Include="Assets\MainCamera.cs" />
     <Compile Include="Assets\Scripts\NPC\UI\DetectionBar.cs" />
@@ -75,9 +77,8 @@
     <Compile Include="Assets\Interfaces\NPCInterface.cs" />
     <Compile Include="Assets\Scripts\NPC\FieldOfViewEditor.cs" />
     <Compile Include="Assets\Scripts\Player\AnimationStateController.cs" />
-    <Compile Include="Assets\Scripts\HidingSpot\DetectingPlayerInHidingSpot.cs" />
     <Compile Include="Assets\Scripts\Player\UI\HealthBar.cs" />
-    <Compile Include="Assets\Scripts\Player\UI\GameOver.cs" />
+    <Compile Include="Assets\Scripts\gameRelated\Game.cs" />
     <Compile Include="Assets\Scripts\Player\UI\InventoryUI.cs" />
     <Compile Include="Assets\Scripts\MlAgent\Goal.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerInventory.cs" />

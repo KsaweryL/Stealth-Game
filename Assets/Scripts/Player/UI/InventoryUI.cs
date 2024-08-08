@@ -25,8 +25,8 @@ public class InventoryUI : MonoBehaviour
         diamondText.text = playerInventory.NumberOfDiamonds.ToString() + "/" + numberOfAllDiamonds;
         if (playerInventory.NumberOfDiamonds == numberOfAllDiamonds)
         {
-            FindObjectOfType<GameOver>().UpdateGameOver(true);
-            FindObjectOfType<GameOver>().UpdatePlayerWon(true);
+            //FindObjectOfType<GameOver>().UpdateGameOver(true);
+            //FindObjectOfType<GameOver>().UpdatePlayerWon(true);
         }
 
     }
