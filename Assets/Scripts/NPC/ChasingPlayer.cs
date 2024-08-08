@@ -41,6 +41,11 @@ public class ChasingPlayer : MonoBehaviour
     [Header("chase")]
     public float chaseSpeedMultiplier;
 
+    public void ResetCurrentlyWaitingTimeToWaitAfterLosing()
+    {
+        currentlyWaitingTimeToWaitAfterLosing = 2;
+    }
+
     public void UpdateCanSeePlayerStatusChasingPlayer(bool canSeePlayerVariable)
     {
         canSeePlayer = canSeePlayerVariable;
@@ -191,6 +196,8 @@ public class ChasingPlayer : MonoBehaviour
 
         npcMovement.UpdateChasePlayerStatusNPCMovement(chasePlayer);
         npcFOV.UpdateChasePlayerStatusNPCFOV(chasePlayer);
+
+        
     }
 
     // Update is called once per frame

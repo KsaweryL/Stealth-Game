@@ -42,6 +42,10 @@ public class ThirdPersonMovement : MonoBehaviour
     public Vector3 velocity;
     public Vector3 moveDir;
 
+    public void ResetCurrentHealth()
+    {
+        currentHealth = maxHealth;
+    }
     public float GetCurrentHealth()
     {
         return currentHealth;
@@ -55,15 +59,26 @@ public class ThirdPersonMovement : MonoBehaviour
         return speed;
     }
 
+    public Vector3 GetMoveDir()
+    {
+        return moveDir;
+    }
+
     public bool IsSprintEnabled()
     {
         return isSprintEnabled;
     }
     public void TakeDamage(float damage)
     {
+        //inform mlagent about the current health
         currentHealth -= damage;
-        if (currentHealth < 0)
+        if (currentHealth <= 0)
+        {
             currentHealth = 0;
+
+        }
+        else
+            GetComponent<MLPlayerAgent>().DamageWasTaken();
     }
 
     void ApplyGravity()
@@ -176,6 +191,7 @@ public class ThirdPersonMovement : MonoBehaviour
         }
 
         moveDir.y = ySpeed;
+
     }
 
     void SetStandardSpeedValues()

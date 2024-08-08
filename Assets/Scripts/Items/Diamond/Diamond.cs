@@ -4,7 +4,10 @@ using UnityEngine;
 
 public class Diamond : MonoBehaviour
 {
-
+    public void ResetProperties()
+    {
+        gameObject.SetActive(true);
+    }
     private void OnTriggerEnter(Collider other)
     {
         PlayerInventory playerInventory = other.GetComponent<PlayerInventory>();
@@ -13,6 +16,7 @@ public class Diamond : MonoBehaviour
         //aka only player has it
         if(playerInventory != null)
         {
+            Debug.Log("diamond collected");
             playerInventory.DiamondCollected();
             gameObject.SetActive(false);
         }

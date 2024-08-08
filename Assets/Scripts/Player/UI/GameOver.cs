@@ -32,6 +32,9 @@ public class GameOver : MonoBehaviour
         {
             gameOver = true;
             playerWon = false;
+            //when player looses, inform the mlagent component
+            if(FindObjectOfType<MLPlayerAgent>())
+                FindObjectOfType<MLPlayerAgent>().PlayerHasLost();
         }
     }
 }

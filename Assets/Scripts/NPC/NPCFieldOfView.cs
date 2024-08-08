@@ -40,6 +40,8 @@ public class NPCFieldOfView : MonoBehaviour
     public void UpdateChasePlayerStatusNPCFOV(bool chasePlayerVariable)
     {
         chasePlayer = chasePlayerVariable;
+        if(chasePlayer == false)
+            canSeePlayer = false;
     }
     public void UpdateHiddenStatusNPCFOV()
     {
@@ -162,13 +164,21 @@ public class NPCFieldOfView : MonoBehaviour
                 currentlyDetectedTimeReversed++;
         }
     }
+
+    private void UpdateMlAgent()
+    {
+        //if the player is both seen and chasen after, give the proper penalty
+        if(canSeePlayer && chasePlayer)
+            if (FindObjectOfType<MLPlayerAgent>())
+                FindObjectOfType<MLPlayerAgent>().PlayerWasDetected();
+    }
     private void UpdatePlayerStatus()
     {
         //update the status when player is detected
         UpdateDetectedTime();
         chasingPlayer.UpdateCanSeePlayerStatusChasingPlayer(canSeePlayer);
         UpdateHiddenStatusNPCFOV();
-
+        UpdateMlAgent();
 
     }
 

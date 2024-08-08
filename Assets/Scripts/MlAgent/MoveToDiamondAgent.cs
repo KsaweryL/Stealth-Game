@@ -25,6 +25,8 @@ public class MoveToDiamondAgent : Agent
     {
         transform.localPosition = new Vector3(Random.Range(-1.36f, 10.25f), 0, Random.Range(-4f, 1.5f));
         targetTransform.localPosition = new Vector3(Random.Range(2.74f, 11.2f), 0, Random.Range(-4f, 1.5f));
+
+        //this one executes the base method - since nothign is in teh base one, it is not needed
         base.OnEpisodeBegin();
     }
     public override void CollectObservations(VectorSensor sensor)

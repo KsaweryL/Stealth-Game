@@ -10,6 +10,10 @@ public class PlayerInventory : MonoBehaviour
 
     public UnityEvent<PlayerInventory> OnDiamondCollected;
 
+    public void ResetProperties()
+    {
+        NumberOfDiamonds = 0;
+    }
     public void DiamondCollected()
     {
         NumberOfDiamonds++;
