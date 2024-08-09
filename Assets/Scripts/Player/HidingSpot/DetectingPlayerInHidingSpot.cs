@@ -43,7 +43,7 @@ public class DetectingPlayerInHidingSpot : MonoBehaviour
 
     void UpdatePlayerHidingState()
     {
-        isSneaking = FindObjectOfType<ThirdPersonMovement>().GetIsSneaking();
+        isSneaking = GetComponent<ThirdPersonMovement>().GetIsSneaking();
 
         if (playerIsTouchingHidingSpot && isSneaking)
         {

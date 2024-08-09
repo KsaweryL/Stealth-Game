@@ -139,7 +139,7 @@ public class ThirdPersonMovement : MonoBehaviour
  
         //jumping
         //jump only when one is not sneaking
-        if (jump && !isSneaking)
+        if (jump && !isSneaking && controller.isGrounded)
         {
 
             ySpeed = jumpSpeed;

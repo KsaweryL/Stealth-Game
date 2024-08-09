@@ -21,7 +21,7 @@ public class AnimationStateController : MonoBehaviour
 
     public void UpdateMovement(float horizontal, float vertical, bool jump, bool sprint, bool sneakingButton)
     {
-        Debug.Log("Animation");
+        //Debug.Log("Animation");
 
         isMovingForward = animator.GetBool("isMovingForward");
         isSneaking = animator.GetBool("isSneaking");

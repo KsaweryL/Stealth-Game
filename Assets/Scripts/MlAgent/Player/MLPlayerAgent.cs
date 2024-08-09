@@ -40,7 +40,7 @@ public class MLPlayerAgent : Agent
         //for the player
         //new Vector3 (-0.11f, -2f, -42.56f)
         startingPlayerPosition = transform.localPosition;
-        Debug.Log("Starting position: " + startingPlayerPosition);
+        //Debug.Log("Starting position: " + startingPlayerPosition);
 
         collectedDiamonds = 0;
         controller = GetComponent<CharacterController>();
@@ -64,31 +64,34 @@ public class MLPlayerAgent : Agent
 
     public override void OnEpisodeBegin()
     {
-        Debug.Log("New Episode");
+        //Debug.Log("New Episode");
         //we need to disbale controller to avoid collisions
         controller.enabled = false;
         transform.localPosition = startingPlayerPosition;
-        Debug.Log("New position: " + transform.localPosition);
+        //Debug.Log("New position: " + transform.localPosition);
         controller.enabled = true;
 
         //resetting properties
         GetComponent<ThirdPersonMovement>().ResetCurrentHealth();
         GetComponent<PlayerInventory>().ResetProperties();
 
-        if (NPCmovement.Length > 0 && allDiamonds.Length > 0)
-        {
-            for (int npc = 0; npc < NPCmovement.Length; npc++)
-                NPCmovement[npc].ResetPropertiesCall();
+        allDiamonds = GetComponentInParent<Game>().GetDiamonds();
+        NPCmovement = GetComponentInParent<Game>().GetNPCmovements();
 
-            for (int diamond = 0; diamond < allDiamonds.Length; diamond++)
-                allDiamonds[diamond].ResetProperties();
-        }
-        else
-            EndEpisode();
+        //important! I have an absolute posiotion here (with respect to the environment), not a local one (with respect to the Diamonds object) as in the inspecotr
+        for (int diamond = 0; diamond < allDiamonds.Length; diamond++)
+            diamondsPositions.Add(allDiamonds[diamond].transform.localPosition);
+
+        for (int npc = 0; npc < NPCmovement.Length; npc++)
+            NPCPositions.Add(NPCmovement[npc].transform.localPosition);
 
         
+        for (int npc = 0; npc < NPCmovement.Length; npc++)
+            NPCmovement[npc].ResetPropertiesCall();
 
-       
+         for (int diamond = 0; diamond < allDiamonds.Length; diamond++)
+            allDiamonds[diamond].ResetProperties();
+        
 
     }
 
@@ -115,7 +118,7 @@ public class MLPlayerAgent : Agent
         bool sprint = actions.ContinuousActions[2] >= 0.0f && actions.ContinuousActions[2] < 0.5f ? true : false;
 
         
-        Debug.Log("Discrete action: " + actions.ContinuousActions[2]);
+        //Debug.Log("Discrete action: " + actions.ContinuousActions[2]);
 
         //simply apply movement from ThirdPersonMovement
         GetComponent<ThirdPersonMovement>().ApplyMovement(moveX, moveZ, jump, sprint, sneak, false);
@@ -123,7 +126,10 @@ public class MLPlayerAgent : Agent
         //if the reward wasn't collected during the time of the step, reset the episode
         stepsAfterReward++;
         if (stepsAfterReward == maxStepsAfterReward)
+        {
+            SetReward(-2f);
             EndEpisode();
+        }
         
 
     }
@@ -136,7 +142,7 @@ public class MLPlayerAgent : Agent
     {
 
         ActionSegment<float> continuousActions = actionsOut.ContinuousActions;
-        Debug.Log("Length: " + continuousActions.Length);
+        //Debug.Log("Length: " + continuousActions.Length);
         continuousActions[0] = Input.GetAxisRaw("Horizontal"); //x
         continuousActions[1] = Input.GetAxisRaw("Vertical"); //z
 
@@ -180,27 +186,27 @@ public class MLPlayerAgent : Agent
         }
 
         stepsAfterReward = 0;
-        Debug.Log(GetCumulativeReward());
+        //Debug.Log(GetCumulativeReward());
     }
 
     public void DamageWasTaken()
     {
         SetReward(-5f);
-        Debug.Log(GetCumulativeReward());
+        //Debug.Log(GetCumulativeReward());
     }
 
     public void PlayerHasLost()
     {
         SetReward(-100f);
-        Debug.Log(GetCumulativeReward());
+        //Debug.Log(GetCumulativeReward());
         EndEpisode() ;
         
     }
 
     public void PlayerWasDetected()
     {
-        SetReward(-2f);
-        Debug.Log(GetCumulativeReward());
+        SetReward(-3f);
+        //Debug.Log(GetCumulativeReward());
     }
 
     private void CheckYaxis()

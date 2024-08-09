@@ -134,7 +134,7 @@ public class NPCMovement : MonoBehaviour
 
         currentlyWaitingTime = 0;
         numberOfPoints = PathPoints.Length;
-        player = FindObjectOfType<ThirdPersonMovement>().transform;
+        player = GetComponentInParent<Game>().GetPlayer().transform;
     }
 
     private void FixedUpdate()

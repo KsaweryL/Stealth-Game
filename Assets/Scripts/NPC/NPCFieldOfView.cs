@@ -18,6 +18,7 @@ public class NPCFieldOfView : MonoBehaviour
     int currentlyDetectedTimeReversed;
     public int currentlyDetectedTime;
     private float currentlySetTimeToDetect;
+    public Transform player;
 
     [Header("Other")]
     public GameObject playerRef;
@@ -45,7 +46,7 @@ public class NPCFieldOfView : MonoBehaviour
     }
     public void UpdateHiddenStatusNPCFOV()
     {
-        playerIsHidden = FindObjectOfType<DetectingPlayerInHidingSpot>().IsPlayerHidden(); ;
+        playerIsHidden = player.GetComponent<DetectingPlayerInHidingSpot>().IsPlayerHidden(); ;
     }
 
     public int GetCurrentlyDetectedTimeReversedNPCFOV()
@@ -92,7 +93,7 @@ public class NPCFieldOfView : MonoBehaviour
                     if (!Physics.Raycast(transform.position, directionToTarget, distnaceToTarget, obstructionMasks[obstructionMask]) || distnaceToTarget < 2)
                     {
                         //if it's a "not full barrier" and player is crouching, we can't see the player
-                        if (Physics.Raycast(transform.position, directionToTarget, distnaceToTarget, notFullBarrier) && FindObjectOfType<ThirdPersonMovement>().GetIsSneaking())
+                        if (Physics.Raycast(transform.position, directionToTarget, distnaceToTarget, notFullBarrier) && player.GetComponent<ThirdPersonMovement>().GetIsSneaking())
                         {
                             canSeePlayer = false;
                         }
@@ -120,15 +121,17 @@ public class NPCFieldOfView : MonoBehaviour
         //change the time to detect whenever player is not seen
         if (!canSeePlayer)
         {
+            bool isSprintEnabledVariable = player.GetComponent<ThirdPersonMovement>().IsSprintEnabled();
+            bool isSneakingVariable = player.GetComponent<ThirdPersonMovement>().GetIsSneaking();
             //if player is sprinting and is sneaking
-            if (FindObjectOfType<ThirdPersonMovement>().IsSprintEnabled() && FindObjectOfType<ThirdPersonMovement>().GetIsSneaking())
+            if (isSprintEnabledVariable && isSneakingVariable)
                 currentlySetTimeToDetect = timeToDetectWhenCrouchingRunning;
             //when player is only sneaking
-            else if (!FindObjectOfType<ThirdPersonMovement>().IsSprintEnabled() && FindObjectOfType<ThirdPersonMovement>().GetIsSneaking())
+            else if (!isSprintEnabledVariable && isSneakingVariable)
                 currentlySetTimeToDetect = timeToDetectWhenCrouching;
-            else if (FindObjectOfType<ThirdPersonMovement>().IsSprintEnabled() && !FindObjectOfType<ThirdPersonMovement>().GetIsSneaking())
+            else if (isSprintEnabledVariable && !isSneakingVariable)
                 currentlySetTimeToDetect = timeToDetectWhenRunning;
-            else if(!FindObjectOfType<ThirdPersonMovement>().IsSprintEnabled() && !FindObjectOfType<ThirdPersonMovement>().GetIsSneaking())
+            else if(!isSprintEnabledVariable && !isSneakingVariable)
                 currentlySetTimeToDetect = timeToDetect;
         }
 
@@ -169,8 +172,8 @@ public class NPCFieldOfView : MonoBehaviour
     {
         //if the player is both seen and chasen after, give the proper penalty
         if(canSeePlayer && chasePlayer)
-            if (FindObjectOfType<MLPlayerAgent>())
-                FindObjectOfType<MLPlayerAgent>().PlayerWasDetected();
+            if (player.GetComponent<MLPlayerAgent>())
+                player.GetComponent<MLPlayerAgent>().PlayerWasDetected();
     }
     private void UpdatePlayerStatus()
     {
@@ -233,6 +236,7 @@ public class NPCFieldOfView : MonoBehaviour
         chasePlayer = false;
 
         //connection with other components
+        player = GetComponentInParent<Game>().GetPlayer().transform;
         chasingPlayer = GetComponent<ChasingPlayer>();
 
         StartCoroutine(FOVRoutine());
@@ -242,11 +246,11 @@ public class NPCFieldOfView : MonoBehaviour
     void Update()
     {
         //for debugging
-        //if(!FindObjectOfType<ThirdPersonMovement>().GetIsSneaking())
-        //    Debug.DrawLine(transform.position + new Vector3(0, 1f, 0),  FindObjectOfType<ThirdPersonMovement>().transform.position + new Vector3(0, 0.5f, 0), Color.green);
+        //if(!player.GetComponent<ThirdPersonMovement>().GetIsSneaking())
+        //    Debug.DrawLine(transform.position + new Vector3(0, 1f, 0),  player.GetComponent<ThirdPersonMovement>().transform.position + new Vector3(0, 0.5f, 0), Color.green);
         //else
         //{
-        //    Debug.DrawLine(transform.position + new Vector3(0, 1f, 0), FindObjectOfType<ThirdPersonMovement>().transform.position, Color.green);
+        //    Debug.DrawLine(transform.position + new Vector3(0, 1f, 0), player.GetComponent<ThirdPersonMovement>().transform.position, Color.green);
         //}
     }
 }

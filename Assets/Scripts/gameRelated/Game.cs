@@ -6,6 +6,7 @@ public class Game : MonoBehaviour
 {
     Diamond[] allDiamonds;
     public NPCMovement[] NPCmovement;
+    public ThirdPersonMovement player;
 
     // Start is called before the first frame update
     void Start()
@@ -19,6 +20,13 @@ public class Game : MonoBehaviour
         Diamond[] allDiamondsVariable = GetComponentsInChildren<Diamond>();
         return allDiamondsVariable;
     }
+
+    public ThirdPersonMovement GetPlayer()
+    {
+        player = GetComponentInChildren<ThirdPersonMovement>();
+        return player;
+    }
+
 
     public NPCMovement[] GetNPCmovements()
     {

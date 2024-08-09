@@ -6653,6 +6653,7 @@ MonoBehaviour:
   timeToDetectWhenCrouching: 0
   timeToDetectWhenCrouchingRunning: 0
   currentlyDetectedTime: 0
+  player: {fileID: 0}
   playerRef: {fileID: 0}
   targetMask:
     serializedVersion: 2
@@ -16505,6 +16506,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   NPCmovement: []
+  player: {fileID: 0}
 --- !u!114 &5590457020354820930
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26225,7 +26227,7 @@ MonoBehaviour:
   turnSmoothTime: 0.1
   turnSMoothVelocity: 0
   gravity: -9.81
-  gravityMultiplier: 6
+  gravityMultiplier: 2
   velocity: {x: 0, y: 0, z: 0}
   moveDir: {x: 0, y: 0, z: 0}
 --- !u!65 &1672508398881003800
@@ -41020,6 +41022,7 @@ MonoBehaviour:
   timeToDetectWhenCrouching: 0
   timeToDetectWhenCrouchingRunning: 0
   currentlyDetectedTime: 0
+  player: {fileID: 0}
   playerRef: {fileID: 0}
   targetMask:
     serializedVersion: 2
@@ -47183,6 +47186,7 @@ MonoBehaviour:
   timeToDetectWhenCrouching: 0
   timeToDetectWhenCrouchingRunning: 0
   currentlyDetectedTime: 0
+  player: {fileID: 0}
   playerRef: {fileID: 0}
   targetMask:
     serializedVersion: 2
@@ -70100,6 +70104,7 @@ MonoBehaviour:
   timeToDetectWhenCrouching: 0
   timeToDetectWhenCrouchingRunning: 0
   currentlyDetectedTime: 0
+  player: {fileID: 0}
   playerRef: {fileID: 0}
   targetMask:
     serializedVersion: 2
@@ -74736,6 +74741,7 @@ MonoBehaviour:
   timeToDetectWhenCrouching: 0
   timeToDetectWhenCrouchingRunning: 0
   currentlyDetectedTime: 0
+  player: {fileID: 0}
   playerRef: {fileID: 0}
   targetMask:
     serializedVersion: 2
@@ -79101,6 +79107,7 @@ MonoBehaviour:
   timeToDetectWhenCrouching: 0
   timeToDetectWhenCrouchingRunning: 0
   currentlyDetectedTime: 0
+  player: {fileID: 0}
   playerRef: {fileID: 0}
   targetMask:
     serializedVersion: 2

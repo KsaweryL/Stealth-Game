@@ -16,7 +16,7 @@ public class Diamond : MonoBehaviour
         //aka only player has it
         if(playerInventory != null)
         {
-            Debug.Log("diamond collected");
+            //Debug.Log("diamond collected");
             playerInventory.DiamondCollected();
             gameObject.SetActive(false);
         }

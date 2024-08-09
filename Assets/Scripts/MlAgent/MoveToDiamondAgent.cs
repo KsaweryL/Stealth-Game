@@ -81,7 +81,7 @@ public class MoveToDiamondAgent : Agent
             EndEpisode();       //1 run
         }
 
-        Debug.Log(GetCumulativeReward());
+        //Debug.Log(GetCumulativeReward());
     }
 
 }

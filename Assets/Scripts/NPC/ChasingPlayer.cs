@@ -129,7 +129,7 @@ public class ChasingPlayer : MonoBehaviour
             if (waitBeforePlayersCover == false && !playerIsHidden)
             {
                 previousDestination = agent.destination;
-                Debug.Log("Chasing the player");
+                //Debug.Log("Chasing the player");
                 agent.isStopped = false;
 
                 agent.destination = player.position;
@@ -162,8 +162,7 @@ public class ChasingPlayer : MonoBehaviour
 
     public void CheckIfPlayerHidden()
     {
-        playerIsHidden = FindObjectOfType<DetectingPlayerInHidingSpot>().IsPlayerHidden();
-
+        playerIsHidden = player.GetComponent<DetectingPlayerInHidingSpot>().IsPlayerHidden();
     }
 
     // Start is called before the first frame update
@@ -172,7 +171,7 @@ public class ChasingPlayer : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         npcMovement = GetComponent<NPCMovement>();
         npcFOV = GetComponent<NPCFieldOfView>();
-        player = FindObjectOfType<ThirdPersonMovement>().transform;
+        player = GetComponentInParent<Game>().GetPlayer().transform;
         playerInfo = player.GetComponent<ThirdPersonMovement>();
 
         canSeePlayer = false;
