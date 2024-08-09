@@ -43,7 +43,7 @@ public class ChasingPlayer : MonoBehaviour
 
     public void ResetCurrentlyWaitingTimeToWaitAfterLosing()
     {
-        currentlyWaitingTimeToWaitAfterLosing = 2;
+        currentlyWaitingTimeToWaitAfterLosing = 0;
     }
 
     public void UpdateCanSeePlayerStatusChasingPlayer(bool canSeePlayerVariable)

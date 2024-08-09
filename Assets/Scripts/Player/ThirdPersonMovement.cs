@@ -84,7 +84,7 @@ public class ThirdPersonMovement : MonoBehaviour
         if (currentHealth <= 0)
         {
             currentHealth = 0;
-
+            GetComponent<MLPlayerAgent>().PlayerHasLost();
         }
         else
             GetComponent<MLPlayerAgent>().DamageWasTaken();
@@ -139,6 +139,7 @@ public class ThirdPersonMovement : MonoBehaviour
  
         //jumping
         //jump only when one is not sneaking
+        //troDO - delete is grounded later for non mlagent
         if (jump && !isSneaking && controller.isGrounded)
         {
 

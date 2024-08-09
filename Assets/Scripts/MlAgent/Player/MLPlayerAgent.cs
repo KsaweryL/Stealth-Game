@@ -9,9 +9,15 @@ public class MLPlayerAgent : Agent
 {
     [SerializeField] private Transform diamondTransform;
 
+    [Header("Arrays")]
     //I need to invoke things to all NPCS
     public NPCMovement[] NPCmovement;
+    public SpawningLocation[] spawningLocations;
 
+    [Header("Layer")]
+    public int whatIsBarrierLayer;
+
+    [Header("Other")]
     [SerializeField] public CharacterController controller;
     public AnimationStateController animationStateController;
 
@@ -36,10 +42,13 @@ public class MLPlayerAgent : Agent
     {
         //needs to be dynamic
         diamondsPositions = new List<Vector3>();
+        NPCPositions = new List<Vector3>();
 
         //for the player
         //new Vector3 (-0.11f, -2f, -42.56f)
+
         startingPlayerPosition = transform.localPosition;
+
         //Debug.Log("Starting position: " + startingPlayerPosition);
 
         collectedDiamonds = 0;
@@ -49,16 +58,18 @@ public class MLPlayerAgent : Agent
         animationStateController = GetComponentInChildren<AnimationStateController>();
 
         allDiamonds = GetComponentInParent<Game>().GetDiamonds();
+
         NPCmovement = GetComponentInParent<Game>().GetNPCmovements();
 
         //important! I have an absolute posiotion here (with respect to the environment), not a local one (with respect to the Diamonds object) as in the inspecotr
         for (int diamond = 0; diamond < allDiamonds.Length; diamond++)
-            diamondsPositions.Add(allDiamonds[diamond].transform.localPosition);
+            diamondsPositions.Add(allDiamonds[diamond].transform.position);
 
         for (int npc = 0; npc < NPCmovement.Length; npc++)
-            NPCPositions.Add(NPCmovement[npc].transform.localPosition);
+            NPCPositions.Add(NPCmovement[npc].transform.position);
 
-       
+        //layer related
+        whatIsBarrierLayer = 9;
 
     }
 
@@ -67,9 +78,16 @@ public class MLPlayerAgent : Agent
         //Debug.Log("New Episode");
         //we need to disbale controller to avoid collisions
         controller.enabled = false;
-        transform.localPosition = startingPlayerPosition;
+
+        //randomize spawning point
+        spawningLocations = GetComponentInParent<Game>().GetSpawningLocations();
+        int choice = Random.Range(0, spawningLocations.Length);
+        transform.position = spawningLocations[choice].transform.position;
         //Debug.Log("New position: " + transform.localPosition);
+
         controller.enabled = true;
+
+        Debug.Log("New Episode");
 
         //resetting properties
         GetComponent<ThirdPersonMovement>().ResetCurrentHealth();
@@ -89,7 +107,9 @@ public class MLPlayerAgent : Agent
         for (int npc = 0; npc < NPCmovement.Length; npc++)
             NPCmovement[npc].ResetPropertiesCall();
 
-         for (int diamond = 0; diamond < allDiamonds.Length; diamond++)
+        GetComponentInParent<Game>().ResetDiamonds();
+        
+        for (int diamond = 0; diamond < allDiamonds.Length; diamond++)
             allDiamonds[diamond].ResetProperties();
         
 
@@ -219,12 +239,21 @@ public class MLPlayerAgent : Agent
         }
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        //colliding with "what is barrier"
+        if (other.gameObject.layer == whatIsBarrierLayer)
+        {
+            SetReward(-15f);
+            EndEpisode();
+        }
 
+    }
     private void Update()
     {
         CheckYaxis();
         usedTime = Time.deltaTime;
 
-        
+        //Debug.Log(GetCumulativeReward());
     }
 }
