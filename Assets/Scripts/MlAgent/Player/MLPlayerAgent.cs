@@ -12,15 +12,24 @@ public class MLPlayerAgent : Agent
     //I need to invoke things to all NPCS
     public NPCMovement[] NPCmovement;
 
-    public CharacterController controller;
+    [SerializeField] public CharacterController controller;
+    public AnimationStateController animationStateController;
 
     public Vector3 startingPlayerPosition;
     public List<Vector3> diamondsPositions;
+    public List<Vector3> NPCPositions;
 
     Diamond[] allDiamonds;
     int collectedDiamonds;
     float moveSpeed;
     float usedTime;
+
+    public Vector3 moveDir;
+    public float ySpeed;
+
+    [Header("Steps")]
+    private int stepsAfterReward = 0;
+    public int maxStepsAfterReward = 4000;
 
 
     void Start()
@@ -37,14 +46,20 @@ public class MLPlayerAgent : Agent
         controller = GetComponent<CharacterController>();
         usedTime = Time.deltaTime;
 
-        //toDO - figyure this one out from the parent
+        animationStateController = GetComponentInChildren<AnimationStateController>();
+
         allDiamonds = GetComponentInParent<Game>().GetDiamonds();
         NPCmovement = GetComponentInParent<Game>().GetNPCmovements();
 
-        //important! I have an absolute posiotion here, not a local one as in the inspecotr
+        //important! I have an absolute posiotion here (with respect to the environment), not a local one (with respect to the Diamonds object) as in the inspecotr
         for (int diamond = 0; diamond < allDiamonds.Length; diamond++)
             diamondsPositions.Add(allDiamonds[diamond].transform.localPosition);
-        
+
+        for (int npc = 0; npc < NPCmovement.Length; npc++)
+            NPCPositions.Add(NPCmovement[npc].transform.localPosition);
+
+       
+
     }
 
     public override void OnEpisodeBegin()
@@ -71,6 +86,7 @@ public class MLPlayerAgent : Agent
         else
             EndEpisode();
 
+        
 
        
 
@@ -83,30 +99,69 @@ public class MLPlayerAgent : Agent
         for (int diamond = 0; diamond < allDiamonds.Length; diamond++)
             sensor.AddObservation(diamondsPositions[diamond]);
 
+        //adding position of NPCS
+        for (int npc = 0; npc < NPCmovement.Length; npc++)
+            sensor.AddObservation(NPCPositions[npc]);
+
     }
 
     public override void OnActionReceived(ActionBuffers actions)
     {
+
         float moveX = actions.ContinuousActions[0];
         float moveZ = actions.ContinuousActions[1];
-        float moveY = actions.ContinuousActions[2];
+        bool jump = actions.ContinuousActions[2] >=-1.0f && actions.ContinuousActions[2] <-0.5f? true : false;
+        bool sneak = actions.ContinuousActions[2] >= -0.5f && actions.ContinuousActions[2] < 0.0f ? true : false;
+        bool sprint = actions.ContinuousActions[2] >= 0.0f && actions.ContinuousActions[2] < 0.5f ? true : false;
 
-        moveSpeed  = FindObjectOfType<ThirdPersonMovement>().GetSpeed();
-        Vector3 moveDir = new Vector3(moveX, moveY, moveZ);
-        if(controller)
-            controller.Move(moveDir.normalized * moveSpeed * usedTime);
+        
+        Debug.Log("Discrete action: " + actions.ContinuousActions[2]);
+
+        //simply apply movement from ThirdPersonMovement
+        GetComponent<ThirdPersonMovement>().ApplyMovement(moveX, moveZ, jump, sprint, sneak, false);
+
+        //if the reward wasn't collected during the time of the step, reset the episode
+        stepsAfterReward++;
+        if (stepsAfterReward == maxStepsAfterReward)
+            EndEpisode();
+        
 
     }
+
+
 
     //Heuristics are mental shortcuts for solving problems in a quick way that delivers a result that is sufficient enough to be useful given time constraints
     //Implement this function to provide custom decision making logic or to support manual control of an agent using keyboard, mouse, game controller input, or a script.
     public override void Heuristic(in ActionBuffers actionsOut)
     {
+
         ActionSegment<float> continuousActions = actionsOut.ContinuousActions;
-        Vector3 moveDir = GetComponent<ThirdPersonMovement>().GetMoveDir();
-        continuousActions[0] = moveDir.x;      //x
-        continuousActions[1] = moveDir.z;        //z
-        continuousActions[2] = moveDir.y;       //y
+        Debug.Log("Length: " + continuousActions.Length);
+        continuousActions[0] = Input.GetAxisRaw("Horizontal"); //x
+        continuousActions[1] = Input.GetAxisRaw("Vertical"); //z
+
+        //I will encode discrete actions as continuous ones
+        float discreteActionValue = 0.0f;
+
+        if (Input.GetKey(KeyCode.Space))
+        {
+            discreteActionValue = -1.0f; // Jump
+        }
+        else if (Input.GetKey(KeyCode.LeftControl))
+        {
+            discreteActionValue = -0.5f; // Crouch
+        }
+        else if (Input.GetKey(KeyCode.LeftShift))
+        {
+            discreteActionValue = 0.5f; // Sprint
+        }
+        else
+        {
+            discreteActionValue = 1.0f; // No action (or default)
+        }
+
+        continuousActions[2] = discreteActionValue;
+
 
     }
 
@@ -124,6 +179,7 @@ public class MLPlayerAgent : Agent
                 SetReward(+10f);
         }
 
+        stepsAfterReward = 0;
         Debug.Log(GetCumulativeReward());
     }
 
@@ -162,5 +218,7 @@ public class MLPlayerAgent : Agent
     {
         CheckYaxis();
         usedTime = Time.deltaTime;
+
+        
     }
 }

@@ -242,11 +242,11 @@ public class NPCFieldOfView : MonoBehaviour
     void Update()
     {
         //for debugging
-        if(!FindObjectOfType<ThirdPersonMovement>().GetIsSneaking())
-            Debug.DrawLine(transform.position + new Vector3(0, 1f, 0),  FindObjectOfType<ThirdPersonMovement>().transform.position + new Vector3(0, 0.5f, 0), Color.green);
-        else
-        {
-            Debug.DrawLine(transform.position + new Vector3(0, 1f, 0), FindObjectOfType<ThirdPersonMovement>().transform.position, Color.green);
-        }
+        //if(!FindObjectOfType<ThirdPersonMovement>().GetIsSneaking())
+        //    Debug.DrawLine(transform.position + new Vector3(0, 1f, 0),  FindObjectOfType<ThirdPersonMovement>().transform.position + new Vector3(0, 0.5f, 0), Color.green);
+        //else
+        //{
+        //    Debug.DrawLine(transform.position + new Vector3(0, 1f, 0), FindObjectOfType<ThirdPersonMovement>().transform.position, Color.green);
+        //}
     }
 }

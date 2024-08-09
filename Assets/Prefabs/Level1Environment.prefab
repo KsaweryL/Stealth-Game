@@ -46,7 +46,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &8987070843300659520
 Transform:
   m_ObjectHideFlags: 0
@@ -15864,7 +15864,7 @@ RectTransform:
   m_Father: {fileID: 5821859281754949063}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: -0.000030517578, y: 0.000061035156}
   m_SizeDelta: {x: 0.000030518, y: 0.0002}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -16504,6 +16504,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b6b189bcbed1764583da9c72ccbc1cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  NPCmovement: []
 --- !u!114 &5590457020354820930
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26165,7 +26166,7 @@ Transform:
   m_GameObject: {fileID: 3610351879649898148}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0.9990933, z: -0, w: 0.04257446}
-  m_LocalPosition: {x: -1.78, y: -1.34, z: -41.73}
+  m_LocalPosition: {x: -2, y: -1.34, z: -43.8}
   m_LocalScale: {x: 0.7402159, y: 0.90599275, z: 0.8251758}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -26213,16 +26214,18 @@ MonoBehaviour:
   controller: {fileID: 7255116387982654610}
   cam: {fileID: 4270201649471784570}
   sprintingSpeed: 0
-  walkingSpeed: 0
+  walkingSpeed: 3
   crouchingSpeed: 0
   crouchingSprintingSpeed: 0
   maxHealth: 100
   currentHealth: 0
   jumpSpeed: 3
+  turnOffControler: 0
   isSprintEnabled: 0
   turnSmoothTime: 0.1
   turnSMoothVelocity: 0
-  gravityMultiplier: 3
+  gravity: -9.81
+  gravityMultiplier: 6
   velocity: {x: 0, y: 0, z: 0}
   moveDir: {x: 0, y: 0, z: 0}
 --- !u!65 &1672508398881003800
@@ -26274,6 +26277,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32fa1dbf70a429146ad292b2dcef1eb9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  OnDiamondCollected:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!108 &2968397778060662762
 Light:
   m_ObjectHideFlags: 0
@@ -26351,12 +26357,17 @@ MonoBehaviour:
   agentParameters:
     maxStep: 0
   hasUpgradedFromAgentParameters: 1
-  MaxStep: 1000
+  MaxStep: 50000
   diamondTransform: {fileID: 0}
   NPCmovement: []
   controller: {fileID: 0}
+  animationStateController: {fileID: 0}
   startingPlayerPosition: {x: 0, y: 0, z: 0}
   diamondsPositions: []
+  NPCPositions: []
+  moveDir: {x: 0, y: 0, z: 0}
+  ySpeed: 0
+  maxStepsAfterReward: 100
 --- !u!114 &2590333375089980673
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26370,7 +26381,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BrainParameters:
-    VectorObservationSize: 9
+    VectorObservationSize: 42
     NumStackedVectorObservations: 1
     m_ActionSpec:
       m_NumContinuousActions: 3
@@ -36622,7 +36633,7 @@ Transform:
   m_GameObject: {fileID: 4813353898829277381}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -10.28, y: -5.36, z: -0.16}
+  m_LocalPosition: {x: -10.28, y: -2.21, z: 17.25}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -50063,7 +50074,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &3898930639803757917
 Transform:
   m_ObjectHideFlags: 0
@@ -55034,7 +55045,7 @@ RectTransform:
   m_Father: {fileID: 1903003632912560602}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: -0.000030517578, y: 0.000061035156}
   m_SizeDelta: {x: 0.000030518, y: 0.0002}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -63387,7 +63398,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &2125387776136051138
 Transform:
   m_ObjectHideFlags: 0
@@ -63526,7 +63537,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &2114527039587701210
 Transform:
   m_ObjectHideFlags: 0
@@ -92150,7 +92161,7 @@ RectTransform:
   m_Father: {fileID: 3543018274997474653}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: -0.000030517578, y: 0.000061035156}
   m_SizeDelta: {x: 0.000030518, y: 0.0002}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -92225,7 +92236,7 @@ RectTransform:
   m_Father: {fileID: 3534762281763061061}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: -0.000030517578, y: 0.000061035156}
   m_SizeDelta: {x: 0.000030518, y: 0.0002}
   m_Pivot: {x: 0.5, y: 0.5}

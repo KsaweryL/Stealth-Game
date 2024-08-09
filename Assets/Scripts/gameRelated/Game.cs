@@ -16,12 +16,14 @@ public class Game : MonoBehaviour
 
     public Diamond[] GetDiamonds()
     {
-        return allDiamonds;
+        Diamond[] allDiamondsVariable = GetComponentsInChildren<Diamond>();
+        return allDiamondsVariable;
     }
 
     public NPCMovement[] GetNPCmovements()
     {
-        return NPCmovement;
+        NPCMovement[] NPCmovementVariable = GetComponentsInChildren<NPCMovement>();
+        return NPCmovementVariable;
     }
 
     // Update is called once per frame

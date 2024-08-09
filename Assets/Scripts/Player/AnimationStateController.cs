@@ -14,22 +14,25 @@ public class AnimationStateController : MonoBehaviour
     void Start()
     {
         animator = GetComponent<Animator>();
+
+        
     }
 
-    // Update is called once per frame
-    void Update()
+
+    public void UpdateMovement(float horizontal, float vertical, bool jump, bool sprint, bool sneakingButton)
     {
+        Debug.Log("Animation");
+
         isMovingForward = animator.GetBool("isMovingForward");
         isSneaking = animator.GetBool("isSneaking");
         isRunning = animator.GetBool("isRunning");
         jumpPressed = animator.GetBool("jumpPressed");
 
-        //initially, there is no jump - toDO - to fix
         animator.SetBool("jumpPressed", false);
         jumpPressed = false;
 
-        if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) ||
-          Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D)){
+        if (horizontal != 0 || vertical != 0)
+        {
             animator.SetBool("isMovingForward", true);
             isMovingForward = true;
         }
@@ -40,7 +43,7 @@ public class AnimationStateController : MonoBehaviour
         }
 
         //standing to sneaking and vice versa
-        if (Input.GetKeyDown(KeyCode.LeftControl))
+        if (sneakingButton)
         {
             if (isSneaking)
             {
@@ -56,7 +59,7 @@ public class AnimationStateController : MonoBehaviour
         }
 
         //walking/crouching to running
-        if (Input.GetKeyDown(KeyCode.LeftShift))
+        if (sprint)
         {
 
             if (isRunning)
@@ -73,11 +76,17 @@ public class AnimationStateController : MonoBehaviour
         }
 
         //jumping
-        if (Input.GetButtonDown("Jump"))
+        if (jump)
         {
             animator.SetBool("jumpPressed", true);
             jumpPressed = true;
         }
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        
         
     }
 }

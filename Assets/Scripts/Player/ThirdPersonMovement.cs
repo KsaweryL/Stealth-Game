@@ -26,6 +26,9 @@ public class ThirdPersonMovement : MonoBehaviour
     public float jumpSpeed;
     private float ySpeed;
 
+    [Header("Mlagent")]
+    public bool turnOffControler;
+
     [Header("Other")]
     public bool isSprintEnabled = false;
 
@@ -37,8 +40,9 @@ public class ThirdPersonMovement : MonoBehaviour
     public float turnSMoothVelocity;
 
     //for gravity
-    private float gravity = -9.81f;
-    [SerializeField] private float gravityMultiplier = 3.0f;
+    [Header("gravity")]
+    public float gravity = -9.81f;
+    public float gravityMultiplier = 1.0f;
     public Vector3 velocity;
     public Vector3 moveDir;
 
@@ -57,6 +61,11 @@ public class ThirdPersonMovement : MonoBehaviour
     public float GetSpeed()
     {
         return speed;
+    }
+
+    public float GetJumpSpeed()
+    {
+        return jumpSpeed;
     }
 
     public Vector3 GetMoveDir()
@@ -81,41 +90,33 @@ public class ThirdPersonMovement : MonoBehaviour
             GetComponent<MLPlayerAgent>().DamageWasTaken();
     }
 
-    void ApplyGravity()
+    public float ApplyGravity(CharacterController controller, Vector3 moveDirVariable, float ySpeedVariable, float time)
     {
         if (controller)
         {
-            if (controller.isGrounded && moveDir.y < 0.0f)
-                ySpeed = -1.0f;
+            if (controller.isGrounded && moveDirVariable.y < 0.0f)
+                ySpeedVariable = -1.0f;
             else
-                ySpeed += gravity * Time.deltaTime;
+                ySpeedVariable += gravity * gravityMultiplier * time;
         }
 
+        return ySpeedVariable;
     }
 
-    void ApplyMovement()
+    public Vector3 ApplyRotation(Transform objectTransform, float horizontal, float vertical, bool enableCam)
     {
-
-        //for rotation
-        //between -1 and 1
-        float horizontal = Input.GetAxisRaw("Horizontal");
-        float vertical = Input.GetAxisRaw("Vertical");
-
         Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized;
-
-        //reset x and z movement
-        moveDir.x = 0f;
-        moveDir.z = 0f;
 
 
         //if there is any movement on x/z axes
         if (direction.magnitude >= 0.1f)
         {
-
-            float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + cam.eulerAngles.y;
+            float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg;
+            if (enableCam)
+                targetAngle += cam.eulerAngles.y;
             //an angle with smoother transition
-            float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSMoothVelocity, turnSmoothTime);
-            transform.rotation = Quaternion.Euler(0f, angle, 0f);      //we rotate our object around our target angle
+            float angle = Mathf.SmoothDampAngle(objectTransform.eulerAngles.y, targetAngle, ref turnSMoothVelocity, turnSmoothTime);
+            objectTransform.rotation = Quaternion.Euler(0f, angle, 0f);      //we rotate our object around our target angle
 
             //quaterion.euler returns a proper quaterion (w,x,y,z) and to assing this rortation to our vector, we need to change vector to quaterion
             //( (in this case 0,0,1 to (0,0,0,1) (w,z,y,z) and do v' = q*v*q^-1, the quaterion is then translated to vector again. All of this is automacially
@@ -123,14 +124,22 @@ public class ThirdPersonMovement : MonoBehaviour
             Vector3 quaterion = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
             moveDir.x = quaterion.x;
             moveDir.z = quaterion.z;
-            
-
         }
+
+        return moveDir;
+    }
+    public void ApplyMovement(float horizontal, float vertical, bool jump, bool sprint, bool sneakingButton, bool enableCam)
+    {
+        //reset x and z movement
+        moveDir.x = 0f;
+        moveDir.z = 0f;
+
+        ApplyRotation(transform, horizontal, vertical, enableCam);
 
  
         //jumping
         //jump only when one is not sneaking
-        if (Input.GetButtonDown("Jump") && !isSneaking)
+        if (jump && !isSneaking)
         {
 
             ySpeed = jumpSpeed;
@@ -141,7 +150,7 @@ public class ThirdPersonMovement : MonoBehaviour
         }
 
         //sneaking
-        if (Input.GetKeyDown(KeyCode.LeftControl))
+        if (sneakingButton)
         {
             //sneaking is being turned off
             if (isSneaking)
@@ -167,7 +176,7 @@ public class ThirdPersonMovement : MonoBehaviour
         }
 
         //sprinting
-        if (Input.GetKeyDown(KeyCode.LeftShift)) {
+        if (sprint) {
 
             //sprinting is being turned off
             if (isSprintEnabled) {
@@ -192,18 +201,27 @@ public class ThirdPersonMovement : MonoBehaviour
 
         moveDir.y = ySpeed;
 
+        //apply gravity
+        ySpeed = ApplyGravity(controller, moveDir, ySpeed, Time.deltaTime);
+
+        //apply final movement
+        if (controller && !turnOffControler)
+            controller.Move(moveDir.normalized * speed * Time.deltaTime);
+
+        GetComponentInChildren<AnimationStateController>().UpdateMovement(horizontal, vertical, jump, sprint, sneakingButton);
+
     }
 
     void SetStandardSpeedValues()
     {
-        if (sprintingSpeed == 0)
-            sprintingSpeed = 8.0f;
         if (walkingSpeed == 0)
             walkingSpeed = 4.0f;
+        if (sprintingSpeed == 0)
+            sprintingSpeed = 2*walkingSpeed;
         if (crouchingSpeed == 0)
-            crouchingSpeed = 3.0f;
+            crouchingSpeed = 0.75f * walkingSpeed;
         if (crouchingSprintingSpeed == 0)
-            crouchingSprintingSpeed = 5.0f;
+            crouchingSprintingSpeed = 1.25f * walkingSpeed;
 
         speed = walkingSpeed;
 
@@ -226,15 +244,18 @@ public class ThirdPersonMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //apply movement
-        ApplyMovement();
+        //for rotation
+        //between -1 and 1
+        float horizontal = Input.GetAxisRaw("Horizontal");
+        float vertical = Input.GetAxisRaw("Vertical");
 
-        //apply gravity
-        ApplyGravity();
+        bool jump = Input.GetButtonDown("Jump");
+        bool sprint = Input.GetKeyDown(KeyCode.LeftShift);
+        bool sneakingButton = Input.GetKeyDown(KeyCode.LeftControl);
 
         //apply movement
-        if (controller)
-            controller.Move(moveDir.normalized * speed * Time.deltaTime);
+        ApplyMovement(horizontal, vertical, jump, sprint, sneakingButton, true);
+
         
 
     }
