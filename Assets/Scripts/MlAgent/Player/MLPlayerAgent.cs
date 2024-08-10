@@ -107,10 +107,7 @@ public class MLPlayerAgent : Agent
         for (int npc = 0; npc < NPCmovement.Length; npc++)
             NPCmovement[npc].ResetPropertiesCall();
 
-        GetComponentInParent<Game>().ResetDiamonds();
         
-        for (int diamond = 0; diamond < allDiamonds.Length; diamond++)
-            allDiamonds[diamond].ResetProperties();
         
 
     }
@@ -128,6 +125,13 @@ public class MLPlayerAgent : Agent
 
     }
 
+    void ResetDiamonds()
+    {
+        GetComponentInParent<Game>().ResetDiamonds();
+
+        for (int diamond = 0; diamond < allDiamonds.Length; diamond++)
+            allDiamonds[diamond].ResetProperties();
+    }
     public override void OnActionReceived(ActionBuffers actions)
     {
 
@@ -148,6 +152,7 @@ public class MLPlayerAgent : Agent
         if (stepsAfterReward == maxStepsAfterReward)
         {
             SetReward(-2f);
+            ResetDiamonds();
             EndEpisode();
         }
         
@@ -219,6 +224,7 @@ public class MLPlayerAgent : Agent
     {
         SetReward(-100f);
         //Debug.Log(GetCumulativeReward());
+        ResetDiamonds();
         EndEpisode() ;
         
     }
@@ -245,6 +251,7 @@ public class MLPlayerAgent : Agent
         if (other.gameObject.layer == whatIsBarrierLayer)
         {
             SetReward(-15f);
+            ResetDiamonds();
             EndEpisode();
         }
 
