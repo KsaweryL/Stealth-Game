@@ -23,8 +23,8 @@ public class MoveToDiamondAgent : Agent
     }
     public override void OnEpisodeBegin()
     {
-        transform.localPosition = new Vector3(Random.Range(-1.36f, 10.25f), 0, Random.Range(-4f, 1.5f));
-        targetTransform.localPosition = new Vector3(Random.Range(2.74f, 11.2f), 0, Random.Range(-4f, 1.5f));
+        transform.localPosition = new Vector3(Random.Range(-1.36f, 6.44f), 9.2f, Random.Range(-6.52f, -1.0f));
+        targetTransform.localPosition = new Vector3(Random.Range(-4.36f, 7.02f), 9.2f, Random.Range(-6.52f, -1.0f));
 
         //this one executes the base method - since nothign is in teh base one, it is not needed
         base.OnEpisodeBegin();
@@ -62,8 +62,10 @@ public class MoveToDiamondAgent : Agent
     }
     private void OnTriggerEnter(Collider other)
     {
-        if (other.TryGetComponent<Goal>(out Goal goal))
+        if (other.TryGetComponent<Diamond>(out Diamond goal))
         {
+
+            Debug.Log("Diamond");
             SetReward(+1f);
 
             floorMeshRender.material = winMaterial;

@@ -16,6 +16,11 @@ public class GameOver : MonoBehaviour
     public void UpdatePlayerWon(bool playerWonVariable)
     {
         playerWon = playerWonVariable;
+
+        if(playerWon && gameOver)
+            if (GetComponentInChildren<MLPlayerAgent>())
+                GetComponentInChildren<MLPlayerAgent>().PlayerHasWon();
+        
     }
 
     // Start is called before the first frame update

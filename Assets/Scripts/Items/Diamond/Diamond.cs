@@ -19,8 +19,13 @@ public class Diamond : MonoBehaviour
         {
             //Debug.Log("diamond collected");
             playerInventory.DiamondCollected();
-            gameObject.SetActive(false);
-            Debug.Log("Diamond should be deactived");
+            if (!GetComponentInParent<Game>().GetIsTrainingOn())
+            {
+                gameObject.SetActive(false);
+            }
+            else
+                transform.localPosition = new Vector3(Random.Range(-3.0f, 3.0f), 1.5f, Random.Range(-3.0f, 3.0f));
+
         }
     }
 

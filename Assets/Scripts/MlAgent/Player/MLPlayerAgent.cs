@@ -37,6 +37,13 @@ public class MLPlayerAgent : Agent
     private int stepsAfterReward = 0;
     public int maxStepsAfterReward = 4000;
 
+    [Header("For Additional Training")]
+    public bool isTrainingOn;
+    public Transform diamondsTransform;
+    [SerializeField] private Material winMaterial;
+    [SerializeField] private Material loseMaterial;
+    [SerializeField] private MeshRenderer floorMeshRender;
+
 
     void Start()
     {
@@ -71,23 +78,31 @@ public class MLPlayerAgent : Agent
         //layer related
         whatIsBarrierLayer = 9;
 
+
     }
 
     public override void OnEpisodeBegin()
     {
         //Debug.Log("New Episode");
+        stepsAfterReward = 0;
         //we need to disbale controller to avoid collisions
         controller.enabled = false;
 
         //randomize spawning point
-        spawningLocations = GetComponentInParent<Game>().GetSpawningLocations();
-        int choice = Random.Range(0, spawningLocations.Length);
-        transform.position = spawningLocations[choice].transform.position;
-        //Debug.Log("New position: " + transform.localPosition);
+        if (!isTrainingOn)
+        {
+            spawningLocations = GetComponentInParent<Game>().GetSpawningLocations();
+            int choice = Random.Range(0, spawningLocations.Length);
+            transform.position = spawningLocations[choice].transform.position;
+        }
+        else
+        {
+            transform.localPosition = new Vector3(Random.Range(-3.0f, 3.0f), 1.5f, Random.Range(-3.0f, 3.0f));
+        }
+        Debug.Log("New position: " + transform.localPosition);
 
         controller.enabled = true;
 
-        Debug.Log("New Episode");
 
         //resetting properties
         GetComponent<ThirdPersonMovement>().ResetCurrentHealth();
@@ -151,7 +166,8 @@ public class MLPlayerAgent : Agent
         stepsAfterReward++;
         if (stepsAfterReward == maxStepsAfterReward)
         {
-            SetReward(-2f);
+            SetReward(-20f);
+            stepsAfterReward = 0;
             ResetDiamonds();
             EndEpisode();
         }
@@ -199,39 +215,47 @@ public class MLPlayerAgent : Agent
     public void DiamondWasCollected()
     {
         collectedDiamonds++;
-        if (allDiamonds != null)
-        {
-            if (collectedDiamonds == allDiamonds.Length)
-            {
-                SetReward(+100f);
-                EndEpisode();
-            }
-            else
-                SetReward(+10f);
-        }
-
         stepsAfterReward = 0;
-        //Debug.Log(GetCumulativeReward());
+
+        SetReward(+100f);
+        Debug.Log(GetCumulativeReward());
+
+        
+    }
+
+    public void PlayerHasWon()
+    {
+        SetReward(+1000f);
+        Debug.Log(GetCumulativeReward());
+        if (isTrainingOn)
+        {
+            floorMeshRender.material = winMaterial;
+        }
+        EndEpisode();
+        
     }
 
     public void DamageWasTaken()
     {
-        SetReward(-5f);
-        //Debug.Log(GetCumulativeReward());
+        SetReward(-10f);
+        Debug.Log(GetCumulativeReward());
     }
 
     public void PlayerHasLost()
     {
-        SetReward(-100f);
-        //Debug.Log(GetCumulativeReward());
+        SetReward(-300f);
+        Debug.Log(GetCumulativeReward());
         ResetDiamonds();
+
+        if(isTrainingOn)
+            floorMeshRender.material = loseMaterial;
         EndEpisode() ;
         
     }
 
     public void PlayerWasDetected()
     {
-        SetReward(-3f);
+        SetReward(-30f);
         //Debug.Log(GetCumulativeReward());
     }
 
@@ -261,6 +285,10 @@ public class MLPlayerAgent : Agent
         CheckYaxis();
         usedTime = Time.deltaTime;
 
+        if(transform.localPosition.y < -15)
+        {
+            PlayerHasLost();
+        }
         //Debug.Log(GetCumulativeReward());
     }
 }

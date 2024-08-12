@@ -13,6 +13,9 @@ public class Game : MonoBehaviour
     public int collectedDiamonds;
     public int allDiamondsNumber;
 
+    [Header("For Additional Training")]
+    public bool isTrainingOn;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -22,6 +25,10 @@ public class Game : MonoBehaviour
         allDiamondsNumber = allDiamonds.Length;
     }
 
+    public bool GetIsTrainingOn()
+    {
+       return isTrainingOn; 
+    }
     public void ResetDiamonds()
     {
         collectedDiamonds = 0;
@@ -30,6 +37,12 @@ public class Game : MonoBehaviour
     public void UpdateCollectedDiamonds()
     {
         collectedDiamonds ++;
+
+        if(collectedDiamonds == allDiamondsNumber)
+        {
+            GetComponent<GameOver>().UpdateGameOver(true);
+            GetComponent<GameOver>().UpdatePlayerWon(true);
+        }
     }
 
     public SpawningLocation[] GetSpawningLocations()
