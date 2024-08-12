@@ -13,6 +13,10 @@ public class MLPlayerAgent : Agent
     //I need to invoke things to all NPCS
     public NPCMovement[] NPCmovement;
     public SpawningLocation[] spawningLocations;
+    public Barrier[] barriers;
+    Diamond[] allDiamonds;
+    Game game;
+
 
     [Header("Layer")]
     public int whatIsBarrierLayer;
@@ -22,10 +26,8 @@ public class MLPlayerAgent : Agent
     public AnimationStateController animationStateController;
 
     public Vector3 startingPlayerPosition;
-    public List<Vector3> diamondsPositions;
-    public List<Vector3> NPCPositions;
 
-    Diamond[] allDiamonds;
+    
     int collectedDiamonds;
     float moveSpeed;
     float usedTime;
@@ -35,21 +37,19 @@ public class MLPlayerAgent : Agent
 
     [Header("Steps")]
     private int stepsAfterReward = 0;
-    public int maxStepsAfterReward = 4000;
+    public int maxStepsAfterReward;
 
     [Header("For Additional Training")]
     public bool isTrainingOn;
     public Transform diamondsTransform;
     [SerializeField] private Material winMaterial;
     [SerializeField] private Material loseMaterial;
+    [SerializeField] private Material neutralMaterial;
     [SerializeField] private MeshRenderer floorMeshRender;
 
 
     void Start()
     {
-        //needs to be dynamic
-        diamondsPositions = new List<Vector3>();
-        NPCPositions = new List<Vector3>();
 
         //for the player
         //new Vector3 (-0.11f, -2f, -42.56f)
@@ -64,20 +64,11 @@ public class MLPlayerAgent : Agent
 
         animationStateController = GetComponentInChildren<AnimationStateController>();
 
-        allDiamonds = GetComponentInParent<Game>().GetDiamonds();
-
-        NPCmovement = GetComponentInParent<Game>().GetNPCmovements();
-
-        //important! I have an absolute posiotion here (with respect to the environment), not a local one (with respect to the Diamonds object) as in the inspecotr
-        for (int diamond = 0; diamond < allDiamonds.Length; diamond++)
-            diamondsPositions.Add(allDiamonds[diamond].transform.position);
-
-        for (int npc = 0; npc < NPCmovement.Length; npc++)
-            NPCPositions.Add(NPCmovement[npc].transform.position);
-
         //layer related
         whatIsBarrierLayer = 9;
 
+        maxStepsAfterReward = 1000;
+        
 
     }
 
@@ -97,9 +88,8 @@ public class MLPlayerAgent : Agent
         }
         else
         {
-            transform.localPosition = new Vector3(Random.Range(-3.0f, 3.0f), 1.5f, Random.Range(-3.0f, 3.0f));
+            transform.localPosition = new Vector3(Random.Range(-3.92f, 3.9f), 1.5f, Random.Range(-4.0f, 4.0f));
         }
-        Debug.Log("New position: " + transform.localPosition);
 
         controller.enabled = true;
 
@@ -111,14 +101,6 @@ public class MLPlayerAgent : Agent
         allDiamonds = GetComponentInParent<Game>().GetDiamonds();
         NPCmovement = GetComponentInParent<Game>().GetNPCmovements();
 
-        //important! I have an absolute posiotion here (with respect to the environment), not a local one (with respect to the Diamonds object) as in the inspecotr
-        for (int diamond = 0; diamond < allDiamonds.Length; diamond++)
-            diamondsPositions.Add(allDiamonds[diamond].transform.localPosition);
-
-        for (int npc = 0; npc < NPCmovement.Length; npc++)
-            NPCPositions.Add(NPCmovement[npc].transform.localPosition);
-
-        
         for (int npc = 0; npc < NPCmovement.Length; npc++)
             NPCmovement[npc].ResetPropertiesCall();
 
@@ -127,16 +109,34 @@ public class MLPlayerAgent : Agent
 
     }
 
+    public Vector3 GetGamesTransformPosition(Vector3 position)
+    {
+        game = GetComponentInParent<Game>();
+        return game.transform.InverseTransformPoint(position);
+    }
     public override void CollectObservations(VectorSensor sensor)
     {
-        sensor.AddObservation(transform.localPosition);
+        allDiamonds = GetComponentInParent<Game>().GetDiamonds();
+        NPCmovement = GetComponentInParent<Game>().GetNPCmovements();
+        barriers = GetComponentInParent<Game>().GetBarriers();
+
+        sensor.AddObservation(GetGamesTransformPosition(transform.position));
+
+        //Debug.Log(GetGamesTransformPosition(transform.position) + " and " + transform.localPosition);
         //adding all of the diamond positions
         for (int diamond = 0; diamond < allDiamonds.Length; diamond++)
-            sensor.AddObservation(diamondsPositions[diamond]);
+        {
+            sensor.AddObservation(GetGamesTransformPosition(allDiamonds[diamond].transform.position));
+            Debug.Log("From observations: " + GetGamesTransformPosition(allDiamonds[diamond].transform.position));
+        }
 
         //adding position of NPCS
         for (int npc = 0; npc < NPCmovement.Length; npc++)
-            sensor.AddObservation(NPCPositions[npc]);
+            sensor.AddObservation(GetGamesTransformPosition(NPCmovement[npc].transform.position));
+
+        //adding barrier detection
+        for (int barrier = 0; barrier < barriers.Length; barrier++)
+            sensor.AddObservation(GetGamesTransformPosition(barriers[barrier].transform.position));
 
     }
 
@@ -160,7 +160,7 @@ public class MLPlayerAgent : Agent
         //Debug.Log("Discrete action: " + actions.ContinuousActions[2]);
 
         //simply apply movement from ThirdPersonMovement
-        GetComponent<ThirdPersonMovement>().ApplyMovement(moveX, moveZ, jump, sprint, sneak, false);
+        GetComponent<ThirdPersonMovement>().ApplyMovement(moveX, moveZ, jump, sprint, sneak, false, 1f);
 
         //if the reward wasn't collected during the time of the step, reset the episode
         stepsAfterReward++;
@@ -169,6 +169,8 @@ public class MLPlayerAgent : Agent
             SetReward(-20f);
             stepsAfterReward = 0;
             ResetDiamonds();
+            if (isTrainingOn)
+                floorMeshRender.material = neutralMaterial;
             EndEpisode();
         }
         
@@ -219,8 +221,13 @@ public class MLPlayerAgent : Agent
 
         SetReward(+100f);
         Debug.Log(GetCumulativeReward());
+        if (isTrainingOn)
+        {
+            floorMeshRender.material = winMaterial;
+        }
+        EndEpisode();
 
-        
+
     }
 
     public void PlayerHasWon()

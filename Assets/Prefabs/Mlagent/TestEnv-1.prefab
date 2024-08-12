@@ -212,6 +212,7 @@ MonoBehaviour:
   NPCmovement: []
   player: {fileID: 0}
   spawningLocations: []
+  barriers: []
   collectedDiamonds: 0
   allDiamondsNumber: 0
   isTrainingOn: 1
@@ -1032,7 +1033,7 @@ PrefabInstance:
     - target: {fileID: 5521520000271125297, guid: c8d8fe98bcc359c4aae102f8a6c83633, type: 3}
       propertyPath: m_Model
       value: 
-      objectReference: {fileID: 5022602860645237092, guid: a231348f84b028c4ab901d7d6ed2b202, type: 3}
+      objectReference: {fileID: 5022602860645237092, guid: b883c7470565c1544a0880b7c31ff00c, type: 3}
     - target: {fileID: 5521520000271125297, guid: c8d8fe98bcc359c4aae102f8a6c83633, type: 3}
       propertyPath: m_BehaviorType
       value: 2
@@ -1062,9 +1063,17 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 3953404909836196949}
     - target: {fileID: 6962053227386552900, guid: c8d8fe98bcc359c4aae102f8a6c83633, type: 3}
+      propertyPath: neutralMaterial
+      value: 
+      objectReference: {fileID: 2100000, guid: ddd0cb9bfb0ac6b43a948f5161d47425, type: 2}
+    - target: {fileID: 6962053227386552900, guid: c8d8fe98bcc359c4aae102f8a6c83633, type: 3}
       propertyPath: diamondsTransform
       value: 
       objectReference: {fileID: 3164357175541848286}
+    - target: {fileID: 6962053227386552900, guid: c8d8fe98bcc359c4aae102f8a6c83633, type: 3}
+      propertyPath: maxStepsAfterReward
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

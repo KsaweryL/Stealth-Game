@@ -8,6 +8,7 @@ public class Game : MonoBehaviour
     public NPCMovement[] NPCmovement;
     public ThirdPersonMovement player;
     public SpawningLocation[] spawningLocations;
+    public Barrier[] barriers;
 
     [Header("Diamonds")]
     public int collectedDiamonds;
@@ -43,6 +44,12 @@ public class Game : MonoBehaviour
             GetComponent<GameOver>().UpdateGameOver(true);
             GetComponent<GameOver>().UpdatePlayerWon(true);
         }
+    }
+
+    public Barrier[] GetBarriers()
+    {
+        barriers = GetComponentsInChildren<Barrier>();
+        return barriers;
     }
 
     public SpawningLocation[] GetSpawningLocations()

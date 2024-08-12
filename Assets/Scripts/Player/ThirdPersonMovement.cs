@@ -128,7 +128,7 @@ public class ThirdPersonMovement : MonoBehaviour
 
         return moveDir;
     }
-    public void ApplyMovement(float horizontal, float vertical, bool jump, bool sprint, bool sneakingButton, bool enableCam)
+    public void ApplyMovement(float horizontal, float vertical, bool jump, bool sprint, bool sneakingButton, bool enableCam, float speedMultiplier)
     {
         //reset x and z movement
         moveDir.x = 0f;
@@ -207,7 +207,7 @@ public class ThirdPersonMovement : MonoBehaviour
 
         //apply final movement
         if (controller && !turnOffControler)
-            controller.Move(moveDir.normalized * speed * Time.deltaTime);
+            controller.Move(moveDir.normalized * speed * speedMultiplier * Time.deltaTime);
 
         GetComponentInChildren<AnimationStateController>().UpdateMovement(horizontal, vertical, jump, sprint, sneakingButton);
 
@@ -255,7 +255,7 @@ public class ThirdPersonMovement : MonoBehaviour
         bool sneakingButton = Input.GetKeyDown(KeyCode.LeftControl);
 
         //apply movement
-        ApplyMovement(horizontal, vertical, jump, sprint, sneakingButton, true);
+        ApplyMovement(horizontal, vertical, jump, sprint, sneakingButton, true, 1f);
 
         
 

@@ -4,6 +4,12 @@ using UnityEngine;
 
 public class Diamond : MonoBehaviour
 {
+    Game game;
+    public Vector3 GetGamesTransformPosition(Vector3 position)
+    {
+        game = GetComponentInParent<Game>();
+        return game.transform.InverseTransformPoint(position);
+    }
     public void ResetProperties()
     {
         gameObject.SetActive(true);
@@ -24,8 +30,9 @@ public class Diamond : MonoBehaviour
                 gameObject.SetActive(false);
             }
             else
-                transform.localPosition = new Vector3(Random.Range(-3.0f, 3.0f), 1.5f, Random.Range(-3.0f, 3.0f));
+                transform.localPosition = new Vector3(Random.Range(-3.92f, 3.9f), 1.5f, Random.Range(-4.0f, 4.0f));
 
+            Debug.Log(GetGamesTransformPosition(transform.position));
         }
     }
 
