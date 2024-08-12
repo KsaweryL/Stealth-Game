@@ -2367,6 +2367,7 @@ GameObject:
   - component: {fileID: 4404637740595792266}
   - component: {fileID: 8514902214195105668}
   - component: {fileID: 3603657696661238003}
+  - component: {fileID: 3301631025198355213}
   m_Layer: 8
   m_Name: Third Person Player
   m_TagString: Player
@@ -2383,7 +2384,7 @@ Transform:
   m_GameObject: {fileID: 3226924982736802351}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0.9999901, z: -0, w: 0.0044600763}
-  m_LocalPosition: {x: 0.7, y: 1.019, z: -0.1}
+  m_LocalPosition: {x: 0.73, y: 1.019, z: 3.71}
   m_LocalScale: {x: 0.7402159, y: 0.90599275, z: 0.8251759}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2605,7 +2606,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BrainParameters:
-    VectorObservationSize: 6
+    VectorObservationSize: 58
     NumStackedVectorObservations: 1
     m_ActionSpec:
       m_NumContinuousActions: 3
@@ -2614,7 +2615,7 @@ MonoBehaviour:
     VectorActionDescriptions: []
     VectorActionSpaceType: 1
     hasUpgradedBrainParametersWithActionSpec: 1
-  m_Model: {fileID: 5022602860645237092, guid: b883c7470565c1544a0880b7c31ff00c, type: 3}
+  m_Model: {fileID: 5022602860645237092, guid: 5ce0575cac6cf464890c0070cbbf5fb1, type: 3}
   m_InferenceDevice: 0
   m_BehaviorType: 2
   m_BehaviorName: CollectAllDiamonds
@@ -2649,6 +2650,32 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   waterLayer: 0
+--- !u!114 &3301631025198355213
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3226924982736802351}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6bb6b867a41448888c1cd4f99643ad71, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SensorName: RayPerceptionSensor
+  m_DetectableTags: []
+  m_RaysPerDirection: 6
+  m_MaxRayDegrees: 70
+  m_SphereCastRadius: 0.5
+  m_RayLength: 20
+  m_RayLayerMask:
+    serializedVersion: 2
+    m_Bits: 10944
+  m_ObservationStacks: 1
+  rayHitColor: {r: 1, g: 0, b: 0, a: 1}
+  rayMissColor: {r: 1, g: 1, b: 1, a: 1}
+  m_StartVerticalOffset: 0
+  m_EndVerticalOffset: 0
 --- !u!1 &3384061916563187440
 GameObject:
   m_ObjectHideFlags: 0

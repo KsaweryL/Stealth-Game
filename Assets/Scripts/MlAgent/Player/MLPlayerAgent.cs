@@ -4,6 +4,7 @@ using UnityEngine;
 using Unity.MLAgents;
 using Unity.MLAgents.Actuators;
 using Unity.MLAgents.Sensors;
+using System.Threading;
 
 public class MLPlayerAgent : Agent
 {
@@ -67,7 +68,7 @@ public class MLPlayerAgent : Agent
         //layer related
         whatIsBarrierLayer = 9;
 
-        maxStepsAfterReward = 1000;
+        maxStepsAfterReward = 1500;
         
 
     }
@@ -88,11 +89,20 @@ public class MLPlayerAgent : Agent
         }
         else
         {
-            transform.localPosition = new Vector3(Random.Range(-3.92f, 3.9f), 1.5f, Random.Range(-4.0f, 4.0f));
+            transform.localPosition = new Vector3(Random.Range(-5.78f, 5.54f), 1.5f, Random.Range(-5.19f, 6.06f));       //whole plane rotation barrier
+            //transform.localPosition = new Vector3(Random.Range(-7.14f, 8.57f), 1.5f, Random.Range(2.47f, 8.33f));
+            //transform.localPosition = new Vector3(Random.Range(-3.79f, 4.06f), 1.5f, Random.Range(-3.3f, 4.31f));
         }
 
         controller.enabled = true;
 
+        //changing the rotation of the barrier
+        if (isTrainingOn)
+        {
+            barriers = GetComponentInParent<Game>().GetBarriers();
+            for (int barrier = 0; barrier < barriers.Length; barrier++)
+                barriers[barrier].transform.rotation = Quaternion.Euler(0, Random.Range(0, 90), 0);
+        }
 
         //resetting properties
         GetComponent<ThirdPersonMovement>().ResetCurrentHealth();
@@ -118,7 +128,6 @@ public class MLPlayerAgent : Agent
     {
         allDiamonds = GetComponentInParent<Game>().GetDiamonds();
         NPCmovement = GetComponentInParent<Game>().GetNPCmovements();
-        barriers = GetComponentInParent<Game>().GetBarriers();
 
         sensor.AddObservation(GetGamesTransformPosition(transform.position));
 
@@ -127,16 +136,33 @@ public class MLPlayerAgent : Agent
         for (int diamond = 0; diamond < allDiamonds.Length; diamond++)
         {
             sensor.AddObservation(GetGamesTransformPosition(allDiamonds[diamond].transform.position));
-            Debug.Log("From observations: " + GetGamesTransformPosition(allDiamonds[diamond].transform.position));
+            //Debug.Log("From observatiopns: " + GetGamesTransformPosition(allDiamonds[diamond].transform.position));
         }
 
         //adding position of NPCS
         for (int npc = 0; npc < NPCmovement.Length; npc++)
             sensor.AddObservation(GetGamesTransformPosition(NPCmovement[npc].transform.position));
 
+
         //adding barrier detection
-        for (int barrier = 0; barrier < barriers.Length; barrier++)
-            sensor.AddObservation(GetGamesTransformPosition(barriers[barrier].transform.position));
+        //I will use raycast for this
+        //float rayLength = 10.0f;
+        //int numRays = 8;
+        //for (int i = 0; i < numRays; i++)
+        //{
+        //    float angle = (i / (float)numRays) * 360f;
+        //    Vector3 direction = Quaternion.Euler(0, angle, 0) * Vector3.forward;
+        //    RaycastHit hit;
+        //    if (Physics.Raycast(transform.position, direction, out hit, rayLength))
+        //    {
+        //        sensor.AddObservation(hit.distance); // Add distance to hit object
+        //    }
+        //    else
+        //    {
+        //        sensor.AddObservation(rayLength); // Max distance if nothing is hit
+        //    }
+
+        //}
 
     }
 
@@ -281,8 +307,12 @@ public class MLPlayerAgent : Agent
         //colliding with "what is barrier"
         if (other.gameObject.layer == whatIsBarrierLayer)
         {
-            SetReward(-15f);
+            SetReward(-200f);
             ResetDiamonds();
+            if (isTrainingOn)
+            {
+                floorMeshRender.material = loseMaterial;
+            }
             EndEpisode();
         }
 

@@ -30,9 +30,11 @@ public class Diamond : MonoBehaviour
                 gameObject.SetActive(false);
             }
             else
-                transform.localPosition = new Vector3(Random.Range(-3.92f, 3.9f), 1.5f, Random.Range(-4.0f, 4.0f));
+                transform.localPosition = new Vector3(Random.Range(-5.78f, 5.54f), 1.5f, Random.Range(-5.19f, 6.06f));       //whole plane rotation barrier
+            //transform.localPosition = new Vector3(Random.Range(-1.57f, 7.74f), 1.5f, Random.Range(-6.72f, -4.08f));
+            //transform.localPosition = new Vector3(Random.Range(-3.79f, 4.06f), 1.5f, Random.Range(-3.3f, 4.31f));
 
-            Debug.Log(GetGamesTransformPosition(transform.position));
+            //Debug.Log(GetGamesTransformPosition(transform.position));
         }
     }
 
