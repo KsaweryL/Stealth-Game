@@ -1840,7 +1840,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Record: 0
   NumStepsToRecord: 0
-  DemonstrationName: collectAllDiamondsDemo
+  DemonstrationName: collectAllDiamondsDemo3
   DemonstrationDirectory: Demos
 --- !u!1001 &4611389724446618273
 PrefabInstance:
