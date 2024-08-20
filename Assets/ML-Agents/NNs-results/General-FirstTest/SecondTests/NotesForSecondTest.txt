@@ -1,0 +1,33 @@
+initialize form 15 or 16
+
+19 or 20 is ok - 25
+
+Phase 1:
+float reachingDiamondReward = 500f;
+float winningGameReward = 5000f;
+float distanceMultiplierReward = 10f;
+float reachingBarrierPointReward = 300f;
+float losingGameReward = -1000f;
+float hittingObstacleReward = -250;
+float reachingMaxStepReward = -350f;
+float timePenaltyMultiplierReward = - 1.5f;
+
+Phase 2:
+float reachingDiamondReward = 500f;
+float winningGameReward = 5000f;
+float distanceMultiplierReward = 10f;
+float reachingBarrierPointReward = 300f;
+float losingGameReward = -1500f;
+float hittingObstacleReward = -700;
+float reachingMaxStepReward = -300f;
+float timePenaltyMultiplierReward = - 2.5f;
+
+Phase 3:
+float reachingDiamondReward = 700f;
+float winningGameReward = 5000f;
+float distanceMultiplierReward = 10f;
+float reachingBarrierPointReward = 300f;
+float losingGameReward = -3000f;
+float hittingObstacleReward = -1200;
+float reachingMaxStepReward = -270f;
+float timePenaltyMultiplierReward = - 1.2f;

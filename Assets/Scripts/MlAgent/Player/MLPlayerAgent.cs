@@ -25,6 +25,8 @@ public class MLPlayerAgent : Agent
     [Header("Other")]
     [SerializeField] public CharacterController controller;
     public AnimationStateController animationStateController;
+    bool barrierPointReached;
+    float distanceToDiamond;
 
     public Vector3 startingPlayerPosition;
 
@@ -39,6 +41,17 @@ public class MLPlayerAgent : Agent
     [Header("Steps")]
     private int stepsAfterReward = 0;
     public int maxStepsAfterReward;
+
+    [Header("Rewards")]
+    float reachingDiamondReward = 700f;
+    float winningGameReward = 5000f;
+    float distanceMultiplierReward = 10f;
+    float reachingBarrierPointReward = 300f;
+    float losingGameReward = -3000f;
+    float hittingObstacleReward = -1200;
+    float reachingMaxStepReward = -270f;
+    float timePenaltyMultiplierReward = - 1.2f;
+
 
     [Header("For Additional Training")]
     public bool isTrainingOn;
@@ -69,7 +82,7 @@ public class MLPlayerAgent : Agent
         whatIsBarrierLayer = 9;
 
         maxStepsAfterReward = 1500;
-        
+
 
     }
 
@@ -89,9 +102,18 @@ public class MLPlayerAgent : Agent
         }
         else
         {
-            transform.localPosition = new Vector3(Random.Range(-5.78f, 5.54f), 1.5f, Random.Range(-5.19f, 6.06f));       //whole plane rotation barrier
+            barriers = GetComponentInParent<Game>().GetBarriers();
+            //only for TestEnv-1 !!
+            transform.localPosition = new Vector3(Random.Range(barriers[0].transform.localPosition.x - 4.45f, barriers[0].transform.localPosition.x + 3.83f), 
+                1.5f, Random.Range(barriers[0].transform.localPosition.z + 1.51f, barriers[0].transform.localPosition.z + 4.96f));
+
+            //transform.localPosition = new Vector3(Random.Range(-0.478f, 0.426f), 0f, Random.Range(2.51f, 6.37f));   //with respect to the barrier
+            //transform.localPosition = new Vector3(Random.Range(-5.78f, 5.54f), 1.5f, Random.Range(-5.19f, 6.06f));       //whole plane rotation barrier
             //transform.localPosition = new Vector3(Random.Range(-7.14f, 8.57f), 1.5f, Random.Range(2.47f, 8.33f));
             //transform.localPosition = new Vector3(Random.Range(-3.79f, 4.06f), 1.5f, Random.Range(-3.3f, 4.31f));
+
+            allDiamonds = GetComponentInParent<Game>().GetDiamonds();
+            distanceToDiamond = Vector3.Distance(allDiamonds[0].transform.position, transform.position);
         }
 
         controller.enabled = true;
@@ -114,8 +136,15 @@ public class MLPlayerAgent : Agent
         for (int npc = 0; npc < NPCmovement.Length; npc++)
             NPCmovement[npc].ResetPropertiesCall();
 
-        
-        
+        if (isTrainingOn)
+        {
+            //reset the positions of diamonds
+            for (int diamond = 0; diamond < allDiamonds.Length; diamond++)
+                allDiamonds[diamond].ResetPosition();
+        }
+
+        //for training
+        barrierPointReached = false;
 
     }
 
@@ -144,25 +173,6 @@ public class MLPlayerAgent : Agent
             sensor.AddObservation(GetGamesTransformPosition(NPCmovement[npc].transform.position));
 
 
-        //adding barrier detection
-        //I will use raycast for this
-        //float rayLength = 10.0f;
-        //int numRays = 8;
-        //for (int i = 0; i < numRays; i++)
-        //{
-        //    float angle = (i / (float)numRays) * 360f;
-        //    Vector3 direction = Quaternion.Euler(0, angle, 0) * Vector3.forward;
-        //    RaycastHit hit;
-        //    if (Physics.Raycast(transform.position, direction, out hit, rayLength))
-        //    {
-        //        sensor.AddObservation(hit.distance); // Add distance to hit object
-        //    }
-        //    else
-        //    {
-        //        sensor.AddObservation(rayLength); // Max distance if nothing is hit
-        //    }
-
-        //}
 
     }
 
@@ -188,11 +198,31 @@ public class MLPlayerAgent : Agent
         //simply apply movement from ThirdPersonMovement
         GetComponent<ThirdPersonMovement>().ApplyMovement(moveX, moveZ, jump, sprint, sneak, false, 1f);
 
+        //getting closer to diamond
+        //disable it once agent knows how to reach the diamond
+        if (isTrainingOn && barrierPointReached)
+        {
+            //reward for making the distance to diamond smaller
+            float newDistanceToDiamond = Vector3.Distance(allDiamonds[0].transform.position, transform.position);
+
+            //Debug.Log("test " + 1 / newDistanceToDiamond * 100);        //20 - 35 
+            if (newDistanceToDiamond < distanceToDiamond)
+            {
+                SetReward(+ 1/newDistanceToDiamond * distanceMultiplierReward);
+                distanceToDiamond = newDistanceToDiamond;
+            }
+            else
+            {
+                //give a time penalty
+                SetReward(+ 1 / newDistanceToDiamond * distanceMultiplierReward * timePenaltyMultiplierReward);
+            }
+        }
+
         //if the reward wasn't collected during the time of the step, reset the episode
         stepsAfterReward++;
         if (stepsAfterReward == maxStepsAfterReward)
         {
-            SetReward(-20f);
+            SetReward(reachingMaxStepReward);
             stepsAfterReward = 0;
             ResetDiamonds();
             if (isTrainingOn)
@@ -245,8 +275,7 @@ public class MLPlayerAgent : Agent
         collectedDiamonds++;
         stepsAfterReward = 0;
 
-        SetReward(+100f);
-        Debug.Log(GetCumulativeReward());
+        SetReward(reachingDiamondReward);
         if (isTrainingOn)
         {
             floorMeshRender.material = winMaterial;
@@ -258,7 +287,7 @@ public class MLPlayerAgent : Agent
 
     public void PlayerHasWon()
     {
-        SetReward(+1000f);
+        SetReward(winningGameReward);
         Debug.Log(GetCumulativeReward());
         if (isTrainingOn)
         {
@@ -276,7 +305,7 @@ public class MLPlayerAgent : Agent
 
     public void PlayerHasLost()
     {
-        SetReward(-300f);
+        SetReward(losingGameReward);
         Debug.Log(GetCumulativeReward());
         ResetDiamonds();
 
@@ -307,13 +336,27 @@ public class MLPlayerAgent : Agent
         //colliding with "what is barrier"
         if (other.gameObject.layer == whatIsBarrierLayer)
         {
-            SetReward(-200f);
-            ResetDiamonds();
-            if (isTrainingOn)
+            //if the player collides with the point that is next to the barrier, give him the reward
+            if (other.gameObject.GetComponent<BarrierPoint>())
             {
-                floorMeshRender.material = loseMaterial;
+                if (!barrierPointReached)
+                {
+                    SetReward(reachingBarrierPointReward);
+                    Debug.Log("Barrier Point collision");
+                    barrierPointReached = true;
+                }
             }
-            EndEpisode();
+            else
+            {
+                //obstacle was hit
+                SetReward(hittingObstacleReward);
+                ResetDiamonds();
+                if (isTrainingOn)
+                {
+                    floorMeshRender.material = loseMaterial;
+                }
+                EndEpisode();
+            }
         }
 
     }
@@ -326,6 +369,10 @@ public class MLPlayerAgent : Agent
         {
             PlayerHasLost();
         }
+
+
         //Debug.Log(GetCumulativeReward());
+
+
     }
 }

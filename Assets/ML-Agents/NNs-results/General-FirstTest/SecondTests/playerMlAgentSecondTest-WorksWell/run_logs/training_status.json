@@ -1,0 +1,38 @@
+{
+    "CollectAllDiamonds": {
+        "checkpoints": [
+            {
+                "steps": 499993,
+                "file_path": "results\\playerMlAgentSecondTest30\\CollectAllDiamonds\\CollectAllDiamonds-499993.onnx",
+                "reward": 1096.849853515625,
+                "creation_time": 1724173543.2922149,
+                "auxillary_file_paths": [
+                    "results\\playerMlAgentSecondTest30\\CollectAllDiamonds\\CollectAllDiamonds-499993.pt"
+                ]
+            },
+            {
+                "steps": 500002,
+                "file_path": "results\\playerMlAgentSecondTest30\\CollectAllDiamonds\\CollectAllDiamonds-500002.onnx",
+                "reward": 960.4693717956543,
+                "creation_time": 1724173543.3573651,
+                "auxillary_file_paths": [
+                    "results\\playerMlAgentSecondTest30\\CollectAllDiamonds\\CollectAllDiamonds-500002.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 500002,
+            "file_path": "results\\playerMlAgentSecondTest30\\CollectAllDiamonds.onnx",
+            "reward": 960.4693717956543,
+            "creation_time": 1724173543.3573651,
+            "auxillary_file_paths": [
+                "results\\playerMlAgentSecondTest30\\CollectAllDiamonds\\CollectAllDiamonds-500002.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "0.30.0",
+        "torch_version": "2.2.2+cu121"
+    }
+}
