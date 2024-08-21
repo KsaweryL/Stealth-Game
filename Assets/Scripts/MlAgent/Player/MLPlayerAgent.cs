@@ -14,8 +14,11 @@ public class MLPlayerAgent : Agent
     //I need to invoke things to all NPCS
     public NPCMovement[] NPCmovement;
     public SpawningLocation[] spawningLocations;
+    public PlayerSpawnPoint[] playerSpawningPoints;
     public Barrier[] barriers;
     Diamond[] allDiamonds;
+    public Tile[] tiles;
+    public List<bool> visitedTiles;
     Game game;
 
 
@@ -44,13 +47,14 @@ public class MLPlayerAgent : Agent
 
     [Header("Rewards")]
     float reachingDiamondReward = 500f;
-    float winningGameReward = 5000f;
-    float distanceMultiplierReward = 20f;
+    float winningGameReward = 10000f;
+    float distanceMultiplierReward = 3f;
     float reachingBarrierPointReward = 300f;
     float losingGameReward = -3000f;
-    float hittingObstacleReward = -400;
-    float reachingMaxStepReward = -650f;
-    float timePenaltyMultiplierReward = -4.5f;
+    float hittingObstacleReward = -300;
+    float reachingMaxStepReward = -850f;
+    float timePenaltyMultiplierReward = -1.5f;
+    float newTileFoundReward = 1f;
 
 
     
@@ -94,6 +98,8 @@ public class MLPlayerAgent : Agent
         isTrainingOn = game.GetIsTrainingOn();
         testNr = game.GetTestNr();
 
+        visitedTiles = new List<bool>();
+
 
     }
 
@@ -107,9 +113,9 @@ public class MLPlayerAgent : Agent
         //randomize spawning point
         if (!isTrainingOn)
         {
-            spawningLocations = GetComponentInParent<Game>().GetSpawningLocations();
-            int choice = Random.Range(0, spawningLocations.Length);
-            transform.position = spawningLocations[choice].transform.position;
+            playerSpawningPoints = GetComponentInParent<Game>().GetPlayerSpawningPoints();
+            int choice = Random.Range(0, playerSpawningPoints.Length);
+            transform.position = playerSpawningPoints[choice].transform.position;
         }
         else
         {
@@ -132,10 +138,19 @@ public class MLPlayerAgent : Agent
 
             }
             else if (testNr == 4) {
-                spawningLocations = GetComponentInParent<Game>().GetSpawningLocations();
-                randomIndexSpawn = Random.Range(0, spawningLocations.Length);
+                playerSpawningPoints = GetComponentInParent<Game>().GetPlayerSpawningPoints();
+                randomIndexSpawn = Random.Range(0, playerSpawningPoints.Length);
 
-                transform.localPosition = GetGamesTransformPosition(spawningLocations[randomIndexSpawn].transform.position);
+                transform.localPosition = GetGamesTransformPosition(playerSpawningPoints[randomIndexSpawn].transform.position);
+
+                //for curiosity driven rl
+                visitedTiles = new List<bool>();
+
+                tiles = GetComponentInParent<Game>().GetTiles();
+                if(tiles != null) 
+                    for (int tile = 0; tile < tiles.Length; tile++)
+                        visitedTiles.Add(false);
+                
             }
 
             allDiamonds = GetComponentInParent<Game>().GetDiamonds();
@@ -406,6 +421,30 @@ public class MLPlayerAgent : Agent
                 }
                 EndEpisode();
             }
+        }
+        //when tile is hit
+        else if (other.gameObject.GetComponent<Tile>())
+        {
+            //for curiosity driven rl
+            tiles = GetComponentInParent<Game>().GetTiles();
+            int tile = 0;
+            //find which tile was hit
+            for (tile = 0; tile < tiles.Length; tile++)
+                if (tiles[tile].transform.position == other.transform.position)
+                    break;
+
+            //check is the tile was already visited
+            if (tile < tiles.Length)
+            {
+                if (visitedTiles[tile] == false)
+                {
+                    visitedTiles[tile] = true;
+                    SetReward(newTileFoundReward);
+
+                    //Debug.Log("Tile reward " + tile);
+                }
+            }
+            
         }
 
     }

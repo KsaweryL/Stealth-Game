@@ -50,17 +50,17 @@ public class Diamond : MonoBehaviour
             transform.localPosition = new Vector3(Random.Range(-8.52f, 7.76f), 1f, Random.Range(-10.88f, 7.09f));
         else if(testNr == 4)
         {
-            SpawningLocation[] spawningLocations = GetComponentInParent<Game>().GetSpawningLocations();
+            PlayerSpawnPoint[] playerSpawnPoints = GetComponentInParent<Game>().GetPlayerSpawningPoints();
 
             MLPlayerAgent mlagent = GetComponentInParent<Game>().GetPlayer().GetComponent<MLPlayerAgent>();
             int randomIndexSpawn = mlagent.GetRandomIndexSPawn();
 
             while (randomIndexSpawn == mlagent.GetRandomIndexSPawn())
             {
-                randomIndexSpawn = Random.Range(0, spawningLocations.Length);
+                randomIndexSpawn = Random.Range(0, playerSpawnPoints.Length);
             }
 
-            transform.localPosition = GetGamesTransformPosition(spawningLocations[randomIndexSpawn].transform.position);
+            transform.localPosition = GetGamesTransformPosition(playerSpawnPoints[randomIndexSpawn].transform.position);
 
         }
     }

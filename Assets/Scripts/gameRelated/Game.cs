@@ -8,7 +8,9 @@ public class Game : MonoBehaviour
     public NPCMovement[] NPCmovement;
     public ThirdPersonMovement player;
     public SpawningLocation[] spawningLocations;
+    public PlayerSpawnPoint[] playerSpawnPoints;
     public Barrier[] barriers;
+    public Tile[] tiles;
 
     [Header("Diamonds")]
     public int collectedDiamonds;
@@ -53,6 +55,11 @@ public class Game : MonoBehaviour
         }
     }
 
+    public Tile[] GetTiles()
+    {
+        tiles = GetComponentsInChildren<Tile>();
+        return tiles;
+    } 
     public Barrier[] GetBarriers()
     {
         barriers = GetComponentsInChildren<Barrier>();
@@ -63,6 +70,12 @@ public class Game : MonoBehaviour
     {
         spawningLocations = GetComponentsInChildren<SpawningLocation>();
         return spawningLocations;
+    }
+
+    public PlayerSpawnPoint[] GetPlayerSpawningPoints()
+    {
+        playerSpawnPoints = GetComponentsInChildren<PlayerSpawnPoint>();
+        return playerSpawnPoints;
     }
     public Diamond[] GetDiamonds()
     {

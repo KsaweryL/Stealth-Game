@@ -64,7 +64,6 @@ public class Tile : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Hello");
         AssignType(other);
 
     }

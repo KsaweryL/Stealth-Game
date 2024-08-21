@@ -62,6 +62,7 @@
   <ItemGroup>
     <Compile Include="Assets\Classes\Tile.cs" />
     <Compile Include="Assets\Scripts\gameRelated\GameOver.cs" />
+    <Compile Include="Assets\PlayerSpawnPoint.cs" />
     <Compile Include="Assets\Assets - grapics\BrokenVector\LowPolyBrickHouses\Scripts\ModelCustomizer.cs" />
     <Compile Include="Assets\Scripts\Menu\Main menu\MainMenu.cs" />
     <Compile Include="Assets\Scripts\gameRelated\SpawningLocation.cs" />
