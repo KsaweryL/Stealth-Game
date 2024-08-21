@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unity.AI.Navigation.Samples", "Unity.AI.Navigation.Samples.csproj", "{CF51BBA7-26A2-D88F-277E-522D0B9D3236}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp", "Assembly-CSharp.csproj", "{ED7D511E-50C3-1D8C-8E77-4689D041909E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unity.AI.Navigation.Samples", "Unity.AI.Navigation.Samples.csproj", "{CF51BBA7-26A2-D88F-277E-522D0B9D3236}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unity.AI.Navigation.Samples.Initialization.Editor", "Unity.AI.Navigation.Samples.Initialization.Editor.csproj", "{1C7DEED1-2C94-AD42-2D9C-EFE407F2F97F}"
 EndProject
@@ -15,14 +15,14 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{CF51BBA7-26A2-D88F-277E-522D0B9D3236}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{CF51BBA7-26A2-D88F-277E-522D0B9D3236}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{CF51BBA7-26A2-D88F-277E-522D0B9D3236}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{CF51BBA7-26A2-D88F-277E-522D0B9D3236}.Release|Any CPU.Build.0 = Release|Any CPU
 		{ED7D511E-50C3-1D8C-8E77-4689D041909E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{ED7D511E-50C3-1D8C-8E77-4689D041909E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ED7D511E-50C3-1D8C-8E77-4689D041909E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ED7D511E-50C3-1D8C-8E77-4689D041909E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CF51BBA7-26A2-D88F-277E-522D0B9D3236}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CF51BBA7-26A2-D88F-277E-522D0B9D3236}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CF51BBA7-26A2-D88F-277E-522D0B9D3236}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CF51BBA7-26A2-D88F-277E-522D0B9D3236}.Release|Any CPU.Build.0 = Release|Any CPU
 		{1C7DEED1-2C94-AD42-2D9C-EFE407F2F97F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{1C7DEED1-2C94-AD42-2D9C-EFE407F2F97F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1C7DEED1-2C94-AD42-2D9C-EFE407F2F97F}.Release|Any CPU.ActiveCfg = Release|Any CPU

@@ -43,24 +43,31 @@ public class MLPlayerAgent : Agent
     public int maxStepsAfterReward;
 
     [Header("Rewards")]
-    float reachingDiamondReward = 700f;
+    float reachingDiamondReward = 500f;
     float winningGameReward = 5000f;
-    float distanceMultiplierReward = 10f;
+    float distanceMultiplierReward = 20f;
     float reachingBarrierPointReward = 300f;
     float losingGameReward = -3000f;
-    float hittingObstacleReward = -1200;
-    float reachingMaxStepReward = -270f;
-    float timePenaltyMultiplierReward = - 1.2f;
+    float hittingObstacleReward = -400;
+    float reachingMaxStepReward = -650f;
+    float timePenaltyMultiplierReward = -4.5f;
 
 
+    
+    int testNr;
+    bool isTrainingOn;
+    int randomIndexSpawn;
     [Header("For Additional Training")]
-    public bool isTrainingOn;
     public Transform diamondsTransform;
     [SerializeField] private Material winMaterial;
     [SerializeField] private Material loseMaterial;
     [SerializeField] private Material neutralMaterial;
     [SerializeField] private MeshRenderer floorMeshRender;
 
+    public int GetRandomIndexSPawn()
+    {
+        return randomIndexSpawn;
+    }
 
     void Start()
     {
@@ -83,6 +90,10 @@ public class MLPlayerAgent : Agent
 
         maxStepsAfterReward = 1500;
 
+        game = GetComponentInParent<Game>();
+        isTrainingOn = game.GetIsTrainingOn();
+        testNr = game.GetTestNr();
+
 
     }
 
@@ -102,15 +113,30 @@ public class MLPlayerAgent : Agent
         }
         else
         {
-            barriers = GetComponentInParent<Game>().GetBarriers();
-            //only for TestEnv-1 !!
-            transform.localPosition = new Vector3(Random.Range(barriers[0].transform.localPosition.x - 4.45f, barriers[0].transform.localPosition.x + 3.83f), 
-                1.5f, Random.Range(barriers[0].transform.localPosition.z + 1.51f, barriers[0].transform.localPosition.z + 4.96f));
+            if (testNr == 2)
+            {
+                barriers = GetComponentInParent<Game>().GetBarriers();
+                //only for TestEnv-1 !!
+                if (barriers.Length > 0)
+                    transform.localPosition = new Vector3(Random.Range(barriers[0].transform.localPosition.x - 4.45f, barriers[0].transform.localPosition.x + 3.83f),
+                        1.5f, Random.Range(barriers[0].transform.localPosition.z + 1.51f, barriers[0].transform.localPosition.z + 4.96f));
+                else
+                    //transform.localPosition = new Vector3(Random.Range(-0.478f, 0.426f), 0f, Random.Range(2.51f, 6.37f));   //with respect to the barrier
+                    transform.localPosition = new Vector3(Random.Range(-5.78f, 5.54f), 1.5f, Random.Range(-5.19f, 6.06f));       //whole plane rotation barrier
+                                                                                                                                 //transform.localPosition = new Vector3(Random.Range(-7.14f, 8.57f), 1.5f, Random.Range(2.47f, 8.33f));
+                                                                                                                                 //transform.localPosition = new Vector3(Random.Range(-3.79f, 4.06f), 1.5f, Random.Range(-3.3f, 4.31f));
+            }
+            else if (testNr == 3)
+            {
+                transform.localPosition = new Vector3(Random.Range(-8.52f, 7.76f), 1f, Random.Range(-10.88f, 7.09f));
 
-            //transform.localPosition = new Vector3(Random.Range(-0.478f, 0.426f), 0f, Random.Range(2.51f, 6.37f));   //with respect to the barrier
-            //transform.localPosition = new Vector3(Random.Range(-5.78f, 5.54f), 1.5f, Random.Range(-5.19f, 6.06f));       //whole plane rotation barrier
-            //transform.localPosition = new Vector3(Random.Range(-7.14f, 8.57f), 1.5f, Random.Range(2.47f, 8.33f));
-            //transform.localPosition = new Vector3(Random.Range(-3.79f, 4.06f), 1.5f, Random.Range(-3.3f, 4.31f));
+            }
+            else if (testNr == 4) {
+                spawningLocations = GetComponentInParent<Game>().GetSpawningLocations();
+                randomIndexSpawn = Random.Range(0, spawningLocations.Length);
+
+                transform.localPosition = GetGamesTransformPosition(spawningLocations[randomIndexSpawn].transform.position);
+            }
 
             allDiamonds = GetComponentInParent<Game>().GetDiamonds();
             distanceToDiamond = Vector3.Distance(allDiamonds[0].transform.position, transform.position);
@@ -118,12 +144,36 @@ public class MLPlayerAgent : Agent
 
         controller.enabled = true;
 
-        //changing the rotation of the barrier
+        //changing the rotation of the barriers
         if (isTrainingOn)
         {
             barriers = GetComponentInParent<Game>().GetBarriers();
             for (int barrier = 0; barrier < barriers.Length; barrier++)
-                barriers[barrier].transform.rotation = Quaternion.Euler(0, Random.Range(0, 90), 0);
+            {
+                if (testNr == 2)
+                    barriers[barrier].transform.rotation = Quaternion.Euler(0, Random.Range(0, 90), 0);
+                else if (testNr == 3)
+                {
+                    int[] angles = { 0, 45, 90 };
+                    Vector3[] scales = { new Vector3(8, 4, 1), new Vector3(7, 3, 1), new Vector3(6, 3, 1), new Vector3(5, 3, 1), new Vector3(6, 4.5f, 1) };
+
+                    int randomIndex = Random.Range(0, angles.Length);
+                    barriers[barrier].transform.rotation = Quaternion.Euler(0, angles[randomIndex], 0);
+
+                    int randomIndexScale = Random.Range(0, scales.Length);
+                    barriers[barrier].transform.localScale = scales[randomIndexScale];
+
+                        //barriers[barrier].transform.localPosition = new Vector3(Random.Range(-7, 7), 1, Random.Range(-10, 7));
+                    
+
+                }
+                else if (testNr == 4)
+                {
+                    
+
+
+                }
+            }
         }
 
         //resetting properties
@@ -199,8 +249,7 @@ public class MLPlayerAgent : Agent
         GetComponent<ThirdPersonMovement>().ApplyMovement(moveX, moveZ, jump, sprint, sneak, false, 1f);
 
         //getting closer to diamond
-        //disable it once agent knows how to reach the diamond
-        if (isTrainingOn && barrierPointReached)
+        if (isTrainingOn)
         {
             //reward for making the distance to diamond smaller
             float newDistanceToDiamond = Vector3.Distance(allDiamonds[0].transform.position, transform.position);

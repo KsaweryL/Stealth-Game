@@ -16,6 +16,17 @@ public class Game : MonoBehaviour
 
     [Header("For Additional Training")]
     public bool isTrainingOn;
+    public int testNr;
+
+    public bool GetIsTrainingOn()
+    {
+        return isTrainingOn;
+    }
+
+    public int GetTestNr()
+    {
+        return testNr;
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -26,10 +37,6 @@ public class Game : MonoBehaviour
         allDiamondsNumber = allDiamonds.Length;
     }
 
-    public bool GetIsTrainingOn()
-    {
-       return isTrainingOn; 
-    }
     public void ResetDiamonds()
     {
         collectedDiamonds = 0;
