@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SocialPlatforms;
+using System.Linq;
 
 public class Tile : MonoBehaviour
 {
@@ -77,6 +79,22 @@ public class Tile : MonoBehaviour
 
     }
 
+    private void UpdatePathToTake()
+    {
+        Tile nextTileToGoTo = new Tile();
+
+        float minDistance = 10000f;
+        nextTileToGoTo = djikstraPathsToDiamonds[0][0];
+        foreach (List<Tile> tileList in djikstraPathsToDiamonds)
+        {
+            float distance = Vector3.Distance(game.GetPlayer().transform.position, tileList.Last().transform.position);
+            if(distance < minDistance)
+                nextTileToGoTo = tileList.First();
+        }
+
+        game.GetPlayer().GetComponent<MLPlayerAgent>().UpdateNextTileToGoTo(nextTileToGoTo);
+    }
+
     public void CreateDjikstraPaths()
     {
         type = TileType.whatIsPlayer;
@@ -128,6 +146,11 @@ public class Tile : MonoBehaviour
             path = pathVariable;
 
         }
+
+        if(djikstraPathsToDiamonds.Count > 0)
+            UpdatePathToTake();
+
+
 
     }
 

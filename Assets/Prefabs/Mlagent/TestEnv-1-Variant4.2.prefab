@@ -819,6 +819,8 @@ MonoBehaviour:
   allDiamondsNumber: 0
   isTrainingOn: 1
   testNr: 4
+  djikstraPath: []
+  enableDjikstraPathFinding: 1
 --- !u!114 &3037749848642717269
 MonoBehaviour:
   m_ObjectHideFlags: 0

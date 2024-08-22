@@ -20,7 +20,18 @@ public class Game : MonoBehaviour
     [Header("For Additional Training")]
     public bool isTrainingOn;
     public int testNr;
+    public List<Tile> djikstraPath;
+    public bool enableDjikstraPathFinding;
 
+    public bool GetEnableDjikstraPathFinding()
+    {
+        return enableDjikstraPathFinding;
+    }
+    public void UpdateDjikstraPath(List<Tile> djikstraPathVar)
+    {
+        djikstraPath = new List<Tile>();
+        djikstraPath = djikstraPathVar;
+    }
     public bool GetIsTrainingOn()
     {
         return isTrainingOn;

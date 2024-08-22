@@ -44,21 +44,24 @@ public class MLPlayerAgent : Agent
 
     [Header("Grid related")]
     public Material gridMaterial;
+    public Tile nextTileToGoTo;
+    public float distanceToNextTile;
 
     [Header("Steps")]
     public int maxStepsAfterReward;
     private int stepsAfterReward = 0;
 
     [Header("Rewards")]
-    float reachingDiamondReward = 500f;
-    float winningGameReward = 10000f;
-    float distanceMultiplierReward = 3f;
-    float reachingBarrierPointReward = 300f;
-    float losingGameReward = -3000f;
-    float hittingObstacleReward = -300;
-    float reachingMaxStepReward = -850f;
-    float timePenaltyMultiplierReward = -1.5f;
-    float newTileFoundReward = 1f;
+    float reachingDiamondReward;
+    float winningGameReward;
+    float distanceMultiplierReward;
+    float reachingBarrierPointReward;
+    float losingGameReward;
+    float hittingObstacleReward;
+    float reachingMaxStepReward;
+    float timePenaltyMultiplierReward;
+    float newTileFoundReward;
+    float djikstraPathFindingReward;
 
 
 
@@ -72,11 +75,32 @@ public class MLPlayerAgent : Agent
     [SerializeField] private Material neutralMaterial;
     [SerializeField] private MeshRenderer floorMeshRender;
 
+    public void UpdateNextTileToGoTo(Tile nextTileToGoToVar)
+    {
+        distanceToNextTile = Vector3.Distance(transform.position, nextTileToGoToVar.transform.position);
+
+        //update if the player is too far or too close
+        if (distanceToNextTile > 3 || distanceToNextTile < 1 || nextTileToGoTo == null)
+            nextTileToGoTo = nextTileToGoToVar;
+    }
     public int GetRandomIndexSPawn()
     {
         return randomIndexSpawn;
     }
 
+    private void UpdateRewards()
+    {
+        if(reachingDiamondReward == 0) reachingDiamondReward = 500f;
+        if (winningGameReward == 0) winningGameReward = 10000f;
+        if (distanceMultiplierReward == 0) distanceMultiplierReward = 3f;
+        if (reachingBarrierPointReward == 0) reachingBarrierPointReward = 300f;
+        if (losingGameReward == 0) losingGameReward = -3000f;
+        if (hittingObstacleReward == 0) hittingObstacleReward = -300;
+        if (reachingMaxStepReward == 0) reachingMaxStepReward = -850f;
+        if (timePenaltyMultiplierReward == 0) timePenaltyMultiplierReward = -1.5f;
+        if (newTileFoundReward == 0) newTileFoundReward = 1f;
+        if (djikstraPathFindingReward == 0) djikstraPathFindingReward = 40f;
+    }
 
     void Start()
     {
@@ -104,6 +128,9 @@ public class MLPlayerAgent : Agent
         testNr = game.GetTestNr();
 
         visitedTiles = new List<bool>();
+
+        UpdateRewards();
+        nextTileToGoTo = new Tile();
 
     }
 
@@ -246,7 +273,19 @@ public class MLPlayerAgent : Agent
         for (int npc = 0; npc < NPCmovement.Length; npc++)
             sensor.AddObservation(GetGamesTransformPosition(NPCmovement[npc].transform.position));
 
+        //add the tiles from Djikstra path finding
+        if (GetComponentInParent<Game>().GetEnableDjikstraPathFinding())
+        {
+            //we need to make sure that all Tiles has executed OnTriggeEnter before we proceed
+            //or just create a new Djikstra Method that will start with current position, update all Tiles and then proceed:
+            // - find the tile where the player is
+            //- find the tiles where diamonds are
+            //- get the path
+            //- get the next tile in the path
 
+            //toDO
+            //sensor.AddObservation(GetGamesTransformPosition(nextTileToGoTo.transform.position));
+        }
 
     }
 
@@ -432,6 +471,7 @@ public class MLPlayerAgent : Agent
             }
         }
         //when tile is hit
+        //for curiosity driven rl
         else if (other.gameObject.GetComponent<Tile>())
         {
             //for curiosity driven rl
@@ -452,6 +492,14 @@ public class MLPlayerAgent : Agent
 
                     //Debug.Log("Tile reward " + tile);
                 }
+            }
+
+            //for Enabled Djikstra path finding
+            //when next proper Tile was hit
+            else if(GetComponentInParent<Game>().GetEnableDjikstraPathFinding() && other.gameObject == nextTileToGoTo)
+            {
+                Debug.Log("Proper Tile hit");
+                SetReward(djikstraPathFindingReward);
             }
             
         }
