@@ -11,6 +11,7 @@ public class Game : MonoBehaviour
     public PlayerSpawnPoint[] playerSpawnPoints;
     public Barrier[] barriers;
     public Tile[] tiles;
+    Tile currentlyTouchedTile;
 
     [Header("Diamonds")]
     public int collectedDiamonds;
@@ -53,6 +54,16 @@ public class Game : MonoBehaviour
             GetComponent<GameOver>().UpdateGameOver(true);
             GetComponent<GameOver>().UpdatePlayerWon(true);
         }
+    }
+
+    public void UpdateCurrentlyTouchedTile(Tile currentlyTouchedTileVar)
+    {
+        currentlyTouchedTile = currentlyTouchedTileVar;
+    }
+
+    public Tile GetCurrentlyTouchedTile()
+    {
+        return currentlyTouchedTile;
     }
 
     public Tile[] GetTiles()

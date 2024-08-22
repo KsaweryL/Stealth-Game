@@ -62,11 +62,11 @@
   <ItemGroup>
     <Compile Include="Assets\Classes\Tile.cs" />
     <Compile Include="Assets\Scripts\gameRelated\GameOver.cs" />
-    <Compile Include="Assets\PlayerSpawnPoint.cs" />
     <Compile Include="Assets\Assets - grapics\BrokenVector\LowPolyBrickHouses\Scripts\ModelCustomizer.cs" />
     <Compile Include="Assets\Scripts\Menu\Main menu\MainMenu.cs" />
     <Compile Include="Assets\Scripts\gameRelated\SpawningLocation.cs" />
     <Compile Include="Assets\Scripts\Player\TakeDamageOnObjectsPlayer.cs" />
+    <Compile Include="Assets\VisibleCube.cs" />
     <Compile Include="Assets\Scripts\MlAgent\Wall.cs" />
     <Compile Include="Assets\Scripts\gameRelated\Barrier.cs" />
     <Compile Include="Assets\Scripts\MlAgent\Player\MLPlayerAgent.cs" />
@@ -82,6 +82,7 @@
     <Compile Include="Assets\Scripts\NPC\FieldOfViewEditor.cs" />
     <Compile Include="Assets\Scripts\Player\AnimationStateController.cs" />
     <Compile Include="Assets\Scripts\Player\UI\HealthBar.cs" />
+    <Compile Include="Assets\Scripts\gameRelated\PlayerSpawnPoint.cs" />
     <Compile Include="Assets\Scripts\gameRelated\Game.cs" />
     <Compile Include="Assets\Scripts\Player\UI\InventoryUI.cs" />
     <Compile Include="Assets\Scripts\MlAgent\Goal.cs" />
@@ -89,6 +90,7 @@
     <Compile Include="Assets\Scripts\Player\UI\MiniMap.cs" />
     <Compile Include="Assets\Scripts\NPC\NPCMovement.cs" />
     <Compile Include="Assets\Scripts\MlAgent\MoveToDiamondAgent.cs" />
+    <Compile Include="Assets\Scripts\MlAgent\Player\Djikstra.cs" />
     <Compile Include="Assets\Scripts\NPC\ChasingPlayer.cs" />
     <Compile Include="Assets\Scripts\NPC\UI\Billboard.cs" />
     <Compile Include="Assets\Scripts\gameRelated\BarrierPoint.cs" />

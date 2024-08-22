@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8934726865412776819}
   - component: {fileID: 7825956340542359312}
   - component: {fileID: 1788220640035693431}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: Tile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -74,7 +74,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 943aa2384c180a64d90e73cb386b08af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  neighbouringTiles: []
+  radius: 1.3
+  tileLayerMask:
+    serializedVersion: 2
+    m_Bits: 32768
+  predecessors: []
+  tilesWithDiamonds: []
+  path: []
+  pathMaterial: {fileID: 2100000, guid: 2f4bd6e75eeee204e9df4382ce17b011, type: 2}
+  gridMaterial: {fileID: 2100000, guid: f76affe4dd91b17469557fc2c08fa0cc, type: 2}
+  index: 0
+  excludedTypes: 090000000d000000
   type: 0
+  x: 0
+  z: 0
 --- !u!65 &1788220640035693431
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -107,13 +121,14 @@ GameObject:
   - component: {fileID: 4047459958074519985}
   - component: {fileID: 1356286865334463375}
   - component: {fileID: 3907451271989398261}
-  m_Layer: 0
+  - component: {fileID: 5608914322147112256}
+  m_Layer: 15
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &4047459958074519985
 Transform:
   m_ObjectHideFlags: 0
@@ -179,3 +194,15 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &5608914322147112256
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8573417655573748408}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fdff5a223f6c728429119368442739f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

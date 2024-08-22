@@ -13,6 +13,7 @@ public class Diamond : MonoBehaviour
         game = GetComponentInParent<Game>();
         testNr = game.GetTestNr();
         isTrainingOn = game.GetIsTrainingOn();
+
     }
     private void Start()
     {
@@ -65,15 +66,6 @@ public class Diamond : MonoBehaviour
         }
     }
 
-    private void AvoidCollisionInTraining(Collider other)
-    {
-        int whatIsBarrierLayer = 9;
-        if (other.gameObject.layer == whatIsBarrierLayer)
-        {
-            //very rare to happen
-            //to Delete
-        }
-    }
     private void OnTriggerEnter(Collider other)
     {
         UpdateTrainingRelatedData();
@@ -95,7 +87,12 @@ public class Diamond : MonoBehaviour
         }
 
         if (isTrainingOn)
-            AvoidCollisionInTraining(other);
+        {
+
+            //update the tile with which diamond collides with
+            if(other.gameObject.GetComponent<Tile>())
+                other.gameObject.GetComponent<Tile>().AssignType(transform.GetComponent<Collider>());
+        }
     }
 
 }

@@ -30,10 +30,11 @@ public class MLPlayerAgent : Agent
     public AnimationStateController animationStateController;
     bool barrierPointReached;
     float distanceToDiamond;
+    Tile currentlyTouchedTile;
 
     public Vector3 startingPlayerPosition;
 
-    
+
     int collectedDiamonds;
     float moveSpeed;
     float usedTime;
@@ -41,9 +42,12 @@ public class MLPlayerAgent : Agent
     public Vector3 moveDir;
     public float ySpeed;
 
+    [Header("Grid related")]
+    public Material gridMaterial;
+
     [Header("Steps")]
-    private int stepsAfterReward = 0;
     public int maxStepsAfterReward;
+    private int stepsAfterReward = 0;
 
     [Header("Rewards")]
     float reachingDiamondReward = 500f;
@@ -57,7 +61,7 @@ public class MLPlayerAgent : Agent
     float newTileFoundReward = 1f;
 
 
-    
+
     int testNr;
     bool isTrainingOn;
     int randomIndexSpawn;
@@ -72,6 +76,7 @@ public class MLPlayerAgent : Agent
     {
         return randomIndexSpawn;
     }
+
 
     void Start()
     {
@@ -99,7 +104,6 @@ public class MLPlayerAgent : Agent
         testNr = game.GetTestNr();
 
         visitedTiles = new List<bool>();
-
 
     }
 
@@ -147,10 +151,15 @@ public class MLPlayerAgent : Agent
                 visitedTiles = new List<bool>();
 
                 tiles = GetComponentInParent<Game>().GetTiles();
-                if(tiles != null) 
+                if (tiles != null)
                     for (int tile = 0; tile < tiles.Length; tile++)
+                    {
                         visitedTiles.Add(false);
-                
+                        tiles[tile].ResetType();
+                        tiles[tile].GetComponentInChildren<MeshRenderer>().material = gridMaterial;
+                    }
+
+
             }
 
             allDiamonds = GetComponentInParent<Game>().GetDiamonds();
@@ -282,7 +291,7 @@ public class MLPlayerAgent : Agent
             }
         }
 
-        //if the reward wasn't collected during the time of the step, reset the episode
+        //if the reward wasn't collected during the episode, reset it
         stepsAfterReward++;
         if (stepsAfterReward == maxStepsAfterReward)
         {
