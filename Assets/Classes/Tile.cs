@@ -20,6 +20,7 @@ public class Tile : MonoBehaviour
     public List<Tile> path;
     public Material pathMaterial;
     public Material gridMaterial;
+    public LayerMask[] layersToCollideWith; 
 
     public int index;
 
@@ -79,136 +80,61 @@ public class Tile : MonoBehaviour
 
     }
 
-    private void UpdatePathToTake()
-    {
-        Tile nextTileToGoTo = new Tile();
-
-        float minDistance = 10000f;
-        nextTileToGoTo = djikstraPathsToDiamonds[0][0];
-        foreach (List<Tile> tileList in djikstraPathsToDiamonds)
-        {
-            float distance = Vector3.Distance(game.GetPlayer().transform.position, tileList.Last().transform.position);
-            if(distance < minDistance)
-                nextTileToGoTo = tileList.First();
-        }
-
-        game.GetPlayer().GetComponent<MLPlayerAgent>().UpdateNextTileToGoTo(nextTileToGoTo);
-    }
-
-    public void CreateDjikstraPaths()
-    {
-        type = TileType.whatIsPlayer;
-
-        GetPredecessors();
-
-        djikstraPathsToDiamonds = new List<List<Tile>>();
-        diamonds = game.GetDiamonds();
-
-        //first, we will find all tiles that contain diamonds
-        tilesWithDiamonds = new List<Tile>();
-
-        foreach (Tile tile in predecessors)
-        {
-            if (tile.type == TileType.Diamond)
-            {
-                tilesWithDiamonds.Add(tile);
-            }
-        }
-
-        path = new List<Tile>();
-
-        //create path to each diamond
-        foreach (Tile diamondTile in tilesWithDiamonds)
-        {
-            List<Tile> pathVariable = new List<Tile>();
-
-            Tile currentlyCheckedTile = diamondTile;
-            for (int i = 0; i < 1000; i++)
-            {
-                if (currentlyCheckedTile == transform.GetComponent<Tile>() || currentlyCheckedTile == predecessors[currentlyCheckedTile.index])
-                    break;
-
-                pathVariable.Add(currentlyCheckedTile);
-                //update the color
-                currentlyCheckedTile.GetComponentInChildren<MeshRenderer>().material = pathMaterial;
-
-                currentlyCheckedTile = predecessors[currentlyCheckedTile.index];
-                
-            }
-
-            //reverse the list
-            pathVariable.Reverse();
-
-            //add the list to tthe tilesWithDiamonds
-            djikstraPathsToDiamonds.Add(pathVariable);
-
-            //for debugging
-            path = pathVariable;
-
-        }
-
-        if(djikstraPathsToDiamonds.Count > 0)
-            UpdatePathToTake();
-
-
-
-    }
-
-    private void GetPredecessors() {
-        predecessors = new List<Tile>();
-        djikstra = new Djikstra();
-        predecessors = djikstra.DjikstraMethod(game.GetTiles(), transform.GetComponent<Tile>(), excludedTypes);
-
-    }
-
     private void AssignCoords()
     {
         x = GetGamesTransformPosition(transform.position).x;
         z = GetGamesTransformPosition(transform.position).z;
     }
 
-    public void AssignType(Collider other)
+    public void AssignType()
     {
-        switch (other.gameObject.layer)
+        foreach (LayerMask layer in layersToCollideWith)
         {
-            case 6: 
-                type = TileType.whatIsGround;
-                break;
-            case 7:
-                type = TileType.RiverWalls;
-                break;
-            case 8:
-                type = TileType.whatIsPlayer;
-                break;
-            case 9:
-                type = TileType.whatIsBarrier;
-                break;
-            case 10:
-                type = TileType.hidingSpot;
-                break;
-            case 11:
-                type = TileType.NPC;
-                break;
-            case 12:
-                type = TileType.Diamond;
-                break;
-            case 13:
-                type = TileType.NotFullBarrier;
-                break;
-            case 14:
-                type = TileType.water;
-                break;
-            default:
-                type = TileType.Default;
-                break;
+            Collider[] hitColliders = Physics.OverlapSphere(transform.position, 1, layer);
+
+            if (hitColliders.Length > 0)
+            {
+                switch (hitColliders[0].gameObject.layer)
+                {
+                    case 6:
+                        type = TileType.whatIsGround;
+                        break;
+                    case 7:
+                        type = TileType.RiverWalls;
+                        break;
+                    case 8:
+                        type = TileType.whatIsPlayer;
+                        break;
+                    case 9:
+                        type = TileType.whatIsBarrier;
+                        break;
+                    case 10:
+                        type = TileType.hidingSpot;
+                        break;
+                    case 11:
+                        type = TileType.NPC;
+                        break;
+                    case 12:
+                        type = TileType.Diamond;
+                        break;
+                    case 13:
+                        type = TileType.NotFullBarrier;
+                        break;
+                    case 14:
+                        type = TileType.water;
+                        break;
+                    default:
+                        type = TileType.Default;
+                        break;
+                }
+            }
         }
 
     }
 
     public void ResetType()
     {
-        if(type == TileType.Diamond || type == TileType.whatIsPlayer)
-            type = TileType.Default;
+        type = TileType.Default;
     }
     private void Start()
     {
@@ -220,18 +146,14 @@ public class Tile : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        AssignType(other);
-        //create new djikstra paths
-        if (other.gameObject.layer == 8)
-        {
-            CreateDjikstraPaths();
-        }
+
     }
 
     private void OnTriggerExit(Collider other)
     {
         type = TileType.Default;
-        GetComponentInChildren<MeshRenderer>().material = gridMaterial;
+        if(GetComponentInChildren<MeshRenderer>())
+            GetComponentInChildren<MeshRenderer>().material = gridMaterial;
     }
 
 

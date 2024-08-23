@@ -5,6 +5,7 @@ using Unity.MLAgents;
 using Unity.MLAgents.Actuators;
 using Unity.MLAgents.Sensors;
 using System.Threading;
+using System.Linq;
 
 public class MLPlayerAgent : Agent
 {
@@ -29,7 +30,7 @@ public class MLPlayerAgent : Agent
     [SerializeField] public CharacterController controller;
     public AnimationStateController animationStateController;
     bool barrierPointReached;
-    float distanceToDiamond;
+    public float minDistanceToDiamond;
     Tile currentlyTouchedTile;
 
     public Vector3 startingPlayerPosition;
@@ -45,23 +46,32 @@ public class MLPlayerAgent : Agent
     [Header("Grid related")]
     public Material gridMaterial;
     public Tile nextTileToGoTo;
+    public Tile initialNextTileToGoTo;
+    public bool checkInitialTile;
     public float distanceToNextTile;
+    public bool properTileWasHit;
+    public List<Tile> djikstraPath;
+    public int currentPathTile;
 
     [Header("Steps")]
     public int maxStepsAfterReward;
     private int stepsAfterReward = 0;
+    public int maxStepsBeforePenalty;
+    List<float> allDistancesToDiamond;
 
     [Header("Rewards")]
-    float reachingDiamondReward;
-    float winningGameReward;
-    float distanceMultiplierReward;
-    float reachingBarrierPointReward;
-    float losingGameReward;
-    float hittingObstacleReward;
-    float reachingMaxStepReward;
-    float timePenaltyMultiplierReward;
-    float newTileFoundReward;
-    float djikstraPathFindingReward;
+    public float reachingDiamondReward;
+    public float winningGameReward;
+    public float distanceMultiplierReward;
+    public float distanceReward;
+    public float reachingBarrierPointReward;
+    public float losingGameReward;
+    public float hittingObstacleReward;
+    public float reachingMaxStepReward;
+    public float reachingMaxStepBeforePenaltyReward;
+    public float timePenaltyMultiplierReward;
+    public float newTileFoundReward;
+    public float djikstraPathFindingReward;
 
 
 
@@ -75,14 +85,6 @@ public class MLPlayerAgent : Agent
     [SerializeField] private Material neutralMaterial;
     [SerializeField] private MeshRenderer floorMeshRender;
 
-    public void UpdateNextTileToGoTo(Tile nextTileToGoToVar)
-    {
-        distanceToNextTile = Vector3.Distance(transform.position, nextTileToGoToVar.transform.position);
-
-        //update if the player is too far or too close
-        if (distanceToNextTile > 3 || distanceToNextTile < 1 || nextTileToGoTo == null)
-            nextTileToGoTo = nextTileToGoToVar;
-    }
     public int GetRandomIndexSPawn()
     {
         return randomIndexSpawn;
@@ -90,16 +92,18 @@ public class MLPlayerAgent : Agent
 
     private void UpdateRewards()
     {
-        if(reachingDiamondReward == 0) reachingDiamondReward = 500f;
-        if (winningGameReward == 0) winningGameReward = 10000f;
-        if (distanceMultiplierReward == 0) distanceMultiplierReward = 3f;
-        if (reachingBarrierPointReward == 0) reachingBarrierPointReward = 300f;
-        if (losingGameReward == 0) losingGameReward = -3000f;
-        if (hittingObstacleReward == 0) hittingObstacleReward = -300;
-        if (reachingMaxStepReward == 0) reachingMaxStepReward = -850f;
-        if (timePenaltyMultiplierReward == 0) timePenaltyMultiplierReward = -1.5f;
-        if (newTileFoundReward == 0) newTileFoundReward = 1f;
-        if (djikstraPathFindingReward == 0) djikstraPathFindingReward = 40f;
+        if(reachingDiamondReward == -1) reachingDiamondReward = 500;
+        if (winningGameReward == -1) winningGameReward = 10000f;
+        if (distanceMultiplierReward == -1) distanceMultiplierReward = 3f;
+        if (distanceReward == -1) distanceReward = 15f;
+        if (reachingBarrierPointReward == -1) reachingBarrierPointReward = 300f;
+        if (losingGameReward == -1) losingGameReward = -3000f;
+        if (hittingObstacleReward == -1) hittingObstacleReward = -300;
+        if (reachingMaxStepReward == -1) reachingMaxStepReward = -850f;
+        if (timePenaltyMultiplierReward == -1) timePenaltyMultiplierReward = -1.5f;
+        if (newTileFoundReward == -1) newTileFoundReward = 1f;
+        if (djikstraPathFindingReward == -1) djikstraPathFindingReward = 40f;
+        if (reachingMaxStepBeforePenaltyReward == -1) reachingMaxStepBeforePenaltyReward = -10f;
     }
 
     void Start()
@@ -121,7 +125,9 @@ public class MLPlayerAgent : Agent
         //layer related
         whatIsBarrierLayer = 9;
 
-        maxStepsAfterReward = 1500;
+        maxStepsAfterReward = 2000;
+        if (maxStepsBeforePenalty == 0)
+            maxStepsBeforePenalty = 1000;
 
         game = GetComponentInParent<Game>();
         isTrainingOn = game.GetIsTrainingOn();
@@ -131,6 +137,9 @@ public class MLPlayerAgent : Agent
 
         UpdateRewards();
         nextTileToGoTo = new Tile();
+        properTileWasHit = false;
+        checkInitialTile = true;
+        currentPathTile = 0;
 
     }
 
@@ -172,7 +181,9 @@ public class MLPlayerAgent : Agent
                 playerSpawningPoints = GetComponentInParent<Game>().GetPlayerSpawningPoints();
                 randomIndexSpawn = Random.Range(0, playerSpawningPoints.Length);
 
-                transform.localPosition = GetGamesTransformPosition(playerSpawningPoints[randomIndexSpawn].transform.position);
+                //initially I had "randomIndexSpawn'
+                randomIndexSpawn = 0;
+                transform.localPosition = GetGamesTransformPosition(playerSpawningPoints[0].transform.position);
 
                 //for curiosity driven rl
                 visitedTiles = new List<bool>();
@@ -183,14 +194,30 @@ public class MLPlayerAgent : Agent
                     {
                         visitedTiles.Add(false);
                         tiles[tile].ResetType();
-                        tiles[tile].GetComponentInChildren<MeshRenderer>().material = gridMaterial;
+                        if(tiles[tile].GetComponentInChildren<MeshRenderer>())
+                            tiles[tile].GetComponentInChildren<MeshRenderer>().material = gridMaterial;
                     }
 
+                //for the djikstra pathfinding
+                //we need this position to fix issues related to the update of the next tile to go to
+                //apparently, collision doesn't work properly when the episode starts
+                if (GetComponentInParent<Game>().GetEnableDjikstraPathFinding())
+                {
+
+                    initialNextTileToGoTo = GetComponentInParent<Game>().GetNextTileToGoTo();
+                    startingPlayerPosition = transform.position;
+                    currentPathTile = 0;
+                    checkInitialTile = true;
+
+                    UpdateNextTileToGoTo(true);
+                }
+
+                allDistancesToDiamond = new List<float>();
 
             }
 
             allDiamonds = GetComponentInParent<Game>().GetDiamonds();
-            distanceToDiamond = Vector3.Distance(allDiamonds[0].transform.position, transform.position);
+            minDistanceToDiamond = Vector3.Distance(allDiamonds[0].transform.position, transform.position);
         }
 
         controller.enabled = true;
@@ -249,6 +276,82 @@ public class MLPlayerAgent : Agent
 
     }
 
+    void UpdateNextTileToGoTo(bool additionalCondition)
+    {
+        //update the color
+        if(djikstraPath.Count > 0)
+        {
+            foreach(Tile tile in djikstraPath)
+                if (tile.GetComponentInChildren<MeshRenderer>())
+                    tile.GetComponentInChildren<MeshRenderer>().material = game.pathMaterial;
+        }
+
+        List<Tile> djikstraPathVar = GetComponentInParent<Game>().CreateDjikstraPath();
+
+        if (djikstraPathVar.Count > 0)
+        {
+
+            if (initialNextTileToGoTo != null)
+            {
+                //if the distance bewteen the initial position of the player and current next tile is greater than 5, immediately change
+                //the next tile
+                if (checkInitialTile && Vector3.Distance(startingPlayerPosition, initialNextTileToGoTo.transform.position) > 5)
+                {
+                    djikstraPath = new List<Tile>();
+                    djikstraPath = djikstraPathVar;
+
+                    if (djikstraPath.Count > 0)
+                        if (Vector3.Distance(transform.position, djikstraPath[0].transform.position) < 3)
+                        {
+                            checkInitialTile = false;
+                            currentPathTile = 0;
+                            nextTileToGoTo = djikstraPath[currentPathTile];
+                        }
+
+                    return;
+                }
+            }
+            else
+            {
+                djikstraPath = new List<Tile>();
+                djikstraPath = djikstraPathVar;
+                if (djikstraPath.Count > 0)
+                    initialNextTileToGoTo = djikstraPath[0];
+            }
+
+
+
+            ////if proper tile was hit, immediately switch to the next one
+            //else if ((properTileWasHit))
+            //{
+            //    nextTileToGoTo = nextTileToGoToVar;
+            //    properTileWasHit = false;
+            //}
+
+            ////else if (nextTileToGoToVar != null && nextTileToGoTo != null)
+            ////{
+            ////    distanceToCurrentTile = Vector3.Distance(nextTileToGoTo.transform.position, transform.position);
+            ////    distanceToNextTile = distanceToCurrentTile;     //for debugging
+            ////    if (distanceToCurrentTile < 0.7 || distanceToCurrentTile > 20)
+            ////        nextTileToGoTo = nextTileToGoToVar;
+            ////}
+
+            ////the initial setup
+            //else if (nextTileToGoTo == null)
+            //    nextTileToGoTo = nextTileToGoToVar;
+        }
+
+        if (additionalCondition)
+        {
+            djikstraPath = new List<Tile>();
+            djikstraPath = djikstraPathVar;
+        }
+
+        if(djikstraPath.Count > 0)
+            nextTileToGoTo = djikstraPath[currentPathTile];
+
+
+    }
     public Vector3 GetGamesTransformPosition(Vector3 position)
     {
         game = GetComponentInParent<Game>();
@@ -283,8 +386,19 @@ public class MLPlayerAgent : Agent
             //- get the path
             //- get the next tile in the path
 
-            //toDO
-            //sensor.AddObservation(GetGamesTransformPosition(nextTileToGoTo.transform.position));
+            UpdateNextTileToGoTo(false);
+
+                float distanceToCurrentTile = Vector3.Distance(nextTileToGoTo.transform.position, transform.position);
+                sensor.AddObservation(GetGamesTransformPosition(nextTileToGoTo.transform.position));
+                sensor.AddObservation(distanceToCurrentTile);
+                distanceToNextTile = distanceToCurrentTile;     //for debugging
+            
+            //else
+            //{
+            //    float distance = Vector3.Distance(allDiamonds[0].transform.position, transform.position);
+            //    sensor.AddObservation(GetGamesTransformPosition(allDiamonds[0].transform.position));
+            //    sensor.AddObservation(distance);
+            //}
         }
 
     }
@@ -314,19 +428,25 @@ public class MLPlayerAgent : Agent
         //getting closer to diamond
         if (isTrainingOn)
         {
+            allDiamonds = GetComponentInParent<Game>().GetDiamonds();
             //reward for making the distance to diamond smaller
             float newDistanceToDiamond = Vector3.Distance(allDiamonds[0].transform.position, transform.position);
+            if(allDistancesToDiamond.Count == 0)
+                allDistancesToDiamond.Add(newDistanceToDiamond);
 
             //Debug.Log("test " + 1 / newDistanceToDiamond * 100);        //20 - 35 
-            if (newDistanceToDiamond < distanceToDiamond)
+            if (newDistanceToDiamond < allDistancesToDiamond.Min())
             {
-                SetReward(+ 1/newDistanceToDiamond * distanceMultiplierReward);
-                distanceToDiamond = newDistanceToDiamond;
+                allDistancesToDiamond.Add(newDistanceToDiamond);
+
+                //SetReward(+ 1/newDistanceToDiamond * distanceMultiplierReward);
+                SetReward(+distanceReward);
+                minDistanceToDiamond = newDistanceToDiamond;
             }
             else
             {
                 //give a time penalty
-                SetReward(+ 1 / newDistanceToDiamond * distanceMultiplierReward * timePenaltyMultiplierReward);
+                //SetReward(+ 1 / newDistanceToDiamond * distanceMultiplierReward * timePenaltyMultiplierReward);
             }
         }
 
@@ -334,12 +454,16 @@ public class MLPlayerAgent : Agent
         stepsAfterReward++;
         if (stepsAfterReward == maxStepsAfterReward)
         {
-            SetReward(reachingMaxStepReward);
+            SetReward(+reachingMaxStepReward);
             stepsAfterReward = 0;
             ResetDiamonds();
             if (isTrainingOn)
                 floorMeshRender.material = neutralMaterial;
             EndEpisode();
+        }
+        else if(stepsAfterReward >= maxStepsBeforePenalty)
+        {
+            SetReward(+reachingMaxStepBeforePenaltyReward);
         }
         
 
@@ -387,7 +511,7 @@ public class MLPlayerAgent : Agent
         collectedDiamonds++;
         stepsAfterReward = 0;
 
-        SetReward(reachingDiamondReward);
+        SetReward(+reachingDiamondReward);
         if (isTrainingOn)
         {
             floorMeshRender.material = winMaterial;
@@ -399,7 +523,7 @@ public class MLPlayerAgent : Agent
 
     public void PlayerHasWon()
     {
-        SetReward(winningGameReward);
+        SetReward(+winningGameReward);
         Debug.Log(GetCumulativeReward());
         if (isTrainingOn)
         {
@@ -417,7 +541,7 @@ public class MLPlayerAgent : Agent
 
     public void PlayerHasLost()
     {
-        SetReward(losingGameReward);
+        SetReward(+losingGameReward);
         Debug.Log(GetCumulativeReward());
         ResetDiamonds();
 
@@ -448,27 +572,16 @@ public class MLPlayerAgent : Agent
         //colliding with "what is barrier"
         if (other.gameObject.layer == whatIsBarrierLayer)
         {
-            //if the player collides with the point that is next to the barrier, give him the reward
-            if (other.gameObject.GetComponent<BarrierPoint>())
-            {
-                if (!barrierPointReached)
-                {
-                    SetReward(reachingBarrierPointReward);
-                    Debug.Log("Barrier Point collision");
-                    barrierPointReached = true;
-                }
-            }
-            else
-            {
+           
                 //obstacle was hit
-                SetReward(hittingObstacleReward);
+                SetReward(+hittingObstacleReward);
                 ResetDiamonds();
                 if (isTrainingOn)
                 {
                     floorMeshRender.material = loseMaterial;
                 }
                 EndEpisode();
-            }
+            
         }
         //when tile is hit
         //for curiosity driven rl
@@ -488,7 +601,7 @@ public class MLPlayerAgent : Agent
                 if (visitedTiles[tile] == false)
                 {
                     visitedTiles[tile] = true;
-                    SetReward(newTileFoundReward);
+                    SetReward(+newTileFoundReward);
 
                     //Debug.Log("Tile reward " + tile);
                 }
@@ -496,10 +609,19 @@ public class MLPlayerAgent : Agent
 
             //for Enabled Djikstra path finding
             //when next proper Tile was hit
-            else if(GetComponentInParent<Game>().GetEnableDjikstraPathFinding() && other.gameObject == nextTileToGoTo)
+            if (nextTileToGoTo != null)
             {
-                Debug.Log("Proper Tile hit");
-                SetReward(djikstraPathFindingReward);
+                if (GetComponentInParent<Game>().GetEnableDjikstraPathFinding() && other.gameObject.transform.position == nextTileToGoTo.transform.position)
+                {
+                    Debug.Log("Proper Tile hit");
+                    SetReward(+djikstraPathFindingReward);
+                    properTileWasHit = true;
+
+                    //if the tile that was hit isn't last, increase the number
+                    if (djikstraPath[currentPathTile] != djikstraPath.Last())
+                        currentPathTile++;
+
+                }
             }
             
         }

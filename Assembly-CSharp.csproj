@@ -66,7 +66,6 @@
     <Compile Include="Assets\Scripts\Menu\Main menu\MainMenu.cs" />
     <Compile Include="Assets\Scripts\gameRelated\SpawningLocation.cs" />
     <Compile Include="Assets\Scripts\Player\TakeDamageOnObjectsPlayer.cs" />
-    <Compile Include="Assets\VisibleCube.cs" />
     <Compile Include="Assets\Scripts\MlAgent\Wall.cs" />
     <Compile Include="Assets\Scripts\gameRelated\Barrier.cs" />
     <Compile Include="Assets\Scripts\MlAgent\Player\MLPlayerAgent.cs" />
@@ -75,6 +74,7 @@
     <Compile Include="Assets\Scripts\NPC\UI\DetectionBar.cs" />
     <Compile Include="Assets\Scripts\NPC\NPCFieldOfView.cs" />
     <Compile Include="Assets\Scripts\Items\Diamond\Diamond.cs" />
+    <Compile Include="Assets\Scripts\gameRelated\VisibleCube.cs" />
     <Compile Include="Assets\Scripts\old\PlayerCamera_old.cs" />
     <Compile Include="Assets\Scripts\NPC\AnimationStateControllerNPC.cs" />
     <Compile Include="Assets\Interfaces\NPCInterface.cs" />

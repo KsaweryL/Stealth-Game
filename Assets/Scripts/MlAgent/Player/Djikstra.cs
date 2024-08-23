@@ -6,6 +6,20 @@ using static Tile;
 
 public class Djikstra : MonoBehaviour
 {
+    public List<Tile> FindTilesWithObjects(Tile[] tiles, GameObject objectToFind, float radius)
+    {
+        List<Tile> objectsToFind = new List<Tile>();
+
+        foreach (Tile tile in tiles) {
+
+            if(Vector3.Distance(tile.transform.position, objectToFind.transform.position) < radius)
+                objectsToFind.Add(tile);
+
+
+        }
+
+        return objectsToFind;
+    }
     public List<Tile> DjikstraMethod(Tile[] tiles, Tile startingTile, TileType[] excludedTypes)
     {
         List<Tile> predecessors = new List<Tile>();
@@ -71,11 +85,14 @@ public class Djikstra : MonoBehaviour
         float distance = 0;
         distance = Vector3.Distance(tiles[tile1Index].transform.position, tiles[tile2Index].transform.position);
 
-        //if the second tile belong to the excluded types of tiles, then distance between them will be considered as big
-        foreach (TileType type in excludedTypes)
+        if (excludedTypes.Length > 0)
         {
-            if (tiles[tile1Index].type == type || tiles[tile2Index].type == type)
-                distance = 1000f;
+            //if the second tile belong to the excluded types of tiles, then distance between them will be considered as big
+            foreach (TileType type in excludedTypes)
+            {
+                if (tiles[tile1Index].type == type || tiles[tile2Index].type == type)
+                    distance = 1000f;
+            }
         }
 
         if (distances[tile1Index] + distance < distances[tile2Index])

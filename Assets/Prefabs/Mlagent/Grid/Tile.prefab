@@ -75,7 +75,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   neighbouringTiles: []
-  radius: 1.3
+  radius: 1
   tileLayerMask:
     serializedVersion: 2
     m_Bits: 32768
@@ -84,6 +84,25 @@ MonoBehaviour:
   path: []
   pathMaterial: {fileID: 2100000, guid: 2f4bd6e75eeee204e9df4382ce17b011, type: 2}
   gridMaterial: {fileID: 2100000, guid: f76affe4dd91b17469557fc2c08fa0cc, type: 2}
+  layersToCollideWith:
+  - serializedVersion: 2
+    m_Bits: 32768
+  - serializedVersion: 2
+    m_Bits: 2048
+  - serializedVersion: 2
+    m_Bits: 4096
+  - serializedVersion: 2
+    m_Bits: 256
+  - serializedVersion: 2
+    m_Bits: 1024
+  - serializedVersion: 2
+    m_Bits: 8192
+  - serializedVersion: 2
+    m_Bits: 512
+  - serializedVersion: 2
+    m_Bits: 128
+  - serializedVersion: 2
+    m_Bits: 16384
   index: 0
   excludedTypes: 090000000d000000
   type: 0
@@ -128,7 +147,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4047459958074519985
 Transform:
   m_ObjectHideFlags: 0

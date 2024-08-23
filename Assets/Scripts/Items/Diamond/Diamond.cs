@@ -61,6 +61,7 @@ public class Diamond : MonoBehaviour
                 randomIndexSpawn = Random.Range(0, playerSpawnPoints.Length);
             }
 
+            //initially there was "randomIndexSpawn"
             transform.localPosition = GetGamesTransformPosition(playerSpawnPoints[randomIndexSpawn].transform.position);
 
         }
@@ -86,13 +87,6 @@ public class Diamond : MonoBehaviour
                 ResetPosition();
         }
 
-        if (isTrainingOn)
-        {
-
-            //update the tile with which diamond collides with
-            if(other.gameObject.GetComponent<Tile>())
-                other.gameObject.GetComponent<Tile>().AssignType(transform.GetComponent<Collider>());
-        }
     }
 
 }
