@@ -182,8 +182,8 @@ public class MLPlayerAgent : Agent
                 randomIndexSpawn = Random.Range(0, playerSpawningPoints.Length);
 
                 //initially I had "randomIndexSpawn'
-                randomIndexSpawn = 0;
-                transform.localPosition = GetGamesTransformPosition(playerSpawningPoints[0].transform.position);
+                //randomIndexSpawn = 0;
+                transform.localPosition = GetGamesTransformPosition(playerSpawningPoints[randomIndexSpawn].transform.position);
 
                 //for curiosity driven rl
                 visitedTiles = new List<bool>();
@@ -362,19 +362,25 @@ public class MLPlayerAgent : Agent
         allDiamonds = GetComponentInParent<Game>().GetDiamonds();
         NPCmovement = GetComponentInParent<Game>().GetNPCmovements();
 
-        sensor.AddObservation(GetGamesTransformPosition(transform.position));
+        //sensor.AddObservation(GetGamesTransformPosition(transform.position));
 
         //Debug.Log(GetGamesTransformPosition(transform.position) + " and " + transform.localPosition);
         //adding all of the diamond positions
         for (int diamond = 0; diamond < allDiamonds.Length; diamond++)
         {
-            sensor.AddObservation(GetGamesTransformPosition(allDiamonds[diamond].transform.position));
+            //sensor.AddObservation(GetGamesTransformPosition(allDiamonds[diamond].transform.position));
+
+            //instead of position, add x and y distances
+            Vector3 difference = (GetGamesTransformPosition(allDiamonds[diamond].transform.position) - GetGamesTransformPosition(transform.position)).normalized;
+
+            sensor.AddObservation(difference.x);
+            sensor.AddObservation(difference.z);
             //Debug.Log("From observatiopns: " + GetGamesTransformPosition(allDiamonds[diamond].transform.position));
         }
 
         //adding position of NPCS
-        for (int npc = 0; npc < NPCmovement.Length; npc++)
-            sensor.AddObservation(GetGamesTransformPosition(NPCmovement[npc].transform.position));
+        //for (int npc = 0; npc < NPCmovement.Length; npc++)
+        //    sensor.AddObservation(GetGamesTransformPosition(NPCmovement[npc].transform.position));
 
         //add the tiles from Djikstra path finding
         if (GetComponentInParent<Game>().GetEnableDjikstraPathFinding())
