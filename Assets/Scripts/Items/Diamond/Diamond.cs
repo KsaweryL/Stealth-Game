@@ -85,6 +85,7 @@ public class Diamond : MonoBehaviour
             }
             else
                 ResetPosition();
+
         }
 
     }

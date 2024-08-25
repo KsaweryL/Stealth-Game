@@ -9,7 +9,7 @@ public class Billboard : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        cam = FindObjectOfType<MainCamera>().transform;
+        cam = GetComponentInParent<Game>().GetCamera().transform;
     }
 
     // Update is called once per frame

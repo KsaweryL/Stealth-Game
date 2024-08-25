@@ -6,6 +6,7 @@ TagManager:
   tags:
   - BarrierTag
   - DiamondTag
+  - NPCTag
   layers:
   - Default
   - TransparentFX

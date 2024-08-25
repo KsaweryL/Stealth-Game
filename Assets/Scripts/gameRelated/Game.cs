@@ -37,6 +37,13 @@ public class Game : MonoBehaviour
     public LayerMask playerMask;
     public LayerMask diamondMask;
 
+    [Header("Camera")]
+    public MainCamera cam;
+
+    public MainCamera GetCamera()
+    {
+        return cam;
+    }
     private List<Tile> GetPredecessorsDjikstra()
     {
         Djikstra djikstra = new Djikstra();
