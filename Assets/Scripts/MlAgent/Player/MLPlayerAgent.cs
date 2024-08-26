@@ -196,8 +196,7 @@ public class MLPlayerAgent : Agent
                 randomIndexSpawn = Random.Range(0, playerSpawningPoints.Length);
 
                 //initially I had "randomIndexSpawn'
-                //randomIndexSpawn = 0;
-                transform.localPosition = GetGamesTransformPosition(playerSpawningPoints[randomIndexSpawn].transform.position);
+                transform.position =playerSpawningPoints[randomIndexSpawn].transform.position;
 
                 //for curiosity driven rl
                 visitedTiles = new List<bool>();

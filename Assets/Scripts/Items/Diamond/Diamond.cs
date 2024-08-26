@@ -62,7 +62,8 @@ public class Diamond : MonoBehaviour
             }
 
             //initially there was "randomIndexSpawn"
-            transform.localPosition = GetGamesTransformPosition(playerSpawnPoints[randomIndexSpawn].transform.position);
+            transform.position = playerSpawnPoints[randomIndexSpawn].transform.position;
+            
 
         }
     }
