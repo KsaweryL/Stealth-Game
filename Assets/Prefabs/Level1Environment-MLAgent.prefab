@@ -19235,7 +19235,7 @@ GameObject:
   - component: {fileID: 7062296258791141703}
   m_Layer: 7
   m_Name: RiverWalls
-  m_TagString: Untagged
+  m_TagString: BarrierTag
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
@@ -27444,7 +27444,7 @@ GameObject:
   - component: {fileID: 5175977237068625234}
   m_Layer: 9
   m_Name: Houses
-  m_TagString: Untagged
+  m_TagString: BarrierTag
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
@@ -28385,8 +28385,25 @@ MonoBehaviour:
   NPCmovement: []
   player: {fileID: 0}
   spawningLocations: []
+  playerSpawnPoints: []
+  barriers: []
+  tiles: []
   collectedDiamonds: 0
   allDiamondsNumber: 0
+  isTrainingOn: 1
+  testNr: 4
+  djikstraPath: []
+  enableDjikstraPathFinding: 0
+  excludedTypes: 
+  pathMaterial: {fileID: 0}
+  radiusForFindingObjects: 0
+  playerMask:
+    serializedVersion: 2
+    m_Bits: 0
+  diamondMask:
+    serializedVersion: 2
+    m_Bits: 0
+  cam: {fileID: 0}
 --- !u!114 &7743761374976854431
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -35737,7 +35754,7 @@ GameObject:
   - component: {fileID: 1768018731261733858}
   m_Layer: 9
   m_Name: Deco
-  m_TagString: Untagged
+  m_TagString: BarrierTag
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -49078,9 +49095,81 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3493697548872394745, guid: c8d8fe98bcc359c4aae102f8a6c83633, type: 3}
+      propertyPath: m_RayLength
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 3493697548872394745, guid: c8d8fe98bcc359c4aae102f8a6c83633, type: 3}
+      propertyPath: m_MaxRayDegrees
+      value: 92.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 3493697548872394745, guid: c8d8fe98bcc359c4aae102f8a6c83633, type: 3}
+      propertyPath: m_RaysPerDirection
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 3493697548872394745, guid: c8d8fe98bcc359c4aae102f8a6c83633, type: 3}
+      propertyPath: m_DetectableTags.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3493697548872394745, guid: c8d8fe98bcc359c4aae102f8a6c83633, type: 3}
+      propertyPath: m_DetectableTags.Array.data[0]
+      value: BarrierTag
+      objectReference: {fileID: 0}
+    - target: {fileID: 3493697548872394745, guid: c8d8fe98bcc359c4aae102f8a6c83633, type: 3}
+      propertyPath: m_DetectableTags.Array.data[1]
+      value: DiamondTag
+      objectReference: {fileID: 0}
+    - target: {fileID: 3493697548872394745, guid: c8d8fe98bcc359c4aae102f8a6c83633, type: 3}
+      propertyPath: m_DetectableTags.Array.data[2]
+      value: NPCTag
+      objectReference: {fileID: 0}
+    - target: {fileID: 5521520000271125297, guid: c8d8fe98bcc359c4aae102f8a6c83633, type: 3}
+      propertyPath: m_BrainParameters.VectorObservationSize
+      value: 65
+      objectReference: {fileID: 0}
     - target: {fileID: 6721724369476882580, guid: c8d8fe98bcc359c4aae102f8a6c83633, type: 3}
       propertyPath: m_Name
       value: Third Person Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 6962053227386552900, guid: c8d8fe98bcc359c4aae102f8a6c83633, type: 3}
+      propertyPath: distanceReward
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6962053227386552900, guid: c8d8fe98bcc359c4aae102f8a6c83633, type: 3}
+      propertyPath: losingGameReward
+      value: -8
+      objectReference: {fileID: 0}
+    - target: {fileID: 6962053227386552900, guid: c8d8fe98bcc359c4aae102f8a6c83633, type: 3}
+      propertyPath: winningGameReward
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 6962053227386552900, guid: c8d8fe98bcc359c4aae102f8a6c83633, type: 3}
+      propertyPath: gettingDamageReward
+      value: -0.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 6962053227386552900, guid: c8d8fe98bcc359c4aae102f8a6c83633, type: 3}
+      propertyPath: maxStepsAfterReward
+      value: 2500
+      objectReference: {fileID: 0}
+    - target: {fileID: 6962053227386552900, guid: c8d8fe98bcc359c4aae102f8a6c83633, type: 3}
+      propertyPath: smallVelocityReward
+      value: -0.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 6962053227386552900, guid: c8d8fe98bcc359c4aae102f8a6c83633, type: 3}
+      propertyPath: hittingObstacleReward
+      value: -7
+      objectReference: {fileID: 0}
+    - target: {fileID: 6962053227386552900, guid: c8d8fe98bcc359c4aae102f8a6c83633, type: 3}
+      propertyPath: maxStepsBeforePenalty
+      value: 1000
+      objectReference: {fileID: 0}
+    - target: {fileID: 6962053227386552900, guid: c8d8fe98bcc359c4aae102f8a6c83633, type: 3}
+      propertyPath: reachingDiamondReward
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 6962053227386552900, guid: c8d8fe98bcc359c4aae102f8a6c83633, type: 3}
+      propertyPath: reachingMaxStepBeforePenaltyReward
+      value: -0.6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

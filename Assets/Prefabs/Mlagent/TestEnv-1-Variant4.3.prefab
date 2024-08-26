@@ -1338,6 +1338,7 @@ MonoBehaviour:
   diamondMask:
     serializedVersion: 2
     m_Bits: 4096
+  cam: {fileID: 0}
 --- !u!114 &6812778305782470889
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1763,6 +1764,7 @@ MonoBehaviour:
   m_DetectableTags:
   - BarrierTag
   - DiamondTag
+  - NPCTag
   m_RaysPerDirection: 13
   m_MaxRayDegrees: 92.7
   m_SphereCastRadius: 0.5
@@ -1951,7 +1953,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1626139289685480428, guid: c8d8fe98bcc359c4aae102f8a6c83633, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -9.58
+      value: -10.8
       objectReference: {fileID: 0}
     - target: {fileID: 1626139289685480428, guid: c8d8fe98bcc359c4aae102f8a6c83633, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1959,7 +1961,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1626139289685480428, guid: c8d8fe98bcc359c4aae102f8a6c83633, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 7.31
+      value: 7.3
       objectReference: {fileID: 0}
     - target: {fileID: 1626139289685480428, guid: c8d8fe98bcc359c4aae102f8a6c83633, type: 3}
       propertyPath: m_LocalRotation.w
@@ -2027,7 +2029,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5521520000271125297, guid: c8d8fe98bcc359c4aae102f8a6c83633, type: 3}
       propertyPath: m_BrainParameters.VectorObservationSize
-      value: 45
+      value: 65
       objectReference: {fileID: 0}
     - target: {fileID: 6721724369476882580, guid: c8d8fe98bcc359c4aae102f8a6c83633, type: 3}
       propertyPath: m_Name
@@ -2091,7 +2093,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6962053227386552900, guid: c8d8fe98bcc359c4aae102f8a6c83633, type: 3}
       propertyPath: hittingObstacleReward
-      value: -3
+      value: -5
       objectReference: {fileID: 0}
     - target: {fileID: 6962053227386552900, guid: c8d8fe98bcc359c4aae102f8a6c83633, type: 3}
       propertyPath: reachingDiamondReward

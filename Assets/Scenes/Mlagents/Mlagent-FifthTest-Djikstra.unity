@@ -27350,6 +27350,7 @@ MonoBehaviour:
   diamondMask:
     serializedVersion: 2
     m_Bits: 0
+  cam: {fileID: 0}
 --- !u!1 &5488404302232376990
 GameObject:
   m_ObjectHideFlags: 0

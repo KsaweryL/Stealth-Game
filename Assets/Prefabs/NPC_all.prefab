@@ -5111,7 +5111,7 @@ GameObject:
   - component: {fileID: 5042156684333070011}
   m_Layer: 11
   m_Name: NPC_all
-  m_TagString: Untagged
+  m_TagString: NPCTag
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

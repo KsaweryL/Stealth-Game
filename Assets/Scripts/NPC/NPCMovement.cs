@@ -42,13 +42,16 @@ public class NPCMovement : MonoBehaviour
     public void ResetPropertiesCall()
     {
         wasResetPropertiesCalled = true;
+        ResetProperties();
     }
     public void ResetProperties()
     {
         agent.enabled = false;
         transform.position = startingPosition;
-        agent.enabled = true;
         GetComponent<ChasingPlayer>().ResetCurrentlyWaitingTimeToWaitAfterLosing();
+        agent.enabled = true;
+
+        StopChasingPlayer();
 
         wasResetPropertiesCalled = false;
 
