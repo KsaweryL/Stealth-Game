@@ -35,6 +35,7 @@ public class AnimationStateControllerNPC : MonoBehaviour
 
         animator.SetBool("isNPCMovingForward", true);
 
+        PathPoints = NPCmovement.GetPathPoints();
         //find if any of the points were reached
         for (int i = 0; i < numberOfPoints; i++) {
             if (NPC.transform.position.x == PathPoints[i].transform.position.x &&

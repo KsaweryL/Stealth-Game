@@ -180,7 +180,7 @@ GameObject:
   - component: {fileID: 1193178733924346814}
   m_Layer: 11
   m_Name: NPC
-  m_TagString: Untagged
+  m_TagString: NPCTag
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2697,9 +2697,10 @@ GameObject:
   - component: {fileID: 3051281340373714612}
   - component: {fileID: 1656014119903335525}
   - component: {fileID: 6133059843235293145}
+  - component: {fileID: 6416786857328825125}
   m_Layer: 11
   m_Name: ma
-  m_TagString: Untagged
+  m_TagString: NPCTag
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2824,7 +2825,6 @@ MonoBehaviour:
     m_Bits: 256
   timeToWaitWhenPatrolling: 2
   chasePlayer: 0
-  wasResetPropertiesCalled: 0
   NPCFOV: {fileID: 0}
   chasingPlayer: {fileID: 0}
 --- !u!114 &1656014119903335525
@@ -2894,6 +2894,27 @@ MonoBehaviour:
   timeBetweenHits: 50
   damageWasInflicted: 0
   chaseSpeedMultiplier: 1.2
+--- !u!65 &6416786857328825125
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3805372206856446800}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1.9724442, z: 1}
+  m_Center: {x: 0, y: 1.1106342, z: 0}
 --- !u!1 &3805372206856446802
 GameObject:
   m_ObjectHideFlags: 0

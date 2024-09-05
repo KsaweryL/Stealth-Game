@@ -81,6 +81,7 @@ public class MLPlayerAgent : Agent
     public float djikstraPathFindingReward;
     public float gettingDamageReward;
     public float smallVelocityReward;
+    public float NPCseePlayerReward;
 
 
 
@@ -114,6 +115,7 @@ public class MLPlayerAgent : Agent
         if (newTileFoundReward == -1) newTileFoundReward = 1f;
         if (djikstraPathFindingReward == -1) djikstraPathFindingReward = 40f;
         if (reachingMaxStepBeforePenaltyReward == 1) reachingMaxStepBeforePenaltyReward = -10f;
+        if (NPCseePlayerReward == 1) NPCseePlayerReward = -0.01f;
     }
 
     void Start()
@@ -281,7 +283,7 @@ public class MLPlayerAgent : Agent
         NPCmovement = GetComponentInParent<Game>().GetNPCmovements();
 
         for (int npc = 0; npc < NPCmovement.Length; npc++)
-            NPCmovement[npc].ResetPropertiesCall();
+            NPCmovement[npc].ResetProperties();
 
         if (isTrainingOn)
         {
@@ -592,19 +594,20 @@ public class MLPlayerAgent : Agent
         Debug.Log(GetCumulativeReward());
         ResetDiamonds();
 
-        for (int npc = 0; npc < NPCmovement.Length; npc++)
-            NPCmovement[npc].ResetPropertiesCall();
-
         if (isTrainingOn && floorMeshRender != null)
             floorMeshRender.material = loseMaterial;
+
         EndEpisode() ;
         
     }
 
-    public void PlayerWasDetected()
+    public void PlayerDetectionCheck(bool canNPCSeePlayer)
     {
-        SetReward(-30f);
-        //Debug.Log(GetCumulativeReward());
+        if (canNPCSeePlayer)
+        {
+            SetReward(+NPCseePlayerReward);
+            Debug.Log("player was spotted");
+        }
     }
 
     private void CheckYaxis()
