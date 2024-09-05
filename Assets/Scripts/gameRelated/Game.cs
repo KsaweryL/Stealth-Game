@@ -15,6 +15,11 @@ public class Game : MonoBehaviour
     public Barrier[] barriers;
     public Tile[] tiles;
     Tile currentlyTouchedTile;
+    bool pauseMenuIsoOn = false;
+
+    [Header("Pause")]
+    public GameObject pauseMenu;
+    
 
     [Header("Diamonds")]
     public int collectedDiamonds;
@@ -40,6 +45,10 @@ public class Game : MonoBehaviour
     [Header("Camera")]
     public MainCamera cam;
 
+    public bool GetIsPauseMenuOn()
+    {
+        return pauseMenuIsoOn;
+    }
     public MainCamera GetCamera()
     {
         return cam;
@@ -271,9 +280,32 @@ public class Game : MonoBehaviour
         return NPCmovementVariable;
     }
 
+    public void ResetPauseMenu()
+    {
+        pauseMenuIsoOn = true;
+        UpdatePauseMenu();
+    }
+    void UpdatePauseMenu()
+    {
+        
+            if (pauseMenuIsoOn)
+            {
+                pauseMenuIsoOn = false;
+            }
+            else
+            {
+                pauseMenuIsoOn = true;
+            }
+            pauseMenu.GetComponentInChildren<PauseMenu>().UpdatePauseMenu(pauseMenuIsoOn);
+
+        
+
+    }
+
     // Update is called once per frame
     void Update()
     {
-        
+        if (Input.GetKeyDown(KeyCode.Escape))
+            UpdatePauseMenu();
     }
 }

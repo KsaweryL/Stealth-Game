@@ -136,11 +136,15 @@ public class ThirdPersonMovement : MonoBehaviour
 
         ApplyRotation(transform, horizontal, vertical, enableCam);
 
- 
+
         //jumping
         //jump only when one is not sneaking
         //troDO - delete is grounded later for non mlagent
-        if (jump && !isSneaking && controller.isGrounded)
+        bool shouldGroundedBeIncluded = false;
+        if(GetComponentInParent<Game>().GetIsTrainingOn())
+            shouldGroundedBeIncluded = true;
+
+        if (jump && !isSneaking && (controller.isGrounded || !shouldGroundedBeIncluded))
         {
 
             ySpeed = jumpSpeed;
@@ -254,8 +258,9 @@ public class ThirdPersonMovement : MonoBehaviour
         bool sprint = Input.GetKeyDown(KeyCode.LeftShift);
         bool sneakingButton = Input.GetKeyDown(KeyCode.LeftControl);
 
-        //apply movement
-        ApplyMovement(horizontal, vertical, jump, sprint, sneakingButton, true, 1f);
+        //apply movement only when game is not paused
+        if(!GetComponentInParent<Game>().GetIsPauseMenuOn())
+            ApplyMovement(horizontal, vertical, jump, sprint, sneakingButton, true, 1f);
 
         
 

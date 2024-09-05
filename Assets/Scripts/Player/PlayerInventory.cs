@@ -19,7 +19,8 @@ public class PlayerInventory : MonoBehaviour
         NumberOfDiamonds++;
 
         GetComponentInParent<Game>().UpdateCollectedDiamonds();
-        GetComponent<MLPlayerAgent>().DiamondWasCollected();
+        if(GetComponentInParent<Game>().GetIsTrainingOn())
+            GetComponent<MLPlayerAgent>().DiamondWasCollected();
         //subscriber publisher type of function
         //in this case, should be assigned to the text in the main UI
         OnDiamondCollected.Invoke(this);
