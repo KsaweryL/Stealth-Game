@@ -1,0 +1,49 @@
+{
+    "name": "root",
+    "metadata": {
+        "timer_format_version": "0.1.0",
+        "start_time_seconds": "1725636922",
+        "python_version": "3.9.13 (tags/v3.9.13:6de2ca5, May 17 2022, 16:36:42) [MSC v.1929 64 bit (AMD64)]",
+        "command_line_arguments": "D:\\Studia\\Thesis\\Stealth game\\venv\\Scripts\\mlagents-learn config/collectAllDiamonds.yaml --run-id=playerMlAgentFifthTest86 --resume",
+        "mlagents_version": "0.30.0",
+        "mlagents_envs_version": "0.30.0",
+        "communication_protocol_version": "1.5.0",
+        "pytorch_version": "2.2.2+cu121",
+        "numpy_version": "1.21.2",
+        "end_time_seconds": "1725636932"
+    },
+    "total": 9.7357158,
+    "count": 1,
+    "self": 0.006659199999999643,
+    "children": {
+        "run_training.setup": {
+            "total": 0.09614370000000028,
+            "count": 1,
+            "self": 0.09614370000000028
+        },
+        "TrainerController.start_learning": {
+            "total": 9.6329129,
+            "count": 1,
+            "self": 0.00011940000000087991,
+            "children": {
+                "TrainerController._reset_env": {
+                    "total": 9.4867178,
+                    "count": 1,
+                    "self": 9.4867178
+                },
+                "TrainerController._save_models": {
+                    "total": 0.14607569999999903,
+                    "count": 1,
+                    "self": 0.0037709999999986366,
+                    "children": {
+                        "RLTrainer._checkpoint": {
+                            "total": 0.1423047000000004,
+                            "count": 1,
+                            "self": 0.1423047000000004
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
