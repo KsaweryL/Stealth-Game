@@ -15,10 +15,14 @@ public class Game : MonoBehaviour
     public Barrier[] barriers;
     public Tile[] tiles;
     Tile currentlyTouchedTile;
-    bool pauseMenuIsoOn = false;
 
     [Header("Pause")]
     public GameObject pauseMenu;
+    public bool pauseMenuIsoOn = false;
+
+
+    [Header("End of the game")]
+    public GameObject endGameMenu;
     
 
     [Header("Diamonds")]
@@ -45,6 +49,10 @@ public class Game : MonoBehaviour
     [Header("Camera")]
     public MainCamera cam;
 
+    public GameObject GetEndGameMenu()
+    {
+        return endGameMenu;
+    }
     public bool GetIsPauseMenuOn()
     {
         return pauseMenuIsoOn;

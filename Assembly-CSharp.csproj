@@ -66,12 +66,13 @@
     <Compile Include="Assets\Scripts\Menu\Main menu\MainMenu.cs" />
     <Compile Include="Assets\Scripts\gameRelated\SpawningLocation.cs" />
     <Compile Include="Assets\Scripts\Player\TakeDamageOnObjectsPlayer.cs" />
-    <Compile Include="Assets\PauseMenu.cs" />
     <Compile Include="Assets\Scripts\MlAgent\Wall.cs" />
     <Compile Include="Assets\Scripts\gameRelated\Barrier.cs" />
+    <Compile Include="Assets\Scripts\Menu\End game menu\EndGameText.cs" />
     <Compile Include="Assets\Scripts\MlAgent\Player\MLPlayerAgent.cs" />
     <Compile Include="Assets\Scripts\Player\HidingSpot\DetectingPlayerInHidingSpot.cs" />
     <Compile Include="Assets\Scripts\Player\ThirdPersonMovement.cs" />
+    <Compile Include="Assets\ChooseLevel.cs" />
     <Compile Include="Assets\Scripts\NPC\UI\DetectionBar.cs" />
     <Compile Include="Assets\Scripts\NPC\NPCFieldOfView.cs" />
     <Compile Include="Assets\Scripts\Items\Diamond\Diamond.cs" />
@@ -82,9 +83,11 @@
     <Compile Include="Assets\Scripts\gameRelated\MainCamera.cs" />
     <Compile Include="Assets\Scripts\NPC\FieldOfViewEditor.cs" />
     <Compile Include="Assets\Scripts\Player\AnimationStateController.cs" />
+    <Compile Include="Assets\Scripts\Menu\End game menu\EndGameMenu.cs" />
     <Compile Include="Assets\Scripts\Player\UI\HealthBar.cs" />
     <Compile Include="Assets\Scripts\gameRelated\PlayerSpawnPoint.cs" />
     <Compile Include="Assets\Scripts\gameRelated\Game.cs" />
+    <Compile Include="Assets\Scripts\Menu\Pause menu\PauseMenu.cs" />
     <Compile Include="Assets\Scripts\Player\UI\InventoryUI.cs" />
     <Compile Include="Assets\Scripts\MlAgent\Goal.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerInventory.cs" />

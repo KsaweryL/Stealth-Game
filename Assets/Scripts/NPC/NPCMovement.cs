@@ -147,8 +147,8 @@ public class NPCMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        //only when agent is enabled
-        if (agent.enabled == true)
+        //only when agent is enabled and when pasue menu is not on 
+        if (agent.enabled == true && !GetComponentInParent<Game>().GetIsPauseMenuOn())
         {
             //Patrol only if player is not already detected
             //once the player is spotted, chase him for a certain period of time,

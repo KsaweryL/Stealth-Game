@@ -3,14 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using Cinemachine;
+using UnityEngine.SceneManagement;
 
 public class PauseMenu : MonoBehaviour
 {
     bool pauseMenuIsoOn;
     //NPC
     NPCMovement[] npcs;
+    Dictionary<NPCMovement, float> npcsSpeed;
     //player
     CinemachineFreeLook camCinemachine;
+    ThirdPersonMovement player;
+    float playerAnimationSpeed;
 
 
     // Start is called before the first frame update
@@ -20,14 +24,24 @@ public class PauseMenu : MonoBehaviour
        
     }
 
-    void FreezeTheGame()
+    public void FreezeTheGame()
     {
         npcs = GetComponentInParent<Game>().GetNPCmovements();
+        npcsSpeed = new Dictionary<NPCMovement, float>();
+        player = GetComponentInParent<Game>().GetPlayer();
 
-        for(int npc = 0; npc < npcs.Length; npc++)
+        //freeze the player
+        playerAnimationSpeed = player.GetComponentInChildren<Animator>().speed;
+        player.GetComponentInChildren<Animator>().speed = 0;
+
+        for (int npc = 0; npc < npcs.Length; npc++)
         {
             NavMeshAgent agent = npcs[npc].GetNavMeshAgent();
             agent.enabled = false;
+
+            //freeze the animation
+            npcsSpeed.Add(npcs[npc], npcs[npc].gameObject.GetComponent<Animator>().speed);
+            npcs[npc].gameObject.GetComponent<Animator>().speed = 0;
         }
 
         //cam
@@ -41,10 +55,19 @@ public class PauseMenu : MonoBehaviour
     {
         npcs = GetComponentInParent<Game>().GetNPCmovements();
 
+        //unfreeze the player
+        player.GetComponentInChildren<Animator>().speed = playerAnimationSpeed;
+
         for (int npc = 0; npc < npcs.Length; npc++)
         {
             NavMeshAgent agent = npcs[npc].GetNavMeshAgent();
+
+            //unfreeze the animation
+            npcs[npc].gameObject.GetComponent<Animator>().speed = npcsSpeed[npcs[npc]];
+
             agent.enabled = true;
+
+            
         }
 
         //cam
@@ -70,9 +93,8 @@ public class PauseMenu : MonoBehaviour
             FreezeTheGame();
         }
     }
-    public void QuitGame()
+    public void BackToMainMenu()
     {
-        Debug.Log("Exited the game");
-        Application.Quit();
+        SceneManager.LoadScene("Scenes/StartingMenu");
     }
 }

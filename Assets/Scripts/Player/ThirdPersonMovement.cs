@@ -84,10 +84,12 @@ public class ThirdPersonMovement : MonoBehaviour
         if (currentHealth <= 0)
         {
             currentHealth = 0;
-            GetComponent<MLPlayerAgent>().PlayerHasLost();
+            if(GetComponentInParent<Game>().GetIsTrainingOn())
+                GetComponent<MLPlayerAgent>().PlayerHasLost();
         }
         else
-            GetComponent<MLPlayerAgent>().DamageWasTaken();
+            if (GetComponentInParent<Game>().GetIsTrainingOn())
+                GetComponent<MLPlayerAgent>().DamageWasTaken();
     }
 
     public float ApplyGravity(CharacterController controller, Vector3 moveDirVariable, float ySpeedVariable, float time)
@@ -259,7 +261,7 @@ public class ThirdPersonMovement : MonoBehaviour
         bool sneakingButton = Input.GetKeyDown(KeyCode.LeftControl);
 
         //apply movement only when game is not paused
-        if(!GetComponentInParent<Game>().GetIsPauseMenuOn())
+        if(!GetComponentInParent<Game>().GetIsPauseMenuOn() && !GetComponentInParent<GameOver>().GetGameOver())
             ApplyMovement(horizontal, vertical, jump, sprint, sneakingButton, true, 1f);
 
         
