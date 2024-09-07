@@ -21,7 +21,7 @@ public class NPCMovement : MonoBehaviour
     public LayerMask whatIsPlayer;
 
     //waiting a number of frames
-    public int timeToWaitWhenPatrolling;
+    public float timeToWaitWhenPatrolling;
     int currentlyWaitingTime;
 
     //detecting a player

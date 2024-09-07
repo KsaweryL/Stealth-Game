@@ -56,7 +56,8 @@ public class Diamond : MonoBehaviour
             MLPlayerAgent mlagent = GetComponentInParent<Game>().GetPlayer().GetComponent<MLPlayerAgent>();
             int randomIndexSpawn = mlagent.GetRandomIndexSPawn();
 
-            while (randomIndexSpawn == mlagent.GetRandomIndexSPawn())
+            //0 is for the special case
+            while (randomIndexSpawn == mlagent.GetRandomIndexSPawn() || randomIndexSpawn == 0)
             {
                 randomIndexSpawn = Random.Range(0, playerSpawnPoints.Length);
             }

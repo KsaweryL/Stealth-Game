@@ -82,6 +82,7 @@ public class MLPlayerAgent : Agent
     public float gettingDamageReward;
     public float smallVelocityReward;
     public float NPCseePlayerReward;
+    public float playerIschasenAfterReward;
 
 
 
@@ -201,9 +202,9 @@ public class MLPlayerAgent : Agent
 
                 //initially I had "randomIndexSpawn'
                 //randomIndexSpawn = 0;
-                randomIndexSpawn = Random.Range(0, 3);
-                if (randomIndexSpawn == 1) randomIndexSpawn = 8;
-                else if (randomIndexSpawn == 2) randomIndexSpawn = 14;
+                randomIndexSpawn = Random.Range(0, 2);
+                if (randomIndexSpawn == 1) randomIndexSpawn = 4;
+                //else if (randomIndexSpawn == 2) randomIndexSpawn = 5;
 
                 transform.position =playerSpawningPoints[randomIndexSpawn].transform.position;
 
@@ -609,6 +610,12 @@ public class MLPlayerAgent : Agent
             SetReward(+NPCseePlayerReward);
             Debug.Log("player was spotted");
         }
+    }
+
+    public void PlayerIsChasenAfter()
+    {
+        SetReward(+playerIschasenAfterReward);
+        EndEpisode();
     }
 
     private void CheckYaxis()
