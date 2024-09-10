@@ -7,6 +7,7 @@ TagManager:
   - BarrierTag
   - DiamondTag
   - NPCTag
+  - HidingSpotTag
   layers:
   - Default
   - TransparentFX

@@ -75,6 +75,7 @@
     <Compile Include="Assets\Scripts\NPC\UI\DetectionBar.cs" />
     <Compile Include="Assets\Scripts\NPC\NPCFieldOfView.cs" />
     <Compile Include="Assets\Scripts\Items\Diamond\Diamond.cs" />
+    <Compile Include="Assets\HidingSpotArea.cs" />
     <Compile Include="Assets\Scripts\gameRelated\VisibleCube.cs" />
     <Compile Include="Assets\Scripts\old\PlayerCamera_old.cs" />
     <Compile Include="Assets\Scripts\NPC\AnimationStateControllerNPC.cs" />

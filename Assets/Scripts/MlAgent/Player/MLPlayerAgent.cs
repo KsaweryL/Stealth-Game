@@ -6,6 +6,8 @@ using Unity.MLAgents.Actuators;
 using Unity.MLAgents.Sensors;
 using System.Threading;
 using System.Linq;
+using UnityEngine.AI;
+using Unity.VisualScripting;
 
 public class MLPlayerAgent : Agent
 {
@@ -58,6 +60,7 @@ public class MLPlayerAgent : Agent
     private int stepsAfterReward = 0;
     public int maxStepsBeforePenalty;
     List<float> allDistancesToDiamond;
+    List<float> allDistancesToNPC;
 
     [Header("Velocity check")]
     public int maxStepsForVelocityMeasurement;
@@ -82,7 +85,9 @@ public class MLPlayerAgent : Agent
     public float gettingDamageReward;
     public float smallVelocityReward;
     public float NPCseePlayerReward;
+    public float playerIsHiddenReward;
     public float playerIschasenAfterReward;
+    public float distanceToClosestNPCReward;
 
 
 
@@ -95,6 +100,14 @@ public class MLPlayerAgent : Agent
     [SerializeField] private Material loseMaterial;
     [SerializeField] private Material neutralMaterial;
     [SerializeField] private MeshRenderer floorMeshRender;
+
+    [Header("NPC")]
+    public NPCMovement chosenNPC;
+    public float minDistanceToNPC;
+
+    [Header("Hiding spot")]
+    public HidingSpotArea[] hidingSpotAreas;
+    public HidingSpotArea chosenHidingSpotArea;
 
     public int GetRandomIndexSPawn()
     {
@@ -236,6 +249,7 @@ public class MLPlayerAgent : Agent
                 }
 
                 allDistancesToDiamond = new List<float>();
+                allDistancesToNPC = new List<float>();
 
             }
 
@@ -365,6 +379,7 @@ public class MLPlayerAgent : Agent
     {
         allDiamonds = GetComponentInParent<Game>().GetDiamonds();
         NPCmovement = GetComponentInParent<Game>().GetNPCmovements();
+        hidingSpotAreas = GetComponentInParent<Game>().GetHidingSpotAreas();
 
         //sensor.AddObservation(GetGamesTransformPosition(transform.position));
 
@@ -395,8 +410,45 @@ public class MLPlayerAgent : Agent
         sensor.AddObservation(difference.z);
 
         //adding position of NPCS
-        //for (int npc = 0; npc < NPCmovement.Length; npc++)
-        //sensor.AddObservation(GetGamesTransformPosition(NPCmovement[npc].transform.position));
+        if (NPCmovement.Length > 10)
+            throw new System.Exception("There are too many NPCS.");
+        else if (NPCmovement.Length == 0)
+            Debug.Log("Therer are np NPC detected");
+
+        for (int npc = 0; npc < NPCmovement.Length; npc++)
+        {
+            Vector3 difference_npc = (GetGamesTransformPosition(GetGamesTransformPosition(NPCmovement[npc].transform.position)) - GetGamesTransformPosition(transform.position)).normalized;
+
+            sensor.AddObservation(difference_npc.x);
+            sensor.AddObservation(difference_npc.z);
+
+            //add velocities of each guard
+            sensor.AddObservation(NPCmovement[npc].GetComponent<NavMeshAgent>().velocity.x);
+            sensor.AddObservation(NPCmovement[npc].GetComponent<NavMeshAgent>().velocity.z);
+        }
+
+        //adding positions of the nearest hiding spot area
+        if (hidingSpotAreas.Length > 15)
+            throw new System.Exception("There are too many Hiding spot areas.");
+        else if (hidingSpotAreas.Length == 0)
+            Debug.Log("Therer are np hiding spot areas detected");
+
+        chosenHidingSpotArea = hidingSpotAreas[0];
+
+        foreach(HidingSpotArea hidingSpotArea in hidingSpotAreas)
+        {
+            if(Vector3.Distance(hidingSpotArea.transform.position, transform.position) < Vector3.Distance(chosenHidingSpotArea.transform.position, transform.position))
+                chosenHidingSpotArea = hidingSpotArea;
+        }
+
+        Vector3 difference_hidingSpotArea = (GetGamesTransformPosition(GetGamesTransformPosition(chosenHidingSpotArea.transform.position)) - GetGamesTransformPosition(transform.position)).normalized;
+
+        sensor.AddObservation(difference_hidingSpotArea.x);
+        sensor.AddObservation(difference_hidingSpotArea.z);
+
+        //add information whether player is hidden
+        bool playerIsHidden = GetComponentInParent<Game>().GetPlayer().GetComponent<DetectingPlayerInHidingSpot>().IsPlayerHidden();
+        sensor.AddObservation(playerIsHidden);
 
         //add the tiles from Djikstra path finding
         if (GetComponentInParent<Game>().GetEnableDjikstraPathFinding())
@@ -458,6 +510,88 @@ public class MLPlayerAgent : Agent
         }
             
     }
+
+    void DistanceToDiamondRewardUpdate()
+    {
+        allDiamonds = GetComponentInParent<Game>().GetDiamonds();
+        //reward for making the distance to diamond smaller
+        float newDistanceToDiamond = Vector3.Distance(allDiamonds[0].transform.position, transform.position);
+        if (allDistancesToDiamond.Count == 0)
+            allDistancesToDiamond.Add(newDistanceToDiamond);
+
+        //Debug.Log("test " + 1 / newDistanceToDiamond * 100);        //20 - 35 
+        if (newDistanceToDiamond < allDistancesToDiamond.Min())
+        {
+            allDistancesToDiamond.Add(newDistanceToDiamond);
+
+            //SetReward(+ 1/newDistanceToDiamond * distanceMultiplierReward);
+            SetReward(+distanceReward);
+            minDistanceToDiamond = newDistanceToDiamond;
+        }
+        else
+        {
+            //give a time penalty
+            //SetReward(+ 1 / newDistanceToDiamond * distanceMultiplierReward * timePenaltyMultiplierReward);
+        }
+    }
+
+    void DistanceToClosestNPCRewardUpdate()
+    {
+        NPCmovement = GetComponentInParent<Game>().GetNPCmovements();
+        //choose the closest NPC
+
+        NPCMovement currentlyChosenNPC = chosenNPC;
+        chosenNPC = NPCmovement[0];
+        foreach (NPCMovement npc in NPCmovement) { 
+            if(Vector3.Distance(npc.transform.position, transform.position) < Vector3.Distance(chosenNPC.transform.position, transform.position))
+                chosenNPC = npc;
+        }
+
+        if (chosenNPC != currentlyChosenNPC)
+            allDistancesToNPC = new List<float>();
+
+
+        //reward for making the distance to diamond smaller
+        float newDistanceToNPC = Vector3.Distance(chosenNPC.transform.position, transform.position);
+        if (allDistancesToNPC.Count == 0)
+            allDistancesToNPC.Add(newDistanceToNPC);
+
+        if (newDistanceToNPC < allDistancesToNPC.Min())
+        {
+            allDistancesToNPC.Add(newDistanceToNPC);
+
+            SetReward(+distanceToClosestNPCReward);
+            minDistanceToNPC = newDistanceToNPC;
+        }
+    }
+
+    void MaxStepsReachedRewardUpdate()
+    {
+        //if the reward wasn't collected during the episode, reset it
+        stepsAfterReward++;
+        if (stepsAfterReward == maxStepsAfterReward)
+        {
+            SetReward(+reachingMaxStepReward);
+            stepsAfterReward = 0;
+            ResetDiamonds();
+            if (isTrainingOn && floorMeshRender != null)
+                floorMeshRender.material = neutralMaterial;
+            EndEpisode();
+        }
+        else if (stepsAfterReward >= maxStepsBeforePenalty)
+        {
+            SetReward(+reachingMaxStepBeforePenaltyReward);
+        }
+    }
+
+    void CheckIfPlayerHiddenUpdate()
+    {
+        bool playerIsHidden = GetComponentInParent<Game>().GetPlayer().GetComponent<DetectingPlayerInHidingSpot>().IsPlayerHidden();
+        if (playerIsHidden)
+        {
+            SetReward(+playerIsHiddenReward);
+        }
+    }
     public override void OnActionReceived(ActionBuffers actions)
     {
 
@@ -476,43 +610,12 @@ public class MLPlayerAgent : Agent
         //getting closer to diamond
         if (isTrainingOn)
         {
-            allDiamonds = GetComponentInParent<Game>().GetDiamonds();
-            //reward for making the distance to diamond smaller
-            float newDistanceToDiamond = Vector3.Distance(allDiamonds[0].transform.position, transform.position);
-            if(allDistancesToDiamond.Count == 0)
-                allDistancesToDiamond.Add(newDistanceToDiamond);
-
-            //Debug.Log("test " + 1 / newDistanceToDiamond * 100);        //20 - 35 
-            if (newDistanceToDiamond < allDistancesToDiamond.Min())
-            {
-                allDistancesToDiamond.Add(newDistanceToDiamond);
-
-                //SetReward(+ 1/newDistanceToDiamond * distanceMultiplierReward);
-                SetReward(+distanceReward);
-                minDistanceToDiamond = newDistanceToDiamond;
-            }
-            else
-            {
-                //give a time penalty
-                //SetReward(+ 1 / newDistanceToDiamond * distanceMultiplierReward * timePenaltyMultiplierReward);
-            }
+            DistanceToDiamondRewardUpdate();
+            DistanceToClosestNPCRewardUpdate();
+            CheckIfPlayerHiddenUpdate();
         }
 
-        //if the reward wasn't collected during the episode, reset it
-        stepsAfterReward++;
-        if (stepsAfterReward == maxStepsAfterReward)
-        {
-            SetReward(+reachingMaxStepReward);
-            stepsAfterReward = 0;
-            ResetDiamonds();
-            if (isTrainingOn && floorMeshRender != null)
-                floorMeshRender.material = neutralMaterial;
-            EndEpisode();
-        }
-        else if(stepsAfterReward >= maxStepsBeforePenalty)
-        {
-            SetReward(+reachingMaxStepBeforePenaltyReward);
-        }
+        MaxStepsReachedRewardUpdate();
 
         //check velocity
         CheckVelocity();
