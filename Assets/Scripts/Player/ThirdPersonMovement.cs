@@ -32,6 +32,8 @@ public class ThirdPersonMovement : MonoBehaviour
     [Header("Other")]
     public bool isSprintEnabled = false;
 
+    
+
     //whether we crouch or not
     bool isSneaking;
 
@@ -42,7 +44,7 @@ public class ThirdPersonMovement : MonoBehaviour
     //for gravity
     [Header("gravity")]
     public float gravity = -9.81f;
-    public float gravityMultiplier = 1.0f;
+    public float gravityMultiplier = 2.2f;
     public Vector3 velocity;
     public Vector3 moveDir;
 
@@ -146,10 +148,10 @@ public class ThirdPersonMovement : MonoBehaviour
         if(GetComponentInParent<Game>().GetIsTrainingOn())
             shouldGroundedBeIncluded = true;
 
-        if (jump && !isSneaking && (controller.isGrounded || !shouldGroundedBeIncluded))
+        if (jump && !isSneaking && (controller.isGrounded))
         {
 
-            ySpeed = jumpSpeed;
+            ySpeed += jumpSpeed;
 
             // Set the isJumping parameter in the Animator
             if (animator)
@@ -215,6 +217,7 @@ public class ThirdPersonMovement : MonoBehaviour
         if (controller && !turnOffControler)
             controller.Move(moveDir.normalized * speed * speedMultiplier * Time.deltaTime);
 
+
         GetComponentInChildren<AnimationStateController>().UpdateMovement(horizontal, vertical, jump, sprint, sneakingButton);
 
     }
@@ -224,9 +227,9 @@ public class ThirdPersonMovement : MonoBehaviour
         if (walkingSpeed == 0)
             walkingSpeed = 4.0f;
         if (sprintingSpeed == 0)
-            sprintingSpeed = 2*walkingSpeed;
+            sprintingSpeed = 2.5f*walkingSpeed;
         if (crouchingSpeed == 0)
-            crouchingSpeed = 0.75f * walkingSpeed;
+            crouchingSpeed = 0.85f * walkingSpeed;
         if (crouchingSprintingSpeed == 0)
             crouchingSprintingSpeed = 1.25f * walkingSpeed;
 
@@ -256,15 +259,23 @@ public class ThirdPersonMovement : MonoBehaviour
         float horizontal = Input.GetAxisRaw("Horizontal");
         float vertical = Input.GetAxisRaw("Vertical");
 
-        bool jump = Input.GetButtonDown("Jump");
+        bool jump = Input.GetKeyDown(KeyCode.Space);
         bool sprint = Input.GetKeyDown(KeyCode.LeftShift);
         bool sneakingButton = Input.GetKeyDown(KeyCode.LeftControl);
 
+        //apply sound
+        SoundFXManager.instance.ApplyRunningSound(horizontal, vertical, isSprintEnabled, isSneaking, ySpeed, GetComponentInChildren<RunningAudioSource>().GetComponent<AudioSource>());
+        SoundFXManager.instance.ApplySneakingSound(horizontal, vertical, isSprintEnabled, isSneaking, ySpeed, GetComponentInChildren<SneakingAudioSource>().GetComponent<AudioSource>());
+        SoundFXManager.instance.ApplySneakingRunningSound(horizontal, vertical, isSprintEnabled, isSneaking, ySpeed, GetComponentInChildren<SneakingRunningAudioSource>().GetComponent<AudioSource>());
+        SoundFXManager.instance.ApplyWalkingSound(horizontal, vertical, isSneaking, isSprintEnabled, ySpeed, GetComponentInChildren<WalkingAudioSource>().GetComponent<AudioSource>());
+        SoundFXManager.instance.ApplyJumpingSound(jump, GetComponentInChildren<JumpingAudioSource>().GetComponent<AudioSource>(), controller.isGrounded);
+
         //apply movement only when game is not paused
-        if(!GetComponentInParent<Game>().GetIsPauseMenuOn() && !GetComponentInParent<GameOver>().GetGameOver())
+        if (!GetComponentInParent<Game>().GetIsPauseMenuOn() && !GetComponentInParent<GameOver>().GetGameOver())
             ApplyMovement(horizontal, vertical, jump, sprint, sneakingButton, true, 1f);
 
         
+
 
     }
 }
