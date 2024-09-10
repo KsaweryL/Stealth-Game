@@ -215,8 +215,9 @@ public class MLPlayerAgent : Agent
 
                 //initially I had "randomIndexSpawn'
                 //randomIndexSpawn = 0;
-                randomIndexSpawn = Random.Range(0, 2);
+                randomIndexSpawn = Random.Range(0, 3);
                 if (randomIndexSpawn == 1) randomIndexSpawn = 4;
+                if (randomIndexSpawn == 2) randomIndexSpawn = 3;
                 //else if (randomIndexSpawn == 2) randomIndexSpawn = 5;
 
                 transform.position =playerSpawningPoints[randomIndexSpawn].transform.position;
