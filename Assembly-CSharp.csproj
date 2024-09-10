@@ -63,16 +63,20 @@
     <Compile Include="Assets\Classes\Tile.cs" />
     <Compile Include="Assets\Scripts\gameRelated\GameOver.cs" />
     <Compile Include="Assets\Assets - grapics\BrokenVector\LowPolyBrickHouses\Scripts\ModelCustomizer.cs" />
+    <Compile Include="Assets\Scripts\Menu\Main menu\ChooseLevel.cs" />
     <Compile Include="Assets\Scripts\Menu\Main menu\MainMenu.cs" />
+    <Compile Include="Assets\Scripts\Sound\Movement\SneakingAudioSource.cs" />
     <Compile Include="Assets\Scripts\gameRelated\SpawningLocation.cs" />
     <Compile Include="Assets\Scripts\Player\TakeDamageOnObjectsPlayer.cs" />
+    <Compile Include="Assets\Scripts\Sound\NPC\DetectingPlayer\HeartBeatAudioSource.cs" />
     <Compile Include="Assets\Scripts\MlAgent\Wall.cs" />
     <Compile Include="Assets\Scripts\gameRelated\Barrier.cs" />
     <Compile Include="Assets\Scripts\Menu\End game menu\EndGameText.cs" />
     <Compile Include="Assets\Scripts\MlAgent\Player\MLPlayerAgent.cs" />
     <Compile Include="Assets\Scripts\Player\HidingSpot\DetectingPlayerInHidingSpot.cs" />
+    <Compile Include="Assets\Scripts\Sound\Movement\WalkingAudioSource.cs" />
     <Compile Include="Assets\Scripts\Player\ThirdPersonMovement.cs" />
-    <Compile Include="Assets\ChooseLevel.cs" />
+    <Compile Include="Assets\Scripts\Sound\Movement\JumpingAudioSource.cs" />
     <Compile Include="Assets\Scripts\NPC\UI\DetectionBar.cs" />
     <Compile Include="Assets\Scripts\NPC\NPCFieldOfView.cs" />
     <Compile Include="Assets\Scripts\Items\Diamond\Diamond.cs" />
@@ -86,6 +90,7 @@
     <Compile Include="Assets\Scripts\Menu\End game menu\EndGameMenu.cs" />
     <Compile Include="Assets\Scripts\Player\UI\HealthBar.cs" />
     <Compile Include="Assets\Scripts\gameRelated\PlayerSpawnPoint.cs" />
+    <Compile Include="Assets\Scripts\Sound\Movement\RunningAudioSource.cs" />
     <Compile Include="Assets\Scripts\gameRelated\Game.cs" />
     <Compile Include="Assets\Scripts\Menu\Pause menu\PauseMenu.cs" />
     <Compile Include="Assets\Scripts\Player\UI\InventoryUI.cs" />
@@ -98,7 +103,10 @@
     <Compile Include="Assets\Scripts\NPC\ChasingPlayer.cs" />
     <Compile Include="Assets\Scripts\NPC\UI\Billboard.cs" />
     <Compile Include="Assets\Scripts\gameRelated\BarrierPoint.cs" />
+    <Compile Include="Assets\Scripts\Sound\SoundFXManager.cs" />
+    <Compile Include="Assets\Scripts\Sound\NPC\DetectingPlayer\BeingDetectedMusic.cs" />
     <Compile Include="Assets\Scripts\old\PlayerMovement_old.cs" />
+    <Compile Include="Assets\Scripts\Sound\Movement\SneakingRunningAudioSource.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Assets - grapics\TextMesh Pro\Shaders\TMPro.cginc" />
