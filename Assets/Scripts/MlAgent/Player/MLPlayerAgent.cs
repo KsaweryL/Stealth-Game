@@ -19,7 +19,8 @@ public class MLPlayerAgent : Agent
     public SpawningLocation[] spawningLocations;
     public PlayerSpawnPoint[] playerSpawningPoints;
     public Barrier[] barriers;
-    Diamond[] allDiamonds;
+    public Diamond[] allDiamonds;
+    public Diamond[] allCurrentDiamonds;
     public Tile[] tiles;
     public List<bool> visitedTiles;
     Game game;
@@ -79,6 +80,7 @@ public class MLPlayerAgent : Agent
     public float hittingObstacleNoTriggerReward;
     public float reachingMaxStepReward;
     public float reachingMaxStepBeforePenaltyReward;
+    public float eachStepTakenReward;
     public float timePenaltyMultiplierReward;
     public float newTileFoundReward;
     public float djikstraPathFindingReward;
@@ -88,8 +90,9 @@ public class MLPlayerAgent : Agent
     public float playerIsHiddenReward;
     public float playerIschasenAfterReward;
     public float distanceToClosestNPCReward;
-
-
+    public float nextNavMeshWaypointReached;
+    public float waypointDistanceReward;
+    public float waypointInreasingDistanceReward;
 
     int testNr;
     bool isTrainingOn;
@@ -108,6 +111,21 @@ public class MLPlayerAgent : Agent
     [Header("Hiding spot")]
     public HidingSpotArea[] hidingSpotAreas;
     public HidingSpotArea chosenHidingSpotArea;
+
+    [Header("Diamond")]
+    public Diamond chosenDiamond;
+
+    [Header("NavMesh")]
+    public NavMeshAgent navMeshAgent;
+    public int currentWaypointIndex = 0;
+    public Vector3[] pathCorners;
+    public float navMeshWaypointDistance;
+    Vector3 nextWaypoint;
+    List<float> allDistancesToWaypoint;
+    public float minDistanceToWaypoint;
+    public GameObject objectToSpawn;        //object to debug
+    //public GameObject objectToSpawn2;
+    //public GameObject objectToSpawn3;
 
     public int GetRandomIndexSPawn()
     {
@@ -175,6 +193,49 @@ public class MLPlayerAgent : Agent
 
     }
 
+    void NavMeshUpdate()
+    {
+        //update navmesh
+        allCurrentDiamonds = GetComponentInParent<Game>().GetDiamonds();
+        if (allCurrentDiamonds.Length > 0)
+        {
+            //choose the closest diamond
+            Diamond currentlyChosenDiamond = allCurrentDiamonds[0];
+            if (allCurrentDiamonds.Length > 0)
+            {
+
+                foreach (Diamond diamond in allCurrentDiamonds)
+                {
+                    if (Vector3.Distance(diamond.transform.position, transform.position) < Vector3.Distance(currentlyChosenDiamond.transform.position, transform.position))
+                        currentlyChosenDiamond = diamond;
+                }
+            }
+
+            //navMeshAgent.destination = currentlyChosenDiamond.transform.position;
+            NavMeshPath path = new NavMeshPath();
+            navMeshAgent.CalculatePath(currentlyChosenDiamond.transform.position, path);
+
+            Debug.Log(currentlyChosenDiamond.gameObject.name + " and " + currentlyChosenDiamond.transform.localPosition);
+            pathCorners = new Vector3[] { currentlyChosenDiamond.transform.position };
+            //pathCorners = path.corners;       //add later
+            Debug.Log(pathCorners.Length);
+            currentWaypointIndex = 0;
+            //debug
+            //objectToSpawn.transform.position = pathCorners[pathCorners.Length - 1];
+            //objectToSpawn3.transform.position = currentlyChosenDiamond.transform.position;
+
+            navMeshAgent.updateRotation = false;
+
+            allDistancesToWaypoint = new List<float>();
+
+            //update the diamond
+            if(chosenDiamond != currentlyChosenDiamond)
+                allDistancesToDiamond = new List<float>();
+
+            chosenDiamond = currentlyChosenDiamond;
+        }
+    }
+
     public override void OnEpisodeBegin()
     {
         //Debug.Log("New Episode");
@@ -214,13 +275,13 @@ public class MLPlayerAgent : Agent
                 randomIndexSpawn = Random.Range(0, playerSpawningPoints.Length);
 
                 //initially I had "randomIndexSpawn'
-                //randomIndexSpawn = 0;
-                randomIndexSpawn = Random.Range(0, 3);
-                if (randomIndexSpawn == 1) randomIndexSpawn = 4;
-                if (randomIndexSpawn == 2) randomIndexSpawn = 3;
+                randomIndexSpawn = 1;
+                //randomIndexSpawn = Random.Range(0, 3);
+                //if (randomIndexSpawn == 1) randomIndexSpawn = 4;
+                //if (randomIndexSpawn == 2) randomIndexSpawn = 3;
                 //else if (randomIndexSpawn == 2) randomIndexSpawn = 5;
 
-                transform.position =playerSpawningPoints[randomIndexSpawn].transform.position;
+                transform.position = playerSpawningPoints[randomIndexSpawn].transform.position;
 
                 //for curiosity driven rl
                 visitedTiles = new List<bool>();
@@ -254,60 +315,34 @@ public class MLPlayerAgent : Agent
 
             }
 
-            allDiamonds = GetComponentInParent<Game>().GetDiamonds();
-            minDistanceToDiamond = Vector3.Distance(allDiamonds[0].transform.position, transform.position);
         }
 
         controller.enabled = true;
-
-        //changing the rotation of the barriers
-        if (isTrainingOn)
-        {
-            barriers = GetComponentInParent<Game>().GetBarriers();
-            for (int barrier = 0; barrier < barriers.Length; barrier++)
-            {
-                if (testNr == 2)
-                    barriers[barrier].transform.rotation = Quaternion.Euler(0, Random.Range(0, 90), 0);
-                else if (testNr == 3)
-                {
-                    int[] angles = { 0, 45, 90 };
-                    Vector3[] scales = { new Vector3(8, 4, 1), new Vector3(7, 3, 1), new Vector3(6, 3, 1), new Vector3(5, 3, 1), new Vector3(6, 4.5f, 1) };
-
-                    int randomIndex = Random.Range(0, angles.Length);
-                    barriers[barrier].transform.rotation = Quaternion.Euler(0, angles[randomIndex], 0);
-
-                    int randomIndexScale = Random.Range(0, scales.Length);
-                    barriers[barrier].transform.localScale = scales[randomIndexScale];
-
-                        //barriers[barrier].transform.localPosition = new Vector3(Random.Range(-7, 7), 1, Random.Range(-10, 7));
-                    
-
-                }
-                else if (testNr == 4)
-                {
-                    
-
-
-                }
-            }
-        }
 
         //resetting properties
         GetComponent<ThirdPersonMovement>().ResetCurrentHealth();
         GetComponent<PlayerInventory>().ResetProperties();
 
-        allDiamonds = GetComponentInParent<Game>().GetDiamonds();
+        //update navmesh
+        navMeshAgent = GetComponent<NavMeshAgent>();
+        GetComponent<NavMeshAgent>().enabled = true;
+
+        if (allDiamonds.Length == 0)
+        {
+            allDiamonds = GetComponentInParent<Game>().GetDiamonds();
+            minDistanceToDiamond = Vector3.Distance(allDiamonds[0].transform.position, transform.position);
+
+
+        }
+
         NPCmovement = GetComponentInParent<Game>().GetNPCmovements();
 
         for (int npc = 0; npc < NPCmovement.Length; npc++)
             NPCmovement[npc].ResetProperties();
 
         if (isTrainingOn)
-        {
-            //reset the positions of diamonds
-            for (int diamond = 0; diamond < allDiamonds.Length; diamond++)
-                allDiamonds[diamond].ResetPosition();
-        }
+            ResetDiamonds();
+
 
         //for training
         barrierPointReached = false;
@@ -378,102 +413,121 @@ public class MLPlayerAgent : Agent
     }
     public override void CollectObservations(VectorSensor sensor)
     {
-        allDiamonds = GetComponentInParent<Game>().GetDiamonds();
+        allCurrentDiamonds = GetComponentInParent<Game>().GetDiamonds();
         NPCmovement = GetComponentInParent<Game>().GetNPCmovements();
         hidingSpotAreas = GetComponentInParent<Game>().GetHidingSpotAreas();
 
-        //sensor.AddObservation(GetGamesTransformPosition(transform.position));
-
-        //Debug.Log(GetGamesTransformPosition(transform.position) + " and " + transform.localPosition);
-        //adding the diamond position with the closest distance
-        int minDiamondIndex = 0;
-        Vector3 difference = (GetGamesTransformPosition(allDiamonds[minDiamondIndex].transform.position) - GetGamesTransformPosition(transform.position)).normalized;
-        float minDistance = Vector3.Distance(GetGamesTransformPosition(allDiamonds[minDiamondIndex].transform.position), GetGamesTransformPosition(transform.position));
-
-        for (int diamond = 0; diamond < allDiamonds.Length; diamond++)
+        if (allCurrentDiamonds.Length > 0)
         {
+            //adding the diamond position with the closest distance
+            //Diamond minDistanceDiamond = allCurrentDiamonds[0];
+            //Vector3 difference = (GetGamesTransformPosition(minDistanceDiamond.transform.position) - GetGamesTransformPosition(transform.position)).normalized;
+            //float minDistance = Vector3.Distance(GetGamesTransformPosition(minDistanceDiamond.transform.position), GetGamesTransformPosition(transform.position));
 
-            //instead of position, add x and y distances
-            float distanceCheck = Vector3.Distance(GetGamesTransformPosition(allDiamonds[diamond].transform.position), GetGamesTransformPosition(transform.position));
-            if (distanceCheck < minDistance) { 
-                minDistance = distanceCheck;
-                minDiamondIndex = diamond;
-            
+            //foreach (Diamond diamond in allCurrentDiamonds)
+            //{
+
+            //    //instead of position, add x and y distances
+            //    float distanceCheck = Vector3.Distance(GetGamesTransformPosition(diamond.transform.position), GetGamesTransformPosition(transform.position));
+            //    if (distanceCheck < minDistance)
+            //    {
+            //        minDistance = distanceCheck;
+            //        minDistanceDiamond = diamond;
+
+            //    }
+
+
+
+            //}
+
+            ////instead of position, add x and y distances
+            Vector3 difference = (GetGamesTransformPosition(chosenDiamond.transform.position) - GetGamesTransformPosition(transform.position)).normalized;
+
+            //sensor.AddObservation(difference.x);
+            //sensor.AddObservation(difference.z);
+
+            //update navmesh
+            nextWaypoint = pathCorners[currentWaypointIndex];
+            Vector3 differenceToNextWaypoint = (GetGamesTransformPosition(nextWaypoint) - GetGamesTransformPosition(transform.position)).normalized;
+
+            //debug
+            //Debug.Log("Waypoint location " + GetGamesTransformPosition(nextWaypoint));
+            //objectToSpawn.transform.position = nextWaypoint;
+            navMeshWaypointDistance = Vector3.Distance(transform.position, nextWaypoint);
+
+
+            sensor.AddObservation(differenceToNextWaypoint.x);
+            sensor.AddObservation(differenceToNextWaypoint.z);
+
+
+            //adding position of NPCS
+            if (NPCmovement.Length > 10)
+                throw new System.Exception("There are too many NPCS.");
+            else if (NPCmovement.Length == 0)
+                Debug.Log("Therer are np NPC detected");
+
+            for (int npc = 0; npc < NPCmovement.Length; npc++)
+            {
+                Vector3 difference_npc = (GetGamesTransformPosition(GetGamesTransformPosition(NPCmovement[npc].transform.position)) - GetGamesTransformPosition(transform.position)).normalized;
+
+                sensor.AddObservation(difference_npc.x);
+                sensor.AddObservation(difference_npc.z);
+
+                //add velocities of each guard
+                sensor.AddObservation(NPCmovement[npc].GetComponent<NavMeshAgent>().velocity.x);
+                sensor.AddObservation(NPCmovement[npc].GetComponent<NavMeshAgent>().velocity.z);
             }
 
+            //adding positions of the nearest hiding spot area
+            if (hidingSpotAreas.Length > 15)
+                throw new System.Exception("There are too many Hiding spot areas.");
+            else if (hidingSpotAreas.Length == 0)
+                Debug.Log("Therer are np hiding spot areas detected");
 
-           
-        }
-        //instead of position, add x and y distances
-        difference = (GetGamesTransformPosition(allDiamonds[minDiamondIndex].transform.position) - GetGamesTransformPosition(transform.position)).normalized;
+            if (hidingSpotAreas.Length > 0)
+            {
+                chosenHidingSpotArea = hidingSpotAreas[0];
 
-        sensor.AddObservation(difference.x);
-        sensor.AddObservation(difference.z);
+                foreach (HidingSpotArea hidingSpotArea in hidingSpotAreas)
+                {
+                    if (Vector3.Distance(hidingSpotArea.transform.position, transform.position) < Vector3.Distance(chosenHidingSpotArea.transform.position, transform.position))
+                        chosenHidingSpotArea = hidingSpotArea;
+                }
 
-        //adding position of NPCS
-        if (NPCmovement.Length > 10)
-            throw new System.Exception("There are too many NPCS.");
-        else if (NPCmovement.Length == 0)
-            Debug.Log("Therer are np NPC detected");
+                Vector3 difference_hidingSpotArea = (GetGamesTransformPosition(GetGamesTransformPosition(chosenHidingSpotArea.transform.position)) - GetGamesTransformPosition(transform.position)).normalized;
 
-        for (int npc = 0; npc < NPCmovement.Length; npc++)
-        {
-            Vector3 difference_npc = (GetGamesTransformPosition(GetGamesTransformPosition(NPCmovement[npc].transform.position)) - GetGamesTransformPosition(transform.position)).normalized;
+                sensor.AddObservation(difference_hidingSpotArea.x);
+                sensor.AddObservation(difference_hidingSpotArea.z);
 
-            sensor.AddObservation(difference_npc.x);
-            sensor.AddObservation(difference_npc.z);
+                //add information whether player is hidden
+                bool playerIsHidden = GetComponentInParent<Game>().GetPlayer().GetComponent<DetectingPlayerInHidingSpot>().IsPlayerHidden();
+                sensor.AddObservation(playerIsHidden);
+            }
 
-            //add velocities of each guard
-            sensor.AddObservation(NPCmovement[npc].GetComponent<NavMeshAgent>().velocity.x);
-            sensor.AddObservation(NPCmovement[npc].GetComponent<NavMeshAgent>().velocity.z);
-        }
+            //add the tiles from Djikstra path finding
+            if (GetComponentInParent<Game>().GetEnableDjikstraPathFinding())
+            {
+                //we need to make sure that all Tiles has executed OnTriggeEnter before we proceed
+                //or just create a new Djikstra Method that will start with current position, update all Tiles and then proceed:
+                // - find the tile where the player is
+                //- find the tiles where diamonds are
+                //- get the path
+                //- get the next tile in the path
 
-        //adding positions of the nearest hiding spot area
-        if (hidingSpotAreas.Length > 15)
-            throw new System.Exception("There are too many Hiding spot areas.");
-        else if (hidingSpotAreas.Length == 0)
-            Debug.Log("Therer are np hiding spot areas detected");
-
-        chosenHidingSpotArea = hidingSpotAreas[0];
-
-        foreach(HidingSpotArea hidingSpotArea in hidingSpotAreas)
-        {
-            if(Vector3.Distance(hidingSpotArea.transform.position, transform.position) < Vector3.Distance(chosenHidingSpotArea.transform.position, transform.position))
-                chosenHidingSpotArea = hidingSpotArea;
-        }
-
-        Vector3 difference_hidingSpotArea = (GetGamesTransformPosition(GetGamesTransformPosition(chosenHidingSpotArea.transform.position)) - GetGamesTransformPosition(transform.position)).normalized;
-
-        sensor.AddObservation(difference_hidingSpotArea.x);
-        sensor.AddObservation(difference_hidingSpotArea.z);
-
-        //add information whether player is hidden
-        bool playerIsHidden = GetComponentInParent<Game>().GetPlayer().GetComponent<DetectingPlayerInHidingSpot>().IsPlayerHidden();
-        sensor.AddObservation(playerIsHidden);
-
-        //add the tiles from Djikstra path finding
-        if (GetComponentInParent<Game>().GetEnableDjikstraPathFinding())
-        {
-            //we need to make sure that all Tiles has executed OnTriggeEnter before we proceed
-            //or just create a new Djikstra Method that will start with current position, update all Tiles and then proceed:
-            // - find the tile where the player is
-            //- find the tiles where diamonds are
-            //- get the path
-            //- get the next tile in the path
-
-            UpdateNextTileToGoTo(false);
+                UpdateNextTileToGoTo(false);
 
                 float distanceToCurrentTile = Vector3.Distance(nextTileToGoTo.transform.position, transform.position);
                 sensor.AddObservation(GetGamesTransformPosition(nextTileToGoTo.transform.position));
                 sensor.AddObservation(distanceToCurrentTile);
                 distanceToNextTile = distanceToCurrentTile;     //for debugging
-            
-            //else
-            //{
-            //    float distance = Vector3.Distance(allDiamonds[0].transform.position, transform.position);
-            //    sensor.AddObservation(GetGamesTransformPosition(allDiamonds[0].transform.position));
-            //    sensor.AddObservation(distance);
-            //}
+
+                //else
+                //{
+                //    float distance = Vector3.Distance(allDiamonds[0].transform.position, transform.position);
+                //    sensor.AddObservation(GetGamesTransformPosition(allDiamonds[0].transform.position));
+                //    sensor.AddObservation(distance);
+                //}
+            }
         }
 
     }
@@ -484,6 +538,11 @@ public class MLPlayerAgent : Agent
 
         for (int diamond = 0; diamond < allDiamonds.Length; diamond++)
             allDiamonds[diamond].ResetProperties();
+
+        for (int diamond = 0; diamond < allDiamonds.Length; diamond++)
+            allDiamonds[diamond].ResetPosition();
+
+        NavMeshUpdate();
     }
 
     void CheckVelocity()
@@ -514,55 +573,76 @@ public class MLPlayerAgent : Agent
 
     void DistanceToDiamondRewardUpdate()
     {
-        allDiamonds = GetComponentInParent<Game>().GetDiamonds();
-        //reward for making the distance to diamond smaller
-        float newDistanceToDiamond = Vector3.Distance(allDiamonds[0].transform.position, transform.position);
-        if (allDistancesToDiamond.Count == 0)
-            allDistancesToDiamond.Add(newDistanceToDiamond);
+        allCurrentDiamonds = GetComponentInParent<Game>().GetDiamonds();
 
-        //Debug.Log("test " + 1 / newDistanceToDiamond * 100);        //20 - 35 
-        if (newDistanceToDiamond < allDistancesToDiamond.Min())
+        if (allCurrentDiamonds.Length > 0)
         {
-            allDistancesToDiamond.Add(newDistanceToDiamond);
+            //choose the closest diamond
+            //Diamond currentlyChosenDiamond = chosenDiamond;
+            //chosenDiamond = allCurrentDiamonds[0];
+            //foreach (Diamond diamond in allCurrentDiamonds)
+            //{
+            //    if (Vector3.Distance(diamond.transform.position, transform.position) < Vector3.Distance(chosenDiamond.transform.position, transform.position))
+            //        chosenDiamond = diamond;
+            //}
 
-            //SetReward(+ 1/newDistanceToDiamond * distanceMultiplierReward);
-            SetReward(+distanceReward);
-            minDistanceToDiamond = newDistanceToDiamond;
-        }
-        else
-        {
-            //give a time penalty
-            //SetReward(+ 1 / newDistanceToDiamond * distanceMultiplierReward * timePenaltyMultiplierReward);
+            //if (chosenDiamond != currentlyChosenDiamond)
+            //    allDistancesToDiamond = new List<float>();
+
+            
+
+            //reward for making the distance to diamond smaller
+            float newDistanceToDiamond = Vector3.Distance(chosenDiamond.transform.position, transform.position);
+            if (allDistancesToDiamond.Count == 0)
+                allDistancesToDiamond.Add(newDistanceToDiamond);
+
+            //Debug.Log("test " + 1 / newDistanceToDiamond * 100);        //20 - 35 
+            if (newDistanceToDiamond < allDistancesToDiamond.Min())
+            {
+                allDistancesToDiamond.Add(newDistanceToDiamond);
+
+                //SetReward(+ 1/newDistanceToDiamond * distanceMultiplierReward);
+                SetReward(+distanceReward);
+                minDistanceToDiamond = newDistanceToDiamond;
+            }
+            else
+            {
+                //give a time penalty
+                //SetReward(+ 1 / newDistanceToDiamond * distanceMultiplierReward * timePenaltyMultiplierReward);
+            }
         }
     }
 
     void DistanceToClosestNPCRewardUpdate()
     {
         NPCmovement = GetComponentInParent<Game>().GetNPCmovements();
-        //choose the closest NPC
-
-        NPCMovement currentlyChosenNPC = chosenNPC;
-        chosenNPC = NPCmovement[0];
-        foreach (NPCMovement npc in NPCmovement) { 
-            if(Vector3.Distance(npc.transform.position, transform.position) < Vector3.Distance(chosenNPC.transform.position, transform.position))
-                chosenNPC = npc;
-        }
-
-        if (chosenNPC != currentlyChosenNPC)
-            allDistancesToNPC = new List<float>();
-
-
-        //reward for making the distance to diamond smaller
-        float newDistanceToNPC = Vector3.Distance(chosenNPC.transform.position, transform.position);
-        if (allDistancesToNPC.Count == 0)
-            allDistancesToNPC.Add(newDistanceToNPC);
-
-        if (newDistanceToNPC < allDistancesToNPC.Min())
+        if (NPCmovement.Length > 0)
         {
-            allDistancesToNPC.Add(newDistanceToNPC);
+            //choose the closest NPC
+            NPCMovement currentlyChosenNPC = chosenNPC;
+            chosenNPC = NPCmovement[0];
+            foreach (NPCMovement npc in NPCmovement)
+            {
+                if (Vector3.Distance(npc.transform.position, transform.position) < Vector3.Distance(chosenNPC.transform.position, transform.position))
+                    chosenNPC = npc;
+            }
 
-            SetReward(+distanceToClosestNPCReward);
-            minDistanceToNPC = newDistanceToNPC;
+            if (chosenNPC != currentlyChosenNPC)
+                allDistancesToNPC = new List<float>();
+
+
+            //reward for making the distance to diamond smaller
+            float newDistanceToNPC = Vector3.Distance(chosenNPC.transform.position, transform.position);
+            if (allDistancesToNPC.Count == 0)
+                allDistancesToNPC.Add(newDistanceToNPC);
+
+            if (newDistanceToNPC < allDistancesToNPC.Min())
+            {
+                allDistancesToNPC.Add(newDistanceToNPC);
+
+                SetReward(+distanceToClosestNPCReward);
+                minDistanceToNPC = newDistanceToNPC;
+            }
         }
     }
 
@@ -583,6 +663,8 @@ public class MLPlayerAgent : Agent
         {
             SetReward(+reachingMaxStepBeforePenaltyReward);
         }
+
+        SetReward(+eachStepTakenReward);
     }
 
     void CheckIfPlayerHiddenUpdate()
@@ -592,6 +674,38 @@ public class MLPlayerAgent : Agent
         {
             SetReward(+playerIsHiddenReward);
         }
+    }
+
+    void NavMeshUpdateWaypointIndex()
+    {
+
+        if (currentWaypointIndex < pathCorners.Length-1)
+        {
+            
+            // Check if the agent is close enough to the waypoint
+            if (Vector3.Distance(transform.position, pathCorners[currentWaypointIndex]) < 3f)
+            {
+                currentWaypointIndex++; // Move to the next waypoint
+                allDistancesToWaypoint = new List<float>();
+                SetReward(+nextNavMeshWaypointReached);
+            }
+        }
+
+        //reward for making the distance to waypoint smaller
+        float newDistanceToWaypoint = Vector3.Distance(pathCorners[currentWaypointIndex], transform.position);
+        if (allDistancesToWaypoint.Count == 0)
+            allDistancesToWaypoint.Add(newDistanceToWaypoint);
+
+        if (newDistanceToWaypoint < allDistancesToWaypoint.Min())
+        {
+            allDistancesToWaypoint.Add(newDistanceToWaypoint);
+
+            SetReward(+waypointDistanceReward);
+            //Debug.Log("waypointDistanceReward " + newDistanceToWaypoint);
+            minDistanceToWaypoint = newDistanceToWaypoint;
+        }
+        else if (newDistanceToWaypoint > allDistancesToWaypoint.Min())
+            SetReward(+waypointInreasingDistanceReward);
     }
     public override void OnActionReceived(ActionBuffers actions)
     {
@@ -614,6 +728,7 @@ public class MLPlayerAgent : Agent
             DistanceToDiamondRewardUpdate();
             DistanceToClosestNPCRewardUpdate();
             CheckIfPlayerHiddenUpdate();
+            NavMeshUpdateWaypointIndex();
         }
 
         MaxStepsReachedRewardUpdate();
@@ -667,12 +782,14 @@ public class MLPlayerAgent : Agent
         stepsAfterReward = 0;
 
         SetReward(+reachingDiamondReward);
-        if (isTrainingOn && floorMeshRender != null)
-        {
-            floorMeshRender.material = winMaterial;
-        }
-        EndEpisode();
+        //if (isTrainingOn && floorMeshRender != null)
+        //{
+        //    floorMeshRender.material = winMaterial;
+        //}
+        allDistancesToDiamond = new List<float>();
+        stepsAfterReward = 0;
 
+        NavMeshUpdate();
 
     }
 
@@ -698,7 +815,6 @@ public class MLPlayerAgent : Agent
     {
         SetReward(+losingGameReward);
         Debug.Log(GetCumulativeReward());
-        ResetDiamonds();
 
         if (isTrainingOn && floorMeshRender != null)
             floorMeshRender.material = loseMaterial;

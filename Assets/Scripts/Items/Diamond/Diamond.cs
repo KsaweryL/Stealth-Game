@@ -5,7 +5,7 @@ using UnityEngine;
 public class Diamond : MonoBehaviour
 {
     Game game;
-    int testNr;
+    public int testNr;
     bool isTrainingOn;
 
     private void UpdateTrainingRelatedData()
@@ -51,16 +51,32 @@ public class Diamond : MonoBehaviour
             transform.localPosition = new Vector3(Random.Range(-8.52f, 7.76f), 1f, Random.Range(-10.88f, 7.09f));
         else if(testNr == 4)
         {
+            
+
             PlayerSpawnPoint[] playerSpawnPoints = GetComponentInParent<Game>().GetPlayerSpawningPoints();
 
             MLPlayerAgent mlagent = GetComponentInParent<Game>().GetPlayer().GetComponent<MLPlayerAgent>();
             int randomIndexSpawn = mlagent.GetRandomIndexSPawn();
 
-            //0 is for the special case
-            while (randomIndexSpawn == mlagent.GetRandomIndexSPawn() || randomIndexSpawn == 0)
+            //also check with positions of other diamonds
+            Diamond[] allDiamonds = GetComponentInParent<Game>().GetPlayer().GetComponent<MLPlayerAgent>().allDiamonds;
+
+            Dictionary<Vector3, Diamond> positionToDiamond = new Dictionary<Vector3, Diamond>();
+            foreach (Diamond diamond in allDiamonds)
             {
-                randomIndexSpawn = Random.Range(0, playerSpawnPoints.Length);
+                //don's add itself
+                if (diamond == gameObject.GetComponent<Diamond>())
+                    continue;
+                positionToDiamond.Add(diamond.transform.position, diamond);
             }
+
+            
+                while (randomIndexSpawn == mlagent.GetRandomIndexSPawn() || positionToDiamond.ContainsKey(playerSpawnPoints[randomIndexSpawn].transform.position))
+                {
+                    randomIndexSpawn = Random.Range(0, playerSpawnPoints.Length);
+
+                }
+            
 
             //initially there was "randomIndexSpawn"
             transform.position = playerSpawnPoints[randomIndexSpawn].transform.position;
@@ -80,13 +96,16 @@ public class Diamond : MonoBehaviour
         if(playerInventory != null)
         {
             //Debug.Log("diamond collected");
+            //if (!isTrainingOn)
+            //{
+            //    gameObject.SetActive(false);
+            //}
+            //else
+            //    //ResetPosition();
+            gameObject.SetActive(false);
+
             playerInventory.DiamondCollected();
-            if (!isTrainingOn)
-            {
-                gameObject.SetActive(false);
-            }
-            else
-                ResetPosition();
+
 
         }
 
