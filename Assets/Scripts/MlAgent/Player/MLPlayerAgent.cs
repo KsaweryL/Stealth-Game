@@ -216,10 +216,17 @@ public class MLPlayerAgent : Agent
             navMeshAgent.CalculatePath(currentlyChosenDiamond.transform.position, path);
 
             Debug.Log(currentlyChosenDiamond.gameObject.name + " and " + currentlyChosenDiamond.transform.localPosition);
-            pathCorners = new Vector3[] { currentlyChosenDiamond.transform.position };
-            //pathCorners = path.corners;       //add later
-            Debug.Log(pathCorners.Length);
-            currentWaypointIndex = 0;
+            //pathCorners = new Vector3[] { currentlyChosenDiamond.transform.position };
+            pathCorners = path.corners; 
+            Debug.Log("path corners length " + pathCorners.Length);
+
+            //pathCorners = new Vector3[] { currentlyChosenDiamond.transform.position };
+            //currentWaypointIndex = 0;
+            if (path.corners.Length > 1)
+                currentWaypointIndex = 1;
+            else { currentWaypointIndex = 0; }
+
+
             //debug
             //objectToSpawn.transform.position = pathCorners[pathCorners.Length - 1];
             //objectToSpawn3.transform.position = currentlyChosenDiamond.transform.position;
@@ -275,7 +282,7 @@ public class MLPlayerAgent : Agent
                 randomIndexSpawn = Random.Range(0, playerSpawningPoints.Length);
 
                 //initially I had "randomIndexSpawn'
-                randomIndexSpawn = 1;
+                //randomIndexSpawn = 1;
                 //randomIndexSpawn = Random.Range(0, 3);
                 //if (randomIndexSpawn == 1) randomIndexSpawn = 4;
                 //if (randomIndexSpawn == 2) randomIndexSpawn = 3;
@@ -452,19 +459,22 @@ public class MLPlayerAgent : Agent
 
             //debug
             //Debug.Log("Waypoint location " + GetGamesTransformPosition(nextWaypoint));
-            //objectToSpawn.transform.position = nextWaypoint;
+            objectToSpawn.transform.position = new Vector3(nextWaypoint.x, 1f, nextWaypoint.z);
             navMeshWaypointDistance = Vector3.Distance(transform.position, nextWaypoint);
 
 
             sensor.AddObservation(differenceToNextWaypoint.x);
             sensor.AddObservation(differenceToNextWaypoint.z);
 
+            //sensor.AddObservation(GetGamesTransformPosition(transform.position));
+            //sensor.AddObservation(GetGamesTransformPosition(nextWaypoint));
+
 
             //adding position of NPCS
             if (NPCmovement.Length > 10)
                 throw new System.Exception("There are too many NPCS.");
-            else if (NPCmovement.Length == 0)
-                Debug.Log("Therer are np NPC detected");
+            //else if (NPCmovement.Length == 0)
+            //    Debug.Log("Therer are np NPC detected");
 
             for (int npc = 0; npc < NPCmovement.Length; npc++)
             {
@@ -481,8 +491,8 @@ public class MLPlayerAgent : Agent
             //adding positions of the nearest hiding spot area
             if (hidingSpotAreas.Length > 15)
                 throw new System.Exception("There are too many Hiding spot areas.");
-            else if (hidingSpotAreas.Length == 0)
-                Debug.Log("Therer are np hiding spot areas detected");
+            //else if (hidingSpotAreas.Length == 0)
+            //    Debug.Log("Therer are np hiding spot areas detected");
 
             if (hidingSpotAreas.Length > 0)
             {
@@ -683,7 +693,7 @@ public class MLPlayerAgent : Agent
         {
             
             // Check if the agent is close enough to the waypoint
-            if (Vector3.Distance(transform.position, pathCorners[currentWaypointIndex]) < 3f)
+            if (Vector3.Distance(transform.position, pathCorners[currentWaypointIndex]) < 2f)
             {
                 currentWaypointIndex++; // Move to the next waypoint
                 allDistancesToWaypoint = new List<float>();
@@ -796,7 +806,7 @@ public class MLPlayerAgent : Agent
     public void PlayerHasWon()
     {
         SetReward(+winningGameReward);
-        Debug.Log(GetCumulativeReward());
+        Debug.Log("win " + GetCumulativeReward());
         if (isTrainingOn && floorMeshRender != null)
         {
             floorMeshRender.material = winMaterial;
@@ -814,7 +824,7 @@ public class MLPlayerAgent : Agent
     public void PlayerHasLost()
     {
         SetReward(+losingGameReward);
-        Debug.Log(GetCumulativeReward());
+        Debug.Log("complete loss " + GetCumulativeReward());
 
         if (isTrainingOn && floorMeshRender != null)
             floorMeshRender.material = loseMaterial;
@@ -861,7 +871,8 @@ public class MLPlayerAgent : Agent
                 floorMeshRender.material = loseMaterial;
             }
 
-            Debug.Log("barrier hit");
+            //Debug.Log("barrier hit");
+            Debug.Log("loss " + GetCumulativeReward());
             EndEpisode();
 
         }
@@ -875,14 +886,14 @@ public class MLPlayerAgent : Agent
         {
 
             //obstacle was hit
-            SetReward(+hittingObstacleReward);
-            ResetDiamonds();
-            if (isTrainingOn && floorMeshRender != null)
-            {
-                floorMeshRender.material = loseMaterial;
-            }
-            Debug.Log("trigger obstacle hit");
-            EndEpisode();
+            //SetReward(+hittingObstacleReward);
+            //ResetDiamonds();
+            //if (isTrainingOn && floorMeshRender != null)
+            //{
+            //    floorMeshRender.material = loseMaterial;
+            //}
+            //Debug.Log("trigger obstacle hit");
+            //EndEpisode();
 
         }
         //when tile is hit

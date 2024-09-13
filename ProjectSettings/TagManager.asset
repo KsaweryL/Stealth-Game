@@ -8,6 +8,7 @@ TagManager:
   - DiamondTag
   - NPCTag
   - HidingSpotTag
+  - NavMeshWaypoint
   layers:
   - Default
   - TransparentFX
