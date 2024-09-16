@@ -459,6 +459,7 @@ public class MLPlayerAgent : Agent
 
             //debug
             //Debug.Log("Waypoint location " + GetGamesTransformPosition(nextWaypoint));
+
             objectToSpawn.transform.position = new Vector3(nextWaypoint.x, 1f, nextWaypoint.z);
             navMeshWaypointDistance = Vector3.Distance(transform.position, nextWaypoint);
 
