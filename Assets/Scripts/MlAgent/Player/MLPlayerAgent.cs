@@ -241,37 +241,6 @@ public class MLPlayerAgent : Agent
 
         controller.enabled = true;
 
-        //changing the rotation of the barriers
-        if (isTrainingOn)
-        {
-            barriers = GetComponentInParent<Game>().GetBarriers();
-            for (int barrier = 0; barrier < barriers.Length; barrier++)
-            {
-                if (testNr == 2)
-                    barriers[barrier].transform.rotation = Quaternion.Euler(0, Random.Range(0, 90), 0);
-                else if (testNr == 3)
-                {
-                    int[] angles = { 0, 45, 90 };
-                    Vector3[] scales = { new Vector3(8, 4, 1), new Vector3(7, 3, 1), new Vector3(6, 3, 1), new Vector3(5, 3, 1), new Vector3(6, 4.5f, 1) };
-
-                    int randomIndex = Random.Range(0, angles.Length);
-                    barriers[barrier].transform.rotation = Quaternion.Euler(0, angles[randomIndex], 0);
-
-                    int randomIndexScale = Random.Range(0, scales.Length);
-                    barriers[barrier].transform.localScale = scales[randomIndexScale];
-
-                        //barriers[barrier].transform.localPosition = new Vector3(Random.Range(-7, 7), 1, Random.Range(-10, 7));
-                    
-
-                }
-                else if (testNr == 4)
-                {
-                    
-
-
-                }
-            }
-        }
 
         //resetting properties
         GetComponent<ThirdPersonMovement>().ResetCurrentHealth();

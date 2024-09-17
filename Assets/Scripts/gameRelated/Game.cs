@@ -16,6 +16,15 @@ public class Game : MonoBehaviour
     public Tile[] tiles;
     Tile currentlyTouchedTile;
 
+    [Header("Pause")]
+    public GameObject pauseMenu;
+    public bool pauseMenuIsoOn = false;
+
+
+    [Header("End of the game")]
+    public GameObject endGameMenu;
+    
+
     [Header("Diamonds")]
     public int collectedDiamonds;
     public int allDiamondsNumber;
@@ -40,6 +49,14 @@ public class Game : MonoBehaviour
     [Header("Camera")]
     public MainCamera cam;
 
+    public GameObject GetEndGameMenu()
+    {
+        return endGameMenu;
+    }
+    public bool GetIsPauseMenuOn()
+    {
+        return pauseMenuIsoOn;
+    }
     public MainCamera GetCamera()
     {
         return cam;
@@ -271,9 +288,32 @@ public class Game : MonoBehaviour
         return NPCmovementVariable;
     }
 
+    public void ResetPauseMenu()
+    {
+        pauseMenuIsoOn = true;
+        UpdatePauseMenu();
+    }
+    void UpdatePauseMenu()
+    {
+        
+            if (pauseMenuIsoOn)
+            {
+                pauseMenuIsoOn = false;
+            }
+            else
+            {
+                pauseMenuIsoOn = true;
+            }
+            pauseMenu.GetComponentInChildren<PauseMenu>().UpdatePauseMenu(pauseMenuIsoOn);
+
+        
+
+    }
+
     // Update is called once per frame
     void Update()
     {
-        
+        if (Input.GetKeyDown(KeyCode.Escape))
+            UpdatePauseMenu();
     }
 }

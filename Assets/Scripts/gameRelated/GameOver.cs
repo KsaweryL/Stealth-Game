@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class GameOver : MonoBehaviour
@@ -7,6 +8,11 @@ public class GameOver : MonoBehaviour
 
     public bool gameOver;
     public bool playerWon;
+
+    public bool GetGameOver()
+    {
+        return gameOver;
+    }
 
     public void UpdateGameOver(bool gameOverVariable)
     {
@@ -17,10 +23,18 @@ public class GameOver : MonoBehaviour
     {
         playerWon = playerWonVariable;
 
-        if(playerWon && gameOver)
-            if (GetComponentInChildren<MLPlayerAgent>())
-                GetComponentInChildren<MLPlayerAgent>().PlayerHasWon();
-        
+        if (playerWon && gameOver)
+        {
+            if (GetComponent<Game>().GetIsTrainingOn())
+                if (GetComponentInChildren<MLPlayerAgent>())
+                    GetComponentInChildren<MLPlayerAgent>().PlayerHasWon();
+
+            GetComponent<Game>().GetEndGameMenu().SetActive(true);
+            GetComponent<Game>().pauseMenu.GetComponent<PauseMenu>().FreezeTheGame();
+            GetComponent<Game>().GetEndGameMenu().GetComponentInChildren<EndGameText>();
+            GetComponent<Game>().GetEndGameMenu().GetComponentInChildren<EndGameText>().GetComponent<TextMeshProUGUI>().text = "You won!";
+        }
+
     }
 
     // Start is called before the first frame update
@@ -37,9 +51,15 @@ public class GameOver : MonoBehaviour
         {
             gameOver = true;
             playerWon = false;
-            //when player looses, inform the mlagent component
-            if(GetComponentInChildren<MLPlayerAgent>())
-                GetComponentInChildren<MLPlayerAgent>().PlayerHasLost();
+            if (GetComponent<Game>().GetIsTrainingOn())
+                //when player looses, inform the mlagent component
+                if (GetComponentInChildren<MLPlayerAgent>())
+                    GetComponentInChildren<MLPlayerAgent>().PlayerHasLost();
+
+            GetComponent<Game>().GetEndGameMenu().SetActive(true);
+            GetComponent<Game>().pauseMenu.GetComponent<PauseMenu>().FreezeTheGame();
+            GetComponent<Game>().GetEndGameMenu().GetComponentInChildren<EndGameText>();
+            GetComponent<Game>().GetEndGameMenu().GetComponentInChildren<EndGameText>().GetComponent<TextMeshProUGUI>().text = "You lost!";
         }
     }
 }
