@@ -73,6 +73,7 @@ public class MLPlayerAgent : Agent
     public float reachingBarrierPointReward;
     public float losingGameReward;
     public float hittingObstacleReward;
+    public float hittingObstacleNoTriggerReward;
     public float reachingMaxStepReward;
     public float reachingMaxStepBeforePenaltyReward;
     public float timePenaltyMultiplierReward;
@@ -107,6 +108,7 @@ public class MLPlayerAgent : Agent
         if (reachingBarrierPointReward == -1) reachingBarrierPointReward = 300f;
         if (losingGameReward == -1) losingGameReward = -3000f;
         if (hittingObstacleReward == -1) hittingObstacleReward = -300;
+        if (hittingObstacleNoTriggerReward == -1) hittingObstacleNoTriggerReward = -1f;
         if (reachingMaxStepReward == -1) reachingMaxStepReward = -850f;
         if (timePenaltyMultiplierReward == -1) timePenaltyMultiplierReward = -1.5f;
         if (newTileFoundReward == -1) newTileFoundReward = 1f;
@@ -196,6 +198,10 @@ public class MLPlayerAgent : Agent
                 randomIndexSpawn = Random.Range(0, playerSpawningPoints.Length);
 
                 //initially I had "randomIndexSpawn'
+                //randomIndexSpawn = 0;
+                randomIndexSpawn = Random.Range(0, 2);
+                if (randomIndexSpawn != 0) randomIndexSpawn = 8;
+
                 transform.position =playerSpawningPoints[randomIndexSpawn].transform.position;
 
                 //for curiosity driven rl
@@ -579,22 +585,43 @@ public class MLPlayerAgent : Agent
             EndEpisode();
         }
     }
+    private void OnCollisionEnter(Collision collision)
+    {
+        ////colliding with "what is barrier"
+        if (collision.gameObject.layer == whatIsBarrierLayer)
+        {
+
+            //obstacle was hit
+            SetReward(+hittingObstacleNoTriggerReward);
+            ResetDiamonds();
+            if (isTrainingOn && floorMeshRender != null)
+            {
+                floorMeshRender.material = loseMaterial;
+            }
+
+            Debug.Log("barrier hit");
+            EndEpisode();
+
+        }
+    }
+
 
     private void OnTriggerEnter(Collider other)
     {
-        //colliding with "what is barrier"
+        ////colliding with "what is barrier"
         if (other.gameObject.layer == whatIsBarrierLayer)
         {
-           
-                //obstacle was hit
-                SetReward(+hittingObstacleReward);
-                ResetDiamonds();
-                if (isTrainingOn && floorMeshRender != null)
-                {
-                    floorMeshRender.material = loseMaterial;
-                }
-                EndEpisode();
-            
+
+            //obstacle was hit
+            SetReward(+hittingObstacleReward);
+            ResetDiamonds();
+            if (isTrainingOn && floorMeshRender != null)
+            {
+                floorMeshRender.material = loseMaterial;
+            }
+            Debug.Log("trigger obstacle hit");
+            EndEpisode();
+
         }
         //when tile is hit
         //for curiosity driven rl
