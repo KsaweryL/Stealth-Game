@@ -127,9 +127,10 @@ public class SoundFXManager : MonoBehaviour
 
     private void Start()
     {
-        soundfxVolumeSlider.value = soundfxVolumeSlider.maxValue * 0.4f;
-        masterVolumeSlider.value = soundfxVolumeSlider.maxValue * 0.4f;
-        musicVolumeSlider.value = soundfxVolumeSlider.maxValue * 0.4f;
+        soundfxVolumeSlider.value = StaticData.soundfxVolumeSliderValue;
+        masterVolumeSlider.value = StaticData.masterVolumeSliderValue;
+        musicVolumeSlider.value = StaticData.musicVolumeSliderValue;
+
     }
 
     // Update is called once per frame
@@ -139,5 +140,10 @@ public class SoundFXManager : MonoBehaviour
         ChangeVolume(soundfxVolumeSlider.value, "SoundFXVolume");
         ChangeVolume(musicVolumeSlider.value, "MusicVolume");
         ChangeVolume(masterVolumeSlider.value, "MasterVolume");
+
+        //once volumes are updated, put them into static variables
+        StaticData.soundfxVolumeSliderValue = soundfxVolumeSlider.value;
+        StaticData.masterVolumeSliderValue = masterVolumeSlider.value;
+        StaticData.musicVolumeSliderValue = musicVolumeSlider.value;
     }
 }
