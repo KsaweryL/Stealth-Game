@@ -17,7 +17,9 @@ public class MiniMap : MonoBehaviour
         Vector3 newPosition = player.position;
         newPosition.y = transform.position.y;
 
-        transform.position = newPosition;
+        //if we wanted camera to follow the player
+        //transform.position = newPosition;
+
 
     }
 

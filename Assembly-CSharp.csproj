@@ -73,6 +73,7 @@
     <Compile Include="Assets\Scripts\gameRelated\Barrier.cs" />
     <Compile Include="Assets\Scripts\Menu\End game menu\EndGameText.cs" />
     <Compile Include="Assets\Scripts\MlAgent\Player\MLPlayerAgent.cs" />
+    <Compile Include="Assets\Scripts\gameRelated\StaticData.cs" />
     <Compile Include="Assets\Scripts\Player\HidingSpot\DetectingPlayerInHidingSpot.cs" />
     <Compile Include="Assets\Scripts\Sound\Movement\WalkingAudioSource.cs" />
     <Compile Include="Assets\Scripts\Player\ThirdPersonMovement.cs" />
@@ -92,6 +93,7 @@
     <Compile Include="Assets\Scripts\gameRelated\PlayerSpawnPoint.cs" />
     <Compile Include="Assets\Scripts\Sound\Movement\RunningAudioSource.cs" />
     <Compile Include="Assets\Scripts\gameRelated\Game.cs" />
+    <Compile Include="Assets\Scripts\Player\UI\MinimapUI.cs" />
     <Compile Include="Assets\Scripts\Menu\Pause menu\PauseMenu.cs" />
     <Compile Include="Assets\Scripts\Player\UI\InventoryUI.cs" />
     <Compile Include="Assets\Scripts\MlAgent\Goal.cs" />

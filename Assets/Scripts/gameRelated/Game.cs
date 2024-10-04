@@ -4,6 +4,7 @@ using System.IO;
 using UnityEngine;
 using static Tile;
 using System.Linq;
+using UnityEditor.Experimental.GraphView;
 
 public class Game : MonoBehaviour
 {
@@ -15,6 +16,10 @@ public class Game : MonoBehaviour
     public Barrier[] barriers;
     public Tile[] tiles;
     Tile currentlyTouchedTile;
+
+    [Header("Minimap")]
+    public GameObject minimap;
+    public bool minimapIsOn = false;
 
     [Header("Pause")]
     public GameObject pauseMenu;
@@ -310,10 +315,31 @@ public class Game : MonoBehaviour
 
     }
 
+    void UpdateMiniMapUI()
+    {
+
+        if (Input.GetKey(KeyCode.M))
+        {
+            minimapIsOn = true;
+            minimap.SetActive(true);
+        }
+        else
+        {
+            minimapIsOn = false;
+            minimap.SetActive(false);
+        }
+        
+
+
+
+    }
+
     // Update is called once per frame
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
             UpdatePauseMenu();
+
+        UpdateMiniMapUI();
     }
 }

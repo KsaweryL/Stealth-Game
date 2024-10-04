@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
+using UnityEngine.UI;
 
 public class SoundFXManager : MonoBehaviour
 {
@@ -10,6 +11,11 @@ public class SoundFXManager : MonoBehaviour
 
     //we need to mix some sounds
     [SerializeField] private AudioMixer audioMixer;
+
+    //for currently available sounds
+    public Slider soundfxVolumeSlider;
+    public Slider masterVolumeSlider;
+    public Slider musicVolumeSlider;
 
     private void Awake()
     {
@@ -101,5 +107,43 @@ public class SoundFXManager : MonoBehaviour
         }
         else
             audioSource.enabled= false;
+    }
+
+    public void ChangeVolume(float volume, string audioMixerParameter)
+    {
+        //0% is -80
+        //1% is -10
+        //100% is 20
+        float audioMixerVolume = 0;
+        if (volume != 0)
+            audioMixerVolume = volume * 30 - 10;
+        else
+            audioMixerVolume = -80;
+
+
+        //it has value from -80 to 0
+        audioMixer.SetFloat(audioMixerParameter, audioMixerVolume);
+    }
+
+    private void Start()
+    {
+        soundfxVolumeSlider.value = StaticData.soundfxVolumeSliderValue;
+        masterVolumeSlider.value = StaticData.masterVolumeSliderValue;
+        musicVolumeSlider.value = StaticData.musicVolumeSliderValue;
+
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+
+        ChangeVolume(soundfxVolumeSlider.value, "SoundFXVolume");
+        ChangeVolume(musicVolumeSlider.value, "MusicVolume");
+        ChangeVolume(masterVolumeSlider.value, "MasterVolume");
+
+        //once volumes are updated, put them into static variables
+        StaticData.soundfxVolumeSliderValue = soundfxVolumeSlider.value;
+        StaticData.masterVolumeSliderValue = masterVolumeSlider.value;
+        StaticData.musicVolumeSliderValue = musicVolumeSlider.value;
     }
 }
