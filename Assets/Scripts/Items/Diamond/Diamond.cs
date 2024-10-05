@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class Diamond : MonoBehaviour
 {
@@ -105,6 +106,10 @@ public class Diamond : MonoBehaviour
             gameObject.SetActive(false);
 
             playerInventory.DiamondCollected();
+
+            //play audio whenever diamond is collected
+            if (!GetComponentInParent<Game>().GetIsTrainingOn())
+                SoundFXManager.instance.SinglePlayAudio(GetComponentInParent<Game>().GetPlayer().GetComponentInChildren<GettingDiamondAudioSource>().GetComponent<AudioSource>());
 
 
         }

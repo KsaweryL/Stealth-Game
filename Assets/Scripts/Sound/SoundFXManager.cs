@@ -17,10 +17,52 @@ public class SoundFXManager : MonoBehaviour
     public Slider masterVolumeSlider;
     public Slider musicVolumeSlider;
 
+    //getting diamond
+    public AudioClip audioclipGettingDiamond;
+
     private void Awake()
     {
         if(instance == null)
             instance = this;
+    }
+
+    void CheckDistance(bool conditionTocheck, float maxDistanceOfSound, float minDistanceOfSound , AudioSource audioSource, bool additionalConditionForWithinDistance)
+    {
+        //intensity should depend on the distance to the player
+        float distanceToPlayer = Vector3.Distance(GetComponentInParent<Game>().GetPlayer().transform.position, audioSource.transform.position);
+
+        //if the audiosoruce comes from the player itself, behave as if we were very close to the audiosource
+        if (audioSource.GetComponentInParent<PlayerInventory>())
+            distanceToPlayer = 0;
+
+        if (conditionTocheck == true && distanceToPlayer <= minDistanceOfSound)
+        {
+            audioSource.enabled = true;
+        }
+        //anything between min distance player and max distance
+        else if (distanceToPlayer <= maxDistanceOfSound && distanceToPlayer > minDistanceOfSound && additionalConditionForWithinDistance)
+        {
+
+            float multiplier = 1 - distanceToPlayer / maxDistanceOfSound + 0.3f;
+            if (multiplier > 1) multiplier = 1;
+
+            audioSource.volume = multiplier;
+            audioSource.enabled = true;
+        }
+        else
+        {
+            audioSource.enabled = false;
+        }
+    }
+
+    public void SinglePlayAudio(AudioSource audioSource)
+    {
+        //audioSource.clip = audioclipGettingDiamond;
+
+        //Debug.Log("hello");
+        //Debug.Log(audioSource.gameObject.GetInstanceID());
+
+        audioSource.Play();
     }
 
     public void ApplyJumpingSound(bool jump, AudioSource audioSource, bool isCharacterGrounded)
@@ -35,20 +77,20 @@ public class SoundFXManager : MonoBehaviour
         else
             audioMixer.SetFloat("PlayerWalkingOrRunningSoundFXVolume", 0);
 
-
-
     }
 
-    public bool ApplyWalkingSound(float horizontal, float vertical, bool sneakingButton, bool sprint, float ySpeed, AudioSource audioSource)
+    public bool ApplyWalkingSound(float horizontal, float vertical, bool sneakingButton, bool sprint, float ySpeed, AudioSource audioSource, bool additionaCondition)
     {
+        
         if ((!(GetComponentInParent<Game>().GetIsTrainingOn()) && ySpeed == -1.0f)) {
-            //play sound fx
-            if ((horizontal != 0f || vertical != 0) && (!sprint && !sneakingButton))
-            {
-                audioSource.enabled = true;
-            }
-            else
-                audioSource.enabled = false;
+
+            float maxDistanceOfSound = 7;
+            float minDistanceOfSound = 3;
+
+            bool conditionToCheck = (horizontal != 0f || vertical != 0) && (!sprint && !sneakingButton) && additionaCondition;
+
+            CheckDistance(conditionToCheck, maxDistanceOfSound, minDistanceOfSound, audioSource, additionaCondition);
+
 
             return audioSource.enabled;
         }
@@ -56,14 +98,13 @@ public class SoundFXManager : MonoBehaviour
         return false;
     }
 
-    public bool ApplyRunningSound(float horizontal, float vertical, bool sprint, bool sneakingButton, float ySpeed, AudioSource audioSource)
+    public bool ApplyRunningSound(float horizontal, float vertical, bool sprint, bool sneakingButton, float ySpeed, AudioSource audioSource, bool additionaConditionFOrWithinDistance)
     {
-        if ((!(GetComponentInParent<Game>().GetIsTrainingOn()) && ySpeed == -1.0f) && (horizontal != 0f || vertical != 0) && sprint && !sneakingButton)
-        {
-            audioSource.enabled = true;
-        }
-        else
-            audioSource.enabled = false;
+        bool conditioToCheck = (!(GetComponentInParent<Game>().GetIsTrainingOn()) && ySpeed == -1.0f) && (horizontal != 0f || vertical != 0) && sprint && !sneakingButton;
+        float maxDistanceOfSound = 9;
+        float minDistanceOfSound = 3;
+
+        CheckDistance(conditioToCheck, maxDistanceOfSound, minDistanceOfSound, audioSource, additionaConditionFOrWithinDistance);
 
         return audioSource.enabled;
     }

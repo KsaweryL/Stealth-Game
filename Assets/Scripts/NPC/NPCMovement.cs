@@ -88,6 +88,11 @@ public class NPCMovement : MonoBehaviour
                 pointNr = 0;
 
         }
+        else
+        {
+            //apply sound
+            SoundFXManager.instance.ApplyWalkingSound(1, 1, false, false, -1, GetComponentInParent<NPC_allScript>().GetComponentInChildren<WalkingAudioSource>().GetComponent<AudioSource>(), true);
+        }
 
         UpdateWaitingTime();
     }
