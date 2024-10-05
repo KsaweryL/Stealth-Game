@@ -301,7 +301,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2252381344910525145, guid: 98605fd7d2f0d2c44a696b999f388955, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2302211511443232430, guid: 98605fd7d2f0d2c44a696b999f388955, type: 3}
       propertyPath: m_MaxRayDegrees
@@ -1071,7 +1071,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2252381344910525145, guid: 98605fd7d2f0d2c44a696b999f388955, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2302211511443232430, guid: 98605fd7d2f0d2c44a696b999f388955, type: 3}
       propertyPath: m_MaxRayDegrees
@@ -1743,7 +1743,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2252381344910525145, guid: 98605fd7d2f0d2c44a696b999f388955, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2302211511443232430, guid: 98605fd7d2f0d2c44a696b999f388955, type: 3}
       propertyPath: m_MaxRayDegrees
@@ -2415,7 +2415,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2252381344910525145, guid: 98605fd7d2f0d2c44a696b999f388955, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2302211511443232430, guid: 98605fd7d2f0d2c44a696b999f388955, type: 3}
       propertyPath: m_MaxRayDegrees
@@ -3087,7 +3087,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2252381344910525145, guid: 98605fd7d2f0d2c44a696b999f388955, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2302211511443232430, guid: 98605fd7d2f0d2c44a696b999f388955, type: 3}
       propertyPath: m_MaxRayDegrees
@@ -3763,7 +3763,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2252381344910525145, guid: 98605fd7d2f0d2c44a696b999f388955, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2302211511443232430, guid: 98605fd7d2f0d2c44a696b999f388955, type: 3}
       propertyPath: m_MaxRayDegrees
@@ -4439,7 +4439,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2252381344910525145, guid: 98605fd7d2f0d2c44a696b999f388955, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2302211511443232430, guid: 98605fd7d2f0d2c44a696b999f388955, type: 3}
       propertyPath: m_MaxRayDegrees
@@ -5220,7 +5220,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2252381344910525145, guid: 98605fd7d2f0d2c44a696b999f388955, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2302211511443232430, guid: 98605fd7d2f0d2c44a696b999f388955, type: 3}
       propertyPath: m_MaxRayDegrees
@@ -5896,7 +5896,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2252381344910525145, guid: 98605fd7d2f0d2c44a696b999f388955, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2302211511443232430, guid: 98605fd7d2f0d2c44a696b999f388955, type: 3}
       propertyPath: m_MaxRayDegrees
@@ -6572,7 +6572,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2252381344910525145, guid: 98605fd7d2f0d2c44a696b999f388955, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2302211511443232430, guid: 98605fd7d2f0d2c44a696b999f388955, type: 3}
       propertyPath: m_MaxRayDegrees
@@ -7248,7 +7248,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2252381344910525145, guid: 98605fd7d2f0d2c44a696b999f388955, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2302211511443232430, guid: 98605fd7d2f0d2c44a696b999f388955, type: 3}
       propertyPath: m_MaxRayDegrees
@@ -7924,7 +7924,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2252381344910525145, guid: 98605fd7d2f0d2c44a696b999f388955, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2302211511443232430, guid: 98605fd7d2f0d2c44a696b999f388955, type: 3}
       propertyPath: m_MaxRayDegrees
@@ -8600,7 +8600,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2252381344910525145, guid: 98605fd7d2f0d2c44a696b999f388955, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2302211511443232430, guid: 98605fd7d2f0d2c44a696b999f388955, type: 3}
       propertyPath: m_MaxRayDegrees
@@ -9276,7 +9276,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2252381344910525145, guid: 98605fd7d2f0d2c44a696b999f388955, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2302211511443232430, guid: 98605fd7d2f0d2c44a696b999f388955, type: 3}
       propertyPath: m_MaxRayDegrees
@@ -9952,7 +9952,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2252381344910525145, guid: 98605fd7d2f0d2c44a696b999f388955, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2302211511443232430, guid: 98605fd7d2f0d2c44a696b999f388955, type: 3}
       propertyPath: m_MaxRayDegrees
@@ -10498,33 +10498,13 @@ PrefabInstance:
       propertyPath: m_Name
       value: Level1Environment-MLAgent-Training2
       objectReference: {fileID: 0}
-    - target: {fileID: 3306585663401066662, guid: 98605fd7d2f0d2c44a696b999f388955, type: 3}
-      propertyPath: m_RayLength
-      value: 12
-      objectReference: {fileID: 0}
-    - target: {fileID: 3306585663401066662, guid: 98605fd7d2f0d2c44a696b999f388955, type: 3}
-      propertyPath: m_RaysPerDirection
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 3306585663401066662, guid: 98605fd7d2f0d2c44a696b999f388955, type: 3}
-      propertyPath: m_DetectableTags.Array.size
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 3306585663401066662, guid: 98605fd7d2f0d2c44a696b999f388955, type: 3}
-      propertyPath: m_DetectableTags.Array.data[3]
-      value: NavMeshWaypoint
-      objectReference: {fileID: 0}
     - target: {fileID: 4770003936808237787, guid: 98605fd7d2f0d2c44a696b999f388955, type: 3}
       propertyPath: cam
       value: 
       objectReference: {fileID: 1124658728}
-    - target: {fileID: 7147040443198519910, guid: 98605fd7d2f0d2c44a696b999f388955, type: 3}
-      propertyPath: m_Model
-      value: 
-      objectReference: {fileID: 5022602860645237092, guid: 7d9cedf994e24644c89902f1dded46c1, type: 3}
-    - target: {fileID: 7147040443198519910, guid: 98605fd7d2f0d2c44a696b999f388955, type: 3}
-      propertyPath: m_BehaviorType
-      value: 2
+    - target: {fileID: 8896987577819042015, guid: 98605fd7d2f0d2c44a696b999f388955, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

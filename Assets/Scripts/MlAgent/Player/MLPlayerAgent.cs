@@ -220,11 +220,11 @@ public class MLPlayerAgent : Agent
             pathCorners = path.corners; 
             Debug.Log("path corners length " + pathCorners.Length);
 
-            //pathCorners = new Vector3[] { currentlyChosenDiamond.transform.position };
-            //currentWaypointIndex = 0;
-            if (path.corners.Length > 1)
-                currentWaypointIndex = 1;
-            else { currentWaypointIndex = 0; }
+            pathCorners = new Vector3[] { currentlyChosenDiamond.transform.position };
+            currentWaypointIndex = 0;
+            //if (path.corners.Length > 1)
+            //    currentWaypointIndex = 1;
+            //else { currentWaypointIndex = 0; }
 
 
             //debug
