@@ -4,6 +4,7 @@ using System.IO;
 using UnityEngine;
 using static Tile;
 using System.Linq;
+using UnityEditor.Experimental.GraphView;
 
 public class Game : MonoBehaviour
 {
@@ -16,6 +17,19 @@ public class Game : MonoBehaviour
     public Tile[] tiles;
     public HidingSpotArea[] hidingSpotAreas;
     Tile currentlyTouchedTile;
+
+    [Header("Minimap")]
+    public GameObject minimap;
+    public bool minimapIsOn = false;
+
+    [Header("Pause")]
+    public GameObject pauseMenu;
+    public bool pauseMenuIsoOn = false;
+
+
+    [Header("End of the game")]
+    public GameObject endGameMenu;
+    
 
     [Header("Diamonds")]
     public int collectedDiamonds;
@@ -45,6 +59,14 @@ public class Game : MonoBehaviour
     {
         hidingSpotAreas = GetComponentsInChildren<HidingSpotArea>();
         return hidingSpotAreas;
+    }
+    public GameObject GetEndGameMenu()
+    {
+        return endGameMenu;
+    }
+    public bool GetIsPauseMenuOn()
+    {
+        return pauseMenuIsoOn;
     }
     public MainCamera GetCamera()
     {
@@ -277,9 +299,53 @@ public class Game : MonoBehaviour
         return NPCmovementVariable;
     }
 
+    public void ResetPauseMenu()
+    {
+        pauseMenuIsoOn = true;
+        UpdatePauseMenu();
+    }
+    void UpdatePauseMenu()
+    {
+        
+            if (pauseMenuIsoOn)
+            {
+                pauseMenuIsoOn = false;
+            }
+            else
+            {
+                pauseMenuIsoOn = true;
+            }
+            pauseMenu.GetComponentInChildren<PauseMenu>().UpdatePauseMenu(pauseMenuIsoOn);
+
+        
+
+    }
+
+    void UpdateMiniMapUI()
+    {
+
+        if (Input.GetKey(KeyCode.M))
+        {
+            minimapIsOn = true;
+            minimap.SetActive(true);
+        }
+        else
+        {
+            minimapIsOn = false;
+            minimap.SetActive(false);
+        }
+        
+
+
+
+    }
+
     // Update is called once per frame
     void Update()
     {
-        
+        if (Input.GetKeyDown(KeyCode.Escape))
+            UpdatePauseMenu();
+
+        UpdateMiniMapUI();
     }
 }

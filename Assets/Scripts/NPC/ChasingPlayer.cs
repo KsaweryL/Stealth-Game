@@ -190,16 +190,20 @@ public class ChasingPlayer : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (chasePlayer)
+        //only when agent is enabled
+        if (agent.enabled)
         {
-            ChaseAfterPlayer();
-            InflictDamage();
-        }
-        else
-            damageWasInflicted = false;
+            if (chasePlayer)
+            {
+                ChaseAfterPlayer();
+                InflictDamage();
+            }
+            else
+                damageWasInflicted = false;
 
-        npcMovement.UpdateChasePlayerStatusNPCMovement(chasePlayer);
-        npcFOV.UpdateChasePlayerStatusNPCFOV(chasePlayer);
+            npcMovement.UpdateChasePlayerStatusNPCMovement(chasePlayer);
+            npcFOV.UpdateChasePlayerStatusNPCFOV(chasePlayer);
+        }
 
         
     }
@@ -207,6 +211,8 @@ public class ChasingPlayer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        CheckIfPlayerHidden();
+        //only when agent is enabled
+        if (agent.enabled)
+            CheckIfPlayerHidden();
     }
 }

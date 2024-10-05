@@ -119,53 +119,57 @@ public class NPCFieldOfView : MonoBehaviour
 
     public void UpdateDetectedTime()
     {
-        //change the time to detect whenever player is not seen
-        if (!canSeePlayer)
+        //don't update the time when the pause menu is on
+        if (!GetComponentInParent<Game>().GetIsPauseMenuOn())
         {
-            bool isSprintEnabledVariable = player.GetComponent<ThirdPersonMovement>().IsSprintEnabled();
-            bool isSneakingVariable = player.GetComponent<ThirdPersonMovement>().GetIsSneaking();
-            //if player is sprinting and is sneaking
-            if (isSprintEnabledVariable && isSneakingVariable)
-                currentlySetTimeToDetect = timeToDetectWhenCrouchingRunning;
-            //when player is only sneaking
-            else if (!isSprintEnabledVariable && isSneakingVariable)
-                currentlySetTimeToDetect = timeToDetectWhenCrouching;
-            else if (isSprintEnabledVariable && !isSneakingVariable)
-                currentlySetTimeToDetect = timeToDetectWhenRunning;
-            else if(!isSprintEnabledVariable && !isSneakingVariable)
-                currentlySetTimeToDetect = timeToDetect;
-        }
-
-        //update the detection variables only when player is being seen
-        if (canSeePlayer)
-        {
-            if (currentlyDetectedTimeReversed == 0)
+            //change the time to detect whenever player is not seen
+            if (!canSeePlayer)
             {
+                bool isSprintEnabledVariable = player.GetComponent<ThirdPersonMovement>().IsSprintEnabled();
+                bool isSneakingVariable = player.GetComponent<ThirdPersonMovement>().GetIsSneaking();
+                //if player is sprinting and is sneaking
+                if (isSprintEnabledVariable && isSneakingVariable)
+                    currentlySetTimeToDetect = timeToDetectWhenCrouchingRunning;
+                //when player is only sneaking
+                else if (!isSprintEnabledVariable && isSneakingVariable)
+                    currentlySetTimeToDetect = timeToDetectWhenCrouching;
+                else if (isSprintEnabledVariable && !isSneakingVariable)
+                    currentlySetTimeToDetect = timeToDetectWhenRunning;
+                else if (!isSprintEnabledVariable && !isSneakingVariable)
+                    currentlySetTimeToDetect = timeToDetect;
+            }
 
-            }
-            else
+            //update the detection variables only when player is being seen
+            if (canSeePlayer)
             {
-                currentlyDetectedTimeReversed--;
-                currentlyDetectedTime++;
+                if (currentlyDetectedTimeReversed == 0)
+                {
+
+                }
+                else
+                {
+                    currentlyDetectedTimeReversed--;
+                    currentlyDetectedTime++;
+                }
             }
-        }
-        else if (!chasePlayer)
-        {
+            else if (!chasePlayer)
+            {
                 currentlyDetectedTimeReversed = (int)Math.Round(currentlySetTimeToDetect / 0.02);
                 currentlyDetectedTime = 0;
 
-        }
-        else if (chasePlayer)
-        {
-            currentlyDetectedTime = (int)Math.Round(currentlySetTimeToDetect / 0.02);
-            currentlyDetectedTimeReversed = 0;
+            }
+            else if (chasePlayer)
+            {
+                currentlyDetectedTime = (int)Math.Round(currentlySetTimeToDetect / 0.02);
+                currentlyDetectedTimeReversed = 0;
 
-        }
-        else if (currentlyDetectedTime > 0)
-        {
-            currentlyDetectedTime--;
-            if (currentlyDetectedTimeReversed != (int)Math.Round(currentlySetTimeToDetect / 0.02)) 
-                currentlyDetectedTimeReversed++;
+            }
+            else if (currentlyDetectedTime > 0)
+            {
+                currentlyDetectedTime--;
+                if (currentlyDetectedTimeReversed != (int)Math.Round(currentlySetTimeToDetect / 0.02))
+                    currentlyDetectedTimeReversed++;
+            }
         }
     }
 

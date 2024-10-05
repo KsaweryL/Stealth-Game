@@ -10,7 +10,7 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{ED7D511E-50C3-1D8C-8E77-4689D041909E}</ProjectGuid>
+    <ProjectGuid>{FBC6CD96-0F3B-86B8-6DD5-C2DD262B5605}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>Assembly-CSharp</AssemblyName>
@@ -63,15 +63,22 @@
     <Compile Include="Assets\Classes\Tile.cs" />
     <Compile Include="Assets\Scripts\gameRelated\GameOver.cs" />
     <Compile Include="Assets\Assets - grapics\BrokenVector\LowPolyBrickHouses\Scripts\ModelCustomizer.cs" />
+    <Compile Include="Assets\Scripts\Menu\Main menu\ChooseLevel.cs" />
     <Compile Include="Assets\Scripts\Menu\Main menu\MainMenu.cs" />
+    <Compile Include="Assets\Scripts\Sound\Movement\SneakingAudioSource.cs" />
     <Compile Include="Assets\Scripts\gameRelated\SpawningLocation.cs" />
     <Compile Include="Assets\Scripts\Player\TakeDamageOnObjectsPlayer.cs" />
     <Compile Include="Assets\Scripts\NPC\NPC_allScript.cs" />
+    <Compile Include="Assets\Scripts\Sound\NPC\DetectingPlayer\HeartBeatAudioSource.cs" />
     <Compile Include="Assets\Scripts\MlAgent\Wall.cs" />
     <Compile Include="Assets\Scripts\gameRelated\Barrier.cs" />
+    <Compile Include="Assets\Scripts\Menu\End game menu\EndGameText.cs" />
     <Compile Include="Assets\Scripts\MlAgent\Player\MLPlayerAgent.cs" />
+    <Compile Include="Assets\Scripts\gameRelated\StaticData.cs" />
     <Compile Include="Assets\Scripts\Player\HidingSpot\DetectingPlayerInHidingSpot.cs" />
+    <Compile Include="Assets\Scripts\Sound\Movement\WalkingAudioSource.cs" />
     <Compile Include="Assets\Scripts\Player\ThirdPersonMovement.cs" />
+    <Compile Include="Assets\Scripts\Sound\Movement\JumpingAudioSource.cs" />
     <Compile Include="Assets\Scripts\NPC\UI\DetectionBar.cs" />
     <Compile Include="Assets\Scripts\NPC\NPCFieldOfView.cs" />
     <Compile Include="Assets\Scripts\Items\Diamond\Diamond.cs" />
@@ -83,9 +90,13 @@
     <Compile Include="Assets\Scripts\gameRelated\MainCamera.cs" />
     <Compile Include="Assets\Scripts\NPC\FieldOfViewEditor.cs" />
     <Compile Include="Assets\Scripts\Player\AnimationStateController.cs" />
+    <Compile Include="Assets\Scripts\Menu\End game menu\EndGameMenu.cs" />
     <Compile Include="Assets\Scripts\Player\UI\HealthBar.cs" />
     <Compile Include="Assets\Scripts\gameRelated\PlayerSpawnPoint.cs" />
+    <Compile Include="Assets\Scripts\Sound\Movement\RunningAudioSource.cs" />
     <Compile Include="Assets\Scripts\gameRelated\Game.cs" />
+    <Compile Include="Assets\Scripts\Player\UI\MinimapUI.cs" />
+    <Compile Include="Assets\Scripts\Menu\Pause menu\PauseMenu.cs" />
     <Compile Include="Assets\Scripts\Player\UI\InventoryUI.cs" />
     <Compile Include="Assets\Scripts\MlAgent\Goal.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerInventory.cs" />
@@ -96,7 +107,10 @@
     <Compile Include="Assets\Scripts\NPC\ChasingPlayer.cs" />
     <Compile Include="Assets\Scripts\NPC\UI\Billboard.cs" />
     <Compile Include="Assets\Scripts\gameRelated\BarrierPoint.cs" />
+    <Compile Include="Assets\Scripts\Sound\SoundFXManager.cs" />
+    <Compile Include="Assets\Scripts\Sound\NPC\DetectingPlayer\BeingDetectedMusic.cs" />
     <Compile Include="Assets\Scripts\old\PlayerMovement_old.cs" />
+    <Compile Include="Assets\Scripts\Sound\Movement\SneakingRunningAudioSource.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Assets - grapics\TextMesh Pro\Shaders\TMPro.cginc" />
@@ -1153,11 +1167,11 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="Unity.AI.Navigation.Samples.Initialization.Editor.csproj">
-      <Project>{1C7DEED1-2C94-AD42-2D9C-EFE407F2F97F}</Project>
+      <Project>{B4EBD927-8650-B386-6053-E257C2B3DC1B}</Project>
       <Name>Unity.AI.Navigation.Samples.Initialization.Editor</Name>
     </ProjectReference>
     <ProjectReference Include="Unity.AI.Navigation.Samples.csproj">
-      <Project>{CF51BBA7-26A2-D88F-277E-522D0B9D3236}</Project>
+      <Project>{FAAE3CD4-125E-9F8A-F5DC-B94041D8A349}</Project>
       <Name>Unity.AI.Navigation.Samples</Name>
     </ProjectReference>
   </ItemGroup>

@@ -44,6 +44,11 @@ public class NPCMovement : MonoBehaviour
 
 
     }
+
+    public NavMeshAgent GetNavMeshAgent()
+    {
+        return agent;
+    }
     public GameObject[] GetPathPoints()
     {
         return PathPoints;
@@ -129,14 +134,20 @@ public class NPCMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
+        //only when agent is enabled and when pasue menu is not on 
+        if (agent.enabled == true && !GetComponentInParent<Game>().GetIsPauseMenuOn())
+        {
+            //Patrol only if player is not already detected
+            //once the player is spotted, chase him for a certain period of time,
+            //even if player is not directly detected 
 
-        //Patrol only if player is not already detected
-        //once the player is spotted, chase him for a certain period of time,
-        //even if player is not directly detected 
+            if (!chasePlayer && !WaitIfDetectingPlayer())
+                NPCPatrolling();
 
-        if (!chasePlayer && !WaitIfDetectingPlayer())
-            NPCPatrolling();
-
+            //check if the need for reseting teh properties was called
+            if (WasResetPropertiesCalled())
+                ResetProperties();
+        }
     }
 
 }
