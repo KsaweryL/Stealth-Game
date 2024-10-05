@@ -29,10 +29,13 @@ public class GameOver : MonoBehaviour
                 if (GetComponentInChildren<MLPlayerAgent>())
                     GetComponentInChildren<MLPlayerAgent>().PlayerHasWon();
 
-            GetComponent<Game>().GetEndGameMenu().SetActive(true);
-            GetComponent<Game>().pauseMenu.GetComponent<PauseMenu>().FreezeTheGame();
-            GetComponent<Game>().GetEndGameMenu().GetComponentInChildren<EndGameText>();
-            GetComponent<Game>().GetEndGameMenu().GetComponentInChildren<EndGameText>().GetComponent<TextMeshProUGUI>().text = "You won!";
+            if (!GetComponent<Game>().GetIsTrainingOn())
+            {
+                GetComponent<Game>().GetEndGameMenu().SetActive(true);
+                GetComponent<Game>().pauseMenu.GetComponent<PauseMenu>().FreezeTheGame();
+                GetComponent<Game>().GetEndGameMenu().GetComponentInChildren<EndGameText>();
+                GetComponent<Game>().GetEndGameMenu().GetComponentInChildren<EndGameText>().GetComponent<TextMeshProUGUI>().text = "You won!";
+            }
         }
 
     }

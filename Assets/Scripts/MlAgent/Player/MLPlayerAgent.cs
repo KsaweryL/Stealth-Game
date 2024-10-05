@@ -216,15 +216,14 @@ public class MLPlayerAgent : Agent
             navMeshAgent.CalculatePath(currentlyChosenDiamond.transform.position, path);
 
             Debug.Log(currentlyChosenDiamond.gameObject.name + " and " + currentlyChosenDiamond.transform.localPosition);
-            //pathCorners = new Vector3[] { currentlyChosenDiamond.transform.position };
             pathCorners = path.corners; 
             Debug.Log("path corners length " + pathCorners.Length);
 
-            pathCorners = new Vector3[] { currentlyChosenDiamond.transform.position };
+            //pathCorners = new Vector3[] { currentlyChosenDiamond.transform.position };
             currentWaypointIndex = 0;
-            //if (path.corners.Length > 1)
-            //    currentWaypointIndex = 1;
-            //else { currentWaypointIndex = 0; }
+            if (path.corners.Length > 1)
+                currentWaypointIndex = 1;
+            else { currentWaypointIndex = 0; }
 
 
             //debug

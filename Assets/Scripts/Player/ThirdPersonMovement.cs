@@ -264,12 +264,14 @@ public class ThirdPersonMovement : MonoBehaviour
         bool sneakingButton = Input.GetKeyDown(KeyCode.LeftControl);
 
         //apply sound
-        SoundFXManager.instance.ApplyRunningSound(horizontal, vertical, isSprintEnabled, isSneaking, ySpeed, GetComponentInChildren<RunningAudioSource>().GetComponent<AudioSource>());
-        SoundFXManager.instance.ApplySneakingSound(horizontal, vertical, isSprintEnabled, isSneaking, ySpeed, GetComponentInChildren<SneakingAudioSource>().GetComponent<AudioSource>());
-        SoundFXManager.instance.ApplySneakingRunningSound(horizontal, vertical, isSprintEnabled, isSneaking, ySpeed, GetComponentInChildren<SneakingRunningAudioSource>().GetComponent<AudioSource>());
-        SoundFXManager.instance.ApplyWalkingSound(horizontal, vertical, isSneaking, isSprintEnabled, ySpeed, GetComponentInChildren<WalkingAudioSource>().GetComponent<AudioSource>());
-        SoundFXManager.instance.ApplyJumpingSound(jump, GetComponentInChildren<JumpingAudioSource>().GetComponent<AudioSource>(), controller.isGrounded);
-
+        if (!GetComponentInParent<Game>().GetIsTrainingOn())
+        {
+            SoundFXManager.instance.ApplyRunningSound(horizontal, vertical, isSprintEnabled, isSneaking, ySpeed, GetComponentInChildren<RunningAudioSource>().GetComponent<AudioSource>());
+            SoundFXManager.instance.ApplySneakingSound(horizontal, vertical, isSprintEnabled, isSneaking, ySpeed, GetComponentInChildren<SneakingAudioSource>().GetComponent<AudioSource>());
+            SoundFXManager.instance.ApplySneakingRunningSound(horizontal, vertical, isSprintEnabled, isSneaking, ySpeed, GetComponentInChildren<SneakingRunningAudioSource>().GetComponent<AudioSource>());
+            SoundFXManager.instance.ApplyWalkingSound(horizontal, vertical, isSneaking, isSprintEnabled, ySpeed, GetComponentInChildren<WalkingAudioSource>().GetComponent<AudioSource>());
+            SoundFXManager.instance.ApplyJumpingSound(jump, GetComponentInChildren<JumpingAudioSource>().GetComponent<AudioSource>(), controller.isGrounded);
+        }
         //apply movement only when game is not paused
         if (!GetComponentInParent<Game>().GetIsPauseMenuOn() && !GetComponentInParent<GameOver>().GetGameOver())
             ApplyMovement(horizontal, vertical, jump, sprint, sneakingButton, true, 1f);

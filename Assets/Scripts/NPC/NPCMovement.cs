@@ -144,9 +144,6 @@ public class NPCMovement : MonoBehaviour
             if (!chasePlayer && !WaitIfDetectingPlayer())
                 NPCPatrolling();
 
-            //check if the need for reseting teh properties was called
-            if (WasResetPropertiesCalled())
-                ResetProperties();
         }
     }
 
