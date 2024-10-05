@@ -68,6 +68,7 @@
     <Compile Include="Assets\Scripts\Sound\Movement\SneakingAudioSource.cs" />
     <Compile Include="Assets\Scripts\gameRelated\SpawningLocation.cs" />
     <Compile Include="Assets\Scripts\Player\TakeDamageOnObjectsPlayer.cs" />
+    <Compile Include="Assets\Scripts\NPC\NPC_allScript.cs" />
     <Compile Include="Assets\Scripts\Sound\NPC\DetectingPlayer\HeartBeatAudioSource.cs" />
     <Compile Include="Assets\Scripts\MlAgent\Wall.cs" />
     <Compile Include="Assets\Scripts\gameRelated\Barrier.cs" />
@@ -81,6 +82,7 @@
     <Compile Include="Assets\Scripts\NPC\UI\DetectionBar.cs" />
     <Compile Include="Assets\Scripts\NPC\NPCFieldOfView.cs" />
     <Compile Include="Assets\Scripts\Items\Diamond\Diamond.cs" />
+    <Compile Include="Assets\HidingSpotArea.cs" />
     <Compile Include="Assets\Scripts\gameRelated\VisibleCube.cs" />
     <Compile Include="Assets\Scripts\old\PlayerCamera_old.cs" />
     <Compile Include="Assets\Scripts\NPC\AnimationStateControllerNPC.cs" />

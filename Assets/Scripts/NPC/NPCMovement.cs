@@ -21,12 +21,11 @@ public class NPCMovement : MonoBehaviour
     public LayerMask whatIsPlayer;
 
     //waiting a number of frames
-    public int timeToWaitWhenPatrolling;
+    public float timeToWaitWhenPatrolling;
     int currentlyWaitingTime;
 
     //detecting a player
     public bool chasePlayer;
-    public bool wasResetPropertiesCalled;
 
     [Header("Connection with other components")]
     public NPCFieldOfView NPCFOV;
@@ -35,15 +34,7 @@ public class NPCMovement : MonoBehaviour
     [Header("Starting position")]
     Vector3 startingPosition;
 
-    public bool WasResetPropertiesCalled()
-    {
-        return wasResetPropertiesCalled;
-    }
-    public void ResetPropertiesCall()
-    {
-        wasResetPropertiesCalled = true;
-        ResetProperties();
-    }
+
     public void ResetProperties()
     {
         agent.enabled = false;
@@ -51,9 +42,6 @@ public class NPCMovement : MonoBehaviour
         GetComponent<ChasingPlayer>().ResetCurrentlyWaitingTimeToWaitAfterLosing();
         agent.enabled = true;
 
-        StopChasingPlayer();
-
-        wasResetPropertiesCalled = false;
 
     }
 
@@ -138,7 +126,6 @@ public class NPCMovement : MonoBehaviour
         chasingPlayer = GetComponent<ChasingPlayer>();
         pointNr = 0;
         startingPosition = transform.position;
-        wasResetPropertiesCalled = false;
 
         currentlyWaitingTime = 0;
         numberOfPoints = PathPoints.Length;
@@ -163,9 +150,4 @@ public class NPCMovement : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
 }

@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8246048903221592300}
   m_Layer: 10
   m_Name: HidingBush
-  m_TagString: Untagged
+  m_TagString: HidingSpotTag
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

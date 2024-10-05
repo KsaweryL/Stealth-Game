@@ -44,6 +44,7 @@ public class ChasingPlayer : MonoBehaviour
     public void ResetCurrentlyWaitingTimeToWaitAfterLosing()
     {
         currentlyWaitingTimeToWaitAfterLosing = 0;
+        canSeePlayer = false;
     }
 
     public void UpdateCanSeePlayerStatusChasingPlayer(bool canSeePlayerVariable)
@@ -51,7 +52,11 @@ public class ChasingPlayer : MonoBehaviour
         canSeePlayer = canSeePlayerVariable;
         int currentlyDetectedTimeReversed = npcFOV.GetCurrentlyDetectedTimeReversedNPCFOV();
         if (canSeePlayer && currentlyDetectedTimeReversed == 0)
+        {
             chasePlayer = true;
+            if (GetComponentInParent<Game>().GetIsTrainingOn())
+                GetComponentInParent<Game>().GetPlayer().GetComponent<MLPlayerAgent>().PlayerIsChasenAfter();
+        }
     }
 
     public bool GetWaitBeforePlayersCoverChasingPlayer()
