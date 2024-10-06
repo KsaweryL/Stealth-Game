@@ -23,11 +23,12 @@ public class InventoryUI : MonoBehaviour
     public void UpdateDiamondText(PlayerInventory playerInventory)
     {
         diamondText.text = playerInventory.NumberOfDiamonds.ToString() + "/" + numberOfAllDiamonds;
-        if (playerInventory.NumberOfDiamonds == numberOfAllDiamonds)
-        {
-            //FindObjectOfType<GameOver>().UpdateGameOver(true);
-            //FindObjectOfType<GameOver>().UpdatePlayerWon(true);
-        }
+        
 
+    }
+
+    public void ResetDiamondText()
+    {
+        diamondText.text = "0/" + numberOfAllDiamonds;
     }
 }

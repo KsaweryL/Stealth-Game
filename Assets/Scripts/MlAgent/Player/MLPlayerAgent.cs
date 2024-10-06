@@ -8,6 +8,7 @@ using System.Threading;
 using System.Linq;
 using UnityEngine.AI;
 using Unity.VisualScripting;
+using UnityEngine.UI;
 
 public class MLPlayerAgent : Agent
 {
@@ -103,6 +104,11 @@ public class MLPlayerAgent : Agent
     [SerializeField] private Material loseMaterial;
     [SerializeField] private Material neutralMaterial;
     [SerializeField] private MeshRenderer floorMeshRender;
+    [SerializeField] private Image imageRender;
+    [SerializeField] private Color winColor = Color.green;
+    [SerializeField] private Color neutralColor = Color.white;
+    [SerializeField] private Color loseColor = Color.red;
+    public bool spectating;
 
     [Header("NPC")]
     public NPCMovement chosenNPC;
@@ -156,7 +162,7 @@ public class MLPlayerAgent : Agent
         //for the player
         //new Vector3 (-0.11f, -2f, -42.56f)
 
-        startingPlayerPosition = transform.localPosition;
+        startingPlayerPosition = transform.position;
 
         //Debug.Log("Starting position: " + startingPlayerPosition);
 
@@ -215,7 +221,7 @@ public class MLPlayerAgent : Agent
             NavMeshPath path = new NavMeshPath();
             navMeshAgent.CalculatePath(currentlyChosenDiamond.transform.position, path);
 
-            Debug.Log(currentlyChosenDiamond.gameObject.name + " and " + currentlyChosenDiamond.transform.localPosition);
+            //Debug.Log(currentlyChosenDiamond.gameObject.name + " and " + currentlyChosenDiamond.transform.localPosition);
             pathCorners = path.corners; 
             Debug.Log("path corners length " + pathCorners.Length);
 
@@ -287,7 +293,11 @@ public class MLPlayerAgent : Agent
                 //if (randomIndexSpawn == 2) randomIndexSpawn = 3;
                 //else if (randomIndexSpawn == 2) randomIndexSpawn = 5;
 
-                transform.position = playerSpawningPoints[randomIndexSpawn].transform.position;
+                if (spectating)
+                    transform.position = startingPlayerPosition;
+                else
+                    transform.position = playerSpawningPoints[randomIndexSpawn].transform.position;
+                
 
                 //for curiosity driven rl
                 visitedTiles = new List<bool>();
@@ -347,11 +357,15 @@ public class MLPlayerAgent : Agent
             NPCmovement[npc].ResetProperties();
 
         if (isTrainingOn)
+        {
             ResetDiamonds();
+            if(FindObjectOfType<InventoryUI>())
+                FindObjectOfType<InventoryUI>().ResetDiamondText();
+        }
 
 
-        //for training
-        barrierPointReached = false;
+            //for training
+            barrierPointReached = false;
 
     }
 
@@ -425,26 +439,6 @@ public class MLPlayerAgent : Agent
 
         if (allCurrentDiamonds.Length > 0)
         {
-            //adding the diamond position with the closest distance
-            //Diamond minDistanceDiamond = allCurrentDiamonds[0];
-            //Vector3 difference = (GetGamesTransformPosition(minDistanceDiamond.transform.position) - GetGamesTransformPosition(transform.position)).normalized;
-            //float minDistance = Vector3.Distance(GetGamesTransformPosition(minDistanceDiamond.transform.position), GetGamesTransformPosition(transform.position));
-
-            //foreach (Diamond diamond in allCurrentDiamonds)
-            //{
-
-            //    //instead of position, add x and y distances
-            //    float distanceCheck = Vector3.Distance(GetGamesTransformPosition(diamond.transform.position), GetGamesTransformPosition(transform.position));
-            //    if (distanceCheck < minDistance)
-            //    {
-            //        minDistance = distanceCheck;
-            //        minDistanceDiamond = diamond;
-
-            //    }
-
-
-
-            //}
 
             ////instead of position, add x and y distances
             Vector3 difference = (GetGamesTransformPosition(chosenDiamond.transform.position) - GetGamesTransformPosition(transform.position)).normalized;
@@ -549,8 +543,11 @@ public class MLPlayerAgent : Agent
         for (int diamond = 0; diamond < allDiamonds.Length; diamond++)
             allDiamonds[diamond].ResetProperties();
 
-        for (int diamond = 0; diamond < allDiamonds.Length; diamond++)
-            allDiamonds[diamond].ResetPosition();
+        if (!spectating)
+        {
+            for (int diamond = 0; diamond < allDiamonds.Length; diamond++)
+                allDiamonds[diamond].ResetPosition();
+        }
 
         NavMeshUpdate();
     }
@@ -587,19 +584,6 @@ public class MLPlayerAgent : Agent
 
         if (allCurrentDiamonds.Length > 0)
         {
-            //choose the closest diamond
-            //Diamond currentlyChosenDiamond = chosenDiamond;
-            //chosenDiamond = allCurrentDiamonds[0];
-            //foreach (Diamond diamond in allCurrentDiamonds)
-            //{
-            //    if (Vector3.Distance(diamond.transform.position, transform.position) < Vector3.Distance(chosenDiamond.transform.position, transform.position))
-            //        chosenDiamond = diamond;
-            //}
-
-            //if (chosenDiamond != currentlyChosenDiamond)
-            //    allDistancesToDiamond = new List<float>();
-
-            
 
             //reward for making the distance to diamond smaller
             float newDistanceToDiamond = Vector3.Distance(chosenDiamond.transform.position, transform.position);
@@ -666,7 +650,11 @@ public class MLPlayerAgent : Agent
             stepsAfterReward = 0;
             ResetDiamonds();
             if (isTrainingOn && floorMeshRender != null)
+            {
                 floorMeshRender.material = neutralMaterial;
+                if(imageRender != null)
+                    imageRender.color = neutralColor;
+            }
             EndEpisode();
         }
         else if (stepsAfterReward >= maxStepsBeforePenalty)
@@ -810,7 +798,15 @@ public class MLPlayerAgent : Agent
         if (isTrainingOn && floorMeshRender != null)
         {
             floorMeshRender.material = winMaterial;
+            if (imageRender != null)
+            {
+                imageRender.color = winColor;
+                //update UI text
+                if(GetComponentInParent<Game>().GetComponentInChildren<AchievedTimeUI>())
+                    GetComponentInParent<Game>().GetComponentInChildren<AchievedTimeUI>().UpdateAchievedTimeText();
+            }
         }
+
         EndEpisode();
         
     }
@@ -827,7 +823,11 @@ public class MLPlayerAgent : Agent
         Debug.Log("complete loss " + GetCumulativeReward());
 
         if (isTrainingOn && floorMeshRender != null)
+        {
             floorMeshRender.material = loseMaterial;
+            if (imageRender != null)
+                imageRender.color = loseColor;
+        }
 
         EndEpisode() ;
         
@@ -859,22 +859,27 @@ public class MLPlayerAgent : Agent
     }
     private void OnCollisionEnter(Collision collision)
     {
-        ////colliding with "what is barrier"
-        if (collision.gameObject.layer == whatIsBarrierLayer)
+        if (!spectating)
         {
-
-            //obstacle was hit
-            SetReward(+hittingObstacleNoTriggerReward);
-            ResetDiamonds();
-            if (isTrainingOn && floorMeshRender != null)
+            ////colliding with "what is barrier"
+            if (collision.gameObject.layer == whatIsBarrierLayer)
             {
-                floorMeshRender.material = loseMaterial;
+
+                //obstacle was hit
+                SetReward(+hittingObstacleNoTriggerReward);
+                ResetDiamonds();
+                if (isTrainingOn && floorMeshRender != null)
+                {
+                    floorMeshRender.material = loseMaterial;
+                    if (imageRender != null)
+                        imageRender.color = loseColor;
+                }
+
+                //Debug.Log("barrier hit");
+                Debug.Log("loss " + GetCumulativeReward());
+                EndEpisode();
+
             }
-
-            //Debug.Log("barrier hit");
-            Debug.Log("loss " + GetCumulativeReward());
-            EndEpisode();
-
         }
     }
 
@@ -950,8 +955,6 @@ public class MLPlayerAgent : Agent
             PlayerHasLost();
         }
 
-
-        //Debug.Log(GetCumulativeReward());
 
 
     }
