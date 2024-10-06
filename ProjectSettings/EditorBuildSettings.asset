@@ -17,4 +17,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Mlagents/ScenesForSpectators/Level1-MlAgentsTraining-Spectating.unity
     guid: 188e4bdb043e1b24badc9967d6a16bb3
+  - enabled: 1
+    path: Assets/Scenes/Mlagents/ScenesForSpectators/Level1-MlAgentsTraining-SpectatingWithGuards.unity
+    guid: b5fc28f22a5790b4bb288e52e99c411f
   m_configObjects: {}

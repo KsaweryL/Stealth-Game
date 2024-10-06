@@ -221,8 +221,11 @@ public class ChasingPlayer : MonoBehaviour
             CheckIfPlayerHidden();
 
         //apply sound
-        SoundFXManager.instance.ApplyRunningSound(1, 1, chasePlayer && !waitBeforePlayersCover, false, -1, GetComponentInParent<NPC_allScript>().GetComponentInChildren<RunningAudioSource>().GetComponent<AudioSource>(), chasePlayer && !waitBeforePlayersCover);
-        //update walking sound as well
-        SoundFXManager.instance.ApplyWalkingSound(1, 1, false, false, -1, GetComponentInParent<NPC_allScript>().GetComponentInChildren<WalkingAudioSource>().GetComponent<AudioSource>(), !waitBeforePlayersCover);
+        if (!GetComponentInParent<Game>().GetIsTrainingOn())
+        {
+            SoundFXManager.instance.ApplyRunningSound(1, 1, chasePlayer && !waitBeforePlayersCover, false, -1, GetComponentInParent<NPC_allScript>().GetComponentInChildren<RunningAudioSource>().GetComponent<AudioSource>(), chasePlayer && !waitBeforePlayersCover);
+            //update walking sound as well
+            SoundFXManager.instance.ApplyWalkingSound(1, 1, false, false, -1, GetComponentInParent<NPC_allScript>().GetComponentInChildren<WalkingAudioSource>().GetComponent<AudioSource>(), !waitBeforePlayersCover);
+        }
     }
 }
