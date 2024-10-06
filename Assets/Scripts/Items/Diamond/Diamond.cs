@@ -80,7 +80,9 @@ public class Diamond : MonoBehaviour
             
 
             //initially there was "randomIndexSpawn"
-            transform.position = playerSpawnPoints[randomIndexSpawn].transform.position;
+            //change position if we don't try to overfit or spectate
+            if(!GetComponentInParent<Game>().GetPlayer().GetComponent<MLPlayerAgent>().overfit && !GetComponentInParent<Game>().GetPlayer().GetComponent<MLPlayerAgent>().spectating)
+                transform.position = playerSpawnPoints[randomIndexSpawn].transform.position;
             
 
         }

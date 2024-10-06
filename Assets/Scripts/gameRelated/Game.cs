@@ -345,10 +345,11 @@ public class Game : MonoBehaviour
     {
         if (!GetIsTrainingOn())
         {
-            if (Input.GetKeyDown(KeyCode.Escape))
-                UpdatePauseMenu();
-
+            
             UpdateMiniMapUI();
         }
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+            UpdatePauseMenu();
     }
 }

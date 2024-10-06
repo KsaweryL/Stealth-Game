@@ -36,6 +36,7 @@ public class MLPlayerAgent : Agent
     bool barrierPointReached;
     public float minDistanceToDiamond;
     Tile currentlyTouchedTile;
+    public bool isPauseOn;
 
     public Vector3 startingPlayerPosition;
 
@@ -109,6 +110,7 @@ public class MLPlayerAgent : Agent
     [SerializeField] private Color neutralColor = Color.white;
     [SerializeField] private Color loseColor = Color.red;
     public bool spectating;
+    public bool overfit;
 
     [Header("NPC")]
     public NPCMovement chosenNPC;
@@ -293,7 +295,7 @@ public class MLPlayerAgent : Agent
                 //if (randomIndexSpawn == 2) randomIndexSpawn = 3;
                 //else if (randomIndexSpawn == 2) randomIndexSpawn = 5;
 
-                if (spectating)
+                if (spectating || overfit)
                     transform.position = startingPlayerPosition;
                 else
                     transform.position = playerSpawningPoints[randomIndexSpawn].transform.position;
@@ -361,6 +363,9 @@ public class MLPlayerAgent : Agent
             ResetDiamonds();
             if(FindObjectOfType<InventoryUI>())
                 FindObjectOfType<InventoryUI>().ResetDiamondText();
+
+            if (GetComponent<Metrics>())
+                GetComponent<Metrics>().UpdateStartTime();
         }
 
 
@@ -714,26 +719,27 @@ public class MLPlayerAgent : Agent
         bool sneak = actions.ContinuousActions[2] >= -0.5f && actions.ContinuousActions[2] < 0.0f ? true : false;
         bool sprint = actions.ContinuousActions[2] >= 0.0f && actions.ContinuousActions[2] < 0.5f ? true : false;
 
-        
-        //Debug.Log("Discrete action: " + actions.ContinuousActions[2]);
-
-        //simply apply movement from ThirdPersonMovement
-        GetComponent<ThirdPersonMovement>().ApplyMovement(moveX, moveZ, jump, sprint, sneak, false, 1f);
-
-        //getting closer to diamond
-        if (isTrainingOn)
+        if (!isPauseOn)
         {
-            DistanceToDiamondRewardUpdate();
-            DistanceToClosestNPCRewardUpdate();
-            CheckIfPlayerHiddenUpdate();
-            NavMeshUpdateWaypointIndex();
+            //Debug.Log("Discrete action: " + actions.ContinuousActions[2]);
+
+            //simply apply movement from ThirdPersonMovement
+            GetComponent<ThirdPersonMovement>().ApplyMovement(moveX, moveZ, jump, sprint, sneak, false, 1f);
+
+            //getting closer to diamond
+            if (isTrainingOn)
+            {
+                DistanceToDiamondRewardUpdate();
+                DistanceToClosestNPCRewardUpdate();
+                CheckIfPlayerHiddenUpdate();
+                NavMeshUpdateWaypointIndex();
+            }
+
+            MaxStepsReachedRewardUpdate();
+
+            //check velocity
+            CheckVelocity();
         }
-
-        MaxStepsReachedRewardUpdate();
-
-        //check velocity
-        CheckVelocity();
-        
 
     }
 
