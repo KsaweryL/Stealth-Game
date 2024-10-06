@@ -101,6 +101,8 @@ public class PauseMenu : MonoBehaviour
     }
     public void BackToMainMenu()
     {
+        GetComponentInParent<Game>().GetPlayer().GetComponent<MLPlayerAgent>().isPauseOn = false;
+
         SceneManager.LoadScene("Scenes/StartingMenu");
     }
 }

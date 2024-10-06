@@ -199,6 +199,12 @@ public class MLPlayerAgent : Agent
         if (maxStepsForVelocityMeasurement == -1)
             maxStepsForVelocityMeasurement = 5;
 
+        //needs reset after changing scenes
+        //todo - fix later
+        isPauseOn = false;
+        navMeshAgent = GetComponent<NavMeshAgent>();
+        NavMeshUpdate();
+        OnEpisodeBegin();
     }
 
     void NavMeshUpdate()
@@ -444,6 +450,10 @@ public class MLPlayerAgent : Agent
 
         if (allCurrentDiamonds.Length > 0)
         {
+            if (chosenDiamond == null)
+            {
+                chosenDiamond = allCurrentDiamonds[0];
+            }
 
             ////instead of position, add x and y distances
             Vector3 difference = (GetGamesTransformPosition(chosenDiamond.transform.position) - GetGamesTransformPosition(transform.position)).normalized;
@@ -452,7 +462,11 @@ public class MLPlayerAgent : Agent
             //sensor.AddObservation(difference.z);
 
             //update navmesh
-            nextWaypoint = pathCorners[currentWaypointIndex];
+            if (chosenDiamond != null && pathCorners.Length > 1)
+                nextWaypoint = pathCorners[currentWaypointIndex];
+            else
+                nextWaypoint = chosenDiamond.transform.position;
+
             Vector3 differenceToNextWaypoint = (GetGamesTransformPosition(nextWaypoint) - GetGamesTransformPosition(transform.position)).normalized;
 
             //debug
@@ -589,6 +603,8 @@ public class MLPlayerAgent : Agent
 
         if (allCurrentDiamonds.Length > 0)
         {
+            if (chosenDiamond == null)
+                chosenDiamond = allCurrentDiamonds[0];
 
             //reward for making the distance to diamond smaller
             float newDistanceToDiamond = Vector3.Distance(chosenDiamond.transform.position, transform.position);
@@ -712,6 +728,9 @@ public class MLPlayerAgent : Agent
     }
     public override void OnActionReceived(ActionBuffers actions)
     {
+        //in case sth wasn't loaded
+        if (pathCorners.Length == 0)
+            Start();
 
         float moveX = actions.ContinuousActions[0];
         float moveZ = actions.ContinuousActions[1];
@@ -733,6 +752,7 @@ public class MLPlayerAgent : Agent
                 DistanceToClosestNPCRewardUpdate();
                 CheckIfPlayerHiddenUpdate();
                 NavMeshUpdateWaypointIndex();
+                
             }
 
             MaxStepsReachedRewardUpdate();
