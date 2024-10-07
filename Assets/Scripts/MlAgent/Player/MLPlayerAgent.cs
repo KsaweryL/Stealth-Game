@@ -135,6 +135,15 @@ public class MLPlayerAgent : Agent
     //public GameObject objectToSpawn2;
     //public GameObject objectToSpawn3;
 
+    [Header("Line rendering")]
+    public bool enableLineRendering;
+    private LineRenderer lineRenderer;
+    public int currentLine;
+    public int numberOfLineRendererPoints = 2;
+    private float lineRendererTimer = 0f;
+    private Vector3 previousLineRendererPosition;
+    bool stopLineRendering;
+
     public int GetRandomIndexSPawn()
     {
         return randomIndexSpawn;
@@ -158,6 +167,7 @@ public class MLPlayerAgent : Agent
         if (NPCseePlayerReward == 1) NPCseePlayerReward = -0.01f;
     }
 
+    
     void Start()
     {
 
@@ -173,6 +183,8 @@ public class MLPlayerAgent : Agent
         usedTime = Time.deltaTime;
 
         animationStateController = GetComponentInChildren<AnimationStateController>();
+        lineRenderer = GetComponent<LineRenderer>();
+        SetInitialValuesLineRenderer();
 
         //layer related
         whatIsBarrierLayer = 9;
@@ -199,8 +211,10 @@ public class MLPlayerAgent : Agent
         if (maxStepsForVelocityMeasurement == -1)
             maxStepsForVelocityMeasurement = 5;
 
+        //related to line renderer
+        SetInitialValuesLineRenderer();
+
         //needs reset after changing scenes
-        //todo - fix later
         isPauseOn = false;
         navMeshAgent = GetComponent<NavMeshAgent>();
         NavMeshUpdate();
@@ -258,6 +272,12 @@ public class MLPlayerAgent : Agent
 
     public override void OnEpisodeBegin()
     {
+        //in case sth wasn't loaded
+        if (!controller)
+        {
+            Start();
+        }
+
         //Debug.Log("New Episode");
         stepsAfterReward = 0;
         //we need to disbale controller to avoid collisions
@@ -301,11 +321,20 @@ public class MLPlayerAgent : Agent
                 //if (randomIndexSpawn == 2) randomIndexSpawn = 3;
                 //else if (randomIndexSpawn == 2) randomIndexSpawn = 5;
 
+                //for line rendering
+                //doesn't work anyway toDO
+                stopLineRendering = true;
+                BeforePositionSwitchNewEpisodeLineRenderer();
+
                 if (spectating || overfit)
                     transform.position = startingPlayerPosition;
                 else
                     transform.position = playerSpawningPoints[randomIndexSpawn].transform.position;
-                
+
+                //for line renderer
+                StartNewLineRendererPath();
+                stopLineRendering = false;
+
 
                 //for curiosity driven rl
                 visitedTiles = new List<bool>();
@@ -377,6 +406,8 @@ public class MLPlayerAgent : Agent
 
             //for training
             barrierPointReached = false;
+
+        
 
     }
 
@@ -730,7 +761,9 @@ public class MLPlayerAgent : Agent
     {
         //in case sth wasn't loaded
         if (pathCorners.Length == 0)
+        {
             Start();
+        }
 
         float moveX = actions.ContinuousActions[0];
         float moveZ = actions.ContinuousActions[1];
@@ -971,6 +1004,73 @@ public class MLPlayerAgent : Agent
         }
 
     }
+
+    void SetInitialValuesLineRenderer()
+    {
+        lineRenderer.startWidth = 0.15f;
+        lineRenderer.endWidth = 0.15f;
+        if (enableLineRendering)
+            lineRenderer.positionCount = 2;
+        else
+            lineRenderer.positionCount = 0;
+        currentLine = 0;
+        stopLineRendering = false;
+        if (enableLineRendering)
+        {
+
+            lineRenderer.SetPosition(0, transform.position);
+            lineRenderer.SetPosition(1, transform.position);
+            currentLine+=2;
+        }
+        
+    }
+
+    void UpdateLineRendererPath()
+    {
+        if (enableLineRendering)
+        {
+            lineRendererTimer += Time.deltaTime;
+
+            if (lineRendererTimer >= 1f)
+            {
+
+                lineRenderer.positionCount++;
+
+                //reset the timer
+                lineRendererTimer = 0f;
+
+                lineRenderer.SetPosition(currentLine, transform.position);
+                previousLineRendererPosition = transform.position;
+                //Debug.Log("Line between: " + currentLine + " and " + transform.position);
+
+                currentLine++;
+            }
+        }
+    }
+
+    void BeforePositionSwitchNewEpisodeLineRenderer()
+    {
+        if (enableLineRendering)
+        {
+            lineRenderer.positionCount++;
+            lineRenderer.SetPosition(currentLine, transform.position);
+            previousLineRendererPosition = transform.position;
+            currentLine++;
+        }
+    }
+    void StartNewLineRendererPath()
+    {
+        if (enableLineRendering && lineRenderer.positionCount > 2)
+        {
+            lineRenderer.positionCount++;
+            //invisible break
+            lineRenderer.SetPosition(currentLine, previousLineRendererPosition);
+            currentLine++;
+        }
+    }
+
+
+    
     private void Update()
     {
         CheckYaxis();
@@ -981,6 +1081,8 @@ public class MLPlayerAgent : Agent
             PlayerHasLost();
         }
 
+        if(!stopLineRendering)
+            UpdateLineRendererPath();
 
 
     }

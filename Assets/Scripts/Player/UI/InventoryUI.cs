@@ -29,6 +29,7 @@ public class InventoryUI : MonoBehaviour
 
     public void ResetDiamondText()
     {
+        diamondText = GetComponent<TextMeshProUGUI>();
         diamondText.text = "0/" + numberOfAllDiamonds;
     }
 }

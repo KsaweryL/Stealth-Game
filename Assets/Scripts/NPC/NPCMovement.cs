@@ -37,6 +37,10 @@ public class NPCMovement : MonoBehaviour
 
     public void ResetProperties()
     {
+        //if agent is not detected, reset start
+        if (!agent)
+            Start();
+
         agent.enabled = false;
         transform.position = startingPosition;
         GetComponent<ChasingPlayer>().ResetCurrentlyWaitingTimeToWaitAfterLosing();
@@ -109,6 +113,7 @@ public class NPCMovement : MonoBehaviour
 
     public bool WaitIfDetectingPlayer()
     {
+        
         if (IsPlayerBeingDetected())
         {
             agent.isStopped = true;
