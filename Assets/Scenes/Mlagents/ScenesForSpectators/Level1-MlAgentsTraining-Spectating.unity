@@ -389,6 +389,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Level1Environment-MLAgent-Spectating
       objectReference: {fileID: 0}
+    - target: {fileID: 1892219163233272566, guid: a674ed33bb1bb6048ac784e826fe3081, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2316479338360647233, guid: a674ed33bb1bb6048ac784e826fe3081, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -409,13 +413,25 @@ PrefabInstance:
       propertyPath: m_LocalRotation.z
       value: 1.02446746e-10
       objectReference: {fileID: 0}
+    - target: {fileID: 4509599229702538370, guid: a674ed33bb1bb6048ac784e826fe3081, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5270270687771359045, guid: a674ed33bb1bb6048ac784e826fe3081, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.000000017659858
+      value: 0.000000017659856
       objectReference: {fileID: 0}
     - target: {fileID: 5270270687771359045, guid: a674ed33bb1bb6048ac784e826fe3081, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.0000000016409465
+      value: -0.0000000016409463
+      objectReference: {fileID: 0}
+    - target: {fileID: 5921977974006482744, guid: a674ed33bb1bb6048ac784e826fe3081, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7224118250368690874, guid: a674ed33bb1bb6048ac784e826fe3081, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8889434624708147662, guid: a674ed33bb1bb6048ac784e826fe3081, type: 3}
       propertyPath: m_LocalRotation.y

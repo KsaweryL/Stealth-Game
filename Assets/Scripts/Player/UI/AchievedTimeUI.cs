@@ -13,13 +13,13 @@ public class AchievedTimeUI : MonoBehaviour
     }
     public void UpdateAchievedTimeText()
     {
-        AchievedTimeText.text = "Previously achieved time: " + GetComponentInParent<Game>().GetPlayer().GetComponent<Metrics>().GetElapsedTime().Seconds + " seconds";
+        AchievedTimeText.text = "Previously achieved time: " + GetComponentInParent<Game>().GetPlayer().GetComponent<Metrics>().GetElapsedTime().Minutes + " minutes and " + GetComponentInParent<Game>().GetPlayer().GetComponent<Metrics>().GetElapsedTime().Seconds + " seconds";
     }
 
     public void UpdateAchievedTimeTextCustom(string str)
     {
         AchievedTimeText = GetComponent<TextMeshProUGUI>();
         if (GetComponentInParent<Game>().GetPlayer().GetComponent<Metrics>())
-            AchievedTimeText.text = str + GetComponentInParent<Game>().GetPlayer().GetComponent<Metrics>().GetElapsedTime().Seconds + " seconds";
+            AchievedTimeText.text = str + GetComponentInParent<Game>().GetPlayer().GetComponent<Metrics>().GetElapsedTime().Minutes + " minutes and "+GetComponentInParent<Game>().GetPlayer().GetComponent<Metrics>().GetElapsedTime().Seconds + " seconds";
     }
 }

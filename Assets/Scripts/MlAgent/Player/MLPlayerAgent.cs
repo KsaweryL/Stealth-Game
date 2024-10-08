@@ -138,6 +138,7 @@ public class MLPlayerAgent : Agent
     [Header("Line rendering")]
     public bool enableLineRendering;
     private LineRenderer lineRenderer;
+    List<GameObject> lineRenderers;
     public int currentLine;
     public int numberOfLineRendererPoints = 2;
     private float lineRendererTimer = 0f;
@@ -183,8 +184,6 @@ public class MLPlayerAgent : Agent
         usedTime = Time.deltaTime;
 
         animationStateController = GetComponentInChildren<AnimationStateController>();
-        lineRenderer = GetComponent<LineRenderer>();
-        SetInitialValuesLineRenderer();
 
         //layer related
         whatIsBarrierLayer = 9;
@@ -211,8 +210,6 @@ public class MLPlayerAgent : Agent
         if (maxStepsForVelocityMeasurement == -1)
             maxStepsForVelocityMeasurement = 5;
 
-        //related to line renderer
-        SetInitialValuesLineRenderer();
 
         //needs reset after changing scenes
         isPauseOn = false;
@@ -321,20 +318,11 @@ public class MLPlayerAgent : Agent
                 //if (randomIndexSpawn == 2) randomIndexSpawn = 3;
                 //else if (randomIndexSpawn == 2) randomIndexSpawn = 5;
 
-                //for line rendering
-                //doesn't work anyway toDO
-                stopLineRendering = true;
-                BeforePositionSwitchNewEpisodeLineRenderer();
 
                 if (spectating || overfit)
                     transform.position = startingPlayerPosition;
                 else
                     transform.position = playerSpawningPoints[randomIndexSpawn].transform.position;
-
-                //for line renderer
-                StartNewLineRendererPath();
-                stopLineRendering = false;
-
 
                 //for curiosity driven rl
                 visitedTiles = new List<bool>();
@@ -407,6 +395,9 @@ public class MLPlayerAgent : Agent
             //for training
             barrierPointReached = false;
 
+        //for line renderer
+        SetInitialValuesLineRenderer();
+
         
 
     }
@@ -475,6 +466,8 @@ public class MLPlayerAgent : Agent
     }
     public override void CollectObservations(VectorSensor sensor)
     {
+        
+
         allCurrentDiamonds = GetComponentInParent<Game>().GetDiamonds();
         NPCmovement = GetComponentInParent<Game>().GetNPCmovements();
         hidingSpotAreas = GetComponentInParent<Game>().GetHidingSpotAreas();
@@ -583,6 +576,8 @@ public class MLPlayerAgent : Agent
                 //}
             }
         }
+
+        
 
     }
 
@@ -759,6 +754,7 @@ public class MLPlayerAgent : Agent
     }
     public override void OnActionReceived(ActionBuffers actions)
     {
+
         //in case sth wasn't loaded
         if (pathCorners.Length == 0)
         {
@@ -1007,6 +1003,19 @@ public class MLPlayerAgent : Agent
 
     void SetInitialValuesLineRenderer()
     {
+        if(lineRenderers == null)
+            //related to line renderer
+            lineRenderers = new List<GameObject>();
+
+        GameObject lineObj;
+        lineObj = new GameObject("LineSegment"+ lineRenderers.Count);
+
+        LineRenderer lineRendererVar = lineObj.AddComponent<LineRenderer>();
+
+        lineRenderers.Add(lineObj);
+        lineRenderer = lineRendererVar;
+
+
         if (lineRenderer)
         {
             lineRenderer.startWidth = 0.15f;
@@ -1086,7 +1095,6 @@ public class MLPlayerAgent : Agent
 
         if(!stopLineRendering)
             UpdateLineRendererPath();
-
 
     }
 }
