@@ -1007,20 +1007,23 @@ public class MLPlayerAgent : Agent
 
     void SetInitialValuesLineRenderer()
     {
-        lineRenderer.startWidth = 0.15f;
-        lineRenderer.endWidth = 0.15f;
-        if (enableLineRendering)
-            lineRenderer.positionCount = 2;
-        else
-            lineRenderer.positionCount = 0;
-        currentLine = 0;
-        stopLineRendering = false;
-        if (enableLineRendering)
+        if (lineRenderer)
         {
+            lineRenderer.startWidth = 0.15f;
+            lineRenderer.endWidth = 0.15f;
+            if (enableLineRendering)
+                lineRenderer.positionCount = 2;
+            else
+                lineRenderer.positionCount = 0;
+            currentLine = 0;
+            stopLineRendering = false;
+            if (enableLineRendering)
+            {
 
-            lineRenderer.SetPosition(0, transform.position);
-            lineRenderer.SetPosition(1, transform.position);
-            currentLine+=2;
+                lineRenderer.SetPosition(0, transform.position);
+                lineRenderer.SetPosition(1, transform.position);
+                currentLine += 2;
+            }
         }
         
     }
