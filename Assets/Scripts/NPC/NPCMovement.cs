@@ -37,6 +37,10 @@ public class NPCMovement : MonoBehaviour
 
     public void ResetProperties()
     {
+        //if agent is not detected, reset start
+        if (!agent)
+            Start();
+
         agent.enabled = false;
         transform.position = startingPosition;
         GetComponent<ChasingPlayer>().ResetCurrentlyWaitingTimeToWaitAfterLosing();
@@ -88,6 +92,12 @@ public class NPCMovement : MonoBehaviour
                 pointNr = 0;
 
         }
+        else
+        {
+            //apply sound
+            if(!GetComponentInParent<Game>().GetIsTrainingOn())
+                SoundFXManager.instance.ApplyWalkingSound(1, 1, false, false, -1, GetComponentInParent<NPC_allScript>().GetComponentInChildren<WalkingAudioSource>().GetComponent<AudioSource>(), true);
+        }
 
         UpdateWaitingTime();
     }
@@ -103,6 +113,7 @@ public class NPCMovement : MonoBehaviour
 
     public bool WaitIfDetectingPlayer()
     {
+        
         if (IsPlayerBeingDetected())
         {
             agent.isStopped = true;

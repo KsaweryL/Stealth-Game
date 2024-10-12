@@ -2985,6 +2985,7 @@ GameObject:
   - component: {fileID: 552546290753637695}
   - component: {fileID: 4864670495700005448}
   - component: {fileID: 3493697548872394745}
+  - component: {fileID: 6222863677864963968}
   m_Layer: 8
   m_Name: Third Person Player
   m_TagString: Player
@@ -3198,23 +3199,69 @@ MonoBehaviour:
   spawningLocations: []
   playerSpawningPoints: []
   barriers: []
+  allDiamonds: []
+  allCurrentDiamonds: []
   tiles: []
   visitedTiles: 
   whatIsBarrierLayer: 0
   controller: {fileID: 0}
   animationStateController: {fileID: 0}
+  minDistanceToDiamond: 0
   startingPlayerPosition: {x: 0, y: 0, z: 0}
   moveDir: {x: 0, y: 0, z: 0}
   ySpeed: 0
   gridMaterial: {fileID: 0}
   nextTileToGoTo: {fileID: 0}
+  initialNextTileToGoTo: {fileID: 0}
+  checkInitialTile: 0
   distanceToNextTile: 0
+  properTileWasHit: 0
+  djikstraPath: []
+  currentPathTile: 0
   maxStepsAfterReward: 100
+  maxStepsBeforePenalty: 0
+  maxStepsForVelocityMeasurement: 0
+  initiPositionVel: {x: 0, y: 0, z: 0}
+  smallVelocity: 0
+  reachingDiamondReward: 0
+  winningGameReward: 0
+  distanceMultiplierReward: 0
+  distanceReward: 0
+  reachingBarrierPointReward: 0
+  losingGameReward: 0
+  hittingObstacleReward: 0
+  hittingObstacleNoTriggerReward: 0
+  reachingMaxStepReward: 0
+  reachingMaxStepBeforePenaltyReward: 0
+  eachStepTakenReward: 0
+  timePenaltyMultiplierReward: 0
+  newTileFoundReward: 0
+  djikstraPathFindingReward: 0
+  gettingDamageReward: 0
+  smallVelocityReward: 0
+  NPCseePlayerReward: 0
+  playerIsHiddenReward: 0
+  playerIschasenAfterReward: 0
+  distanceToClosestNPCReward: 0
+  nextNavMeshWaypointReached: 0
+  waypointDistanceReward: 0
+  waypointInreasingDistanceReward: 0
   diamondsTransform: {fileID: 0}
   winMaterial: {fileID: 0}
   loseMaterial: {fileID: 0}
   neutralMaterial: {fileID: 0}
   floorMeshRender: {fileID: 0}
+  chosenNPC: {fileID: 0}
+  minDistanceToNPC: 0
+  hidingSpotAreas: []
+  chosenHidingSpotArea: {fileID: 0}
+  chosenDiamond: {fileID: 0}
+  navMeshAgent: {fileID: 0}
+  currentWaypointIndex: 0
+  pathCorners: []
+  navMeshWaypointDistance: 0
+  minDistanceToWaypoint: 0
+  objectToSpawn: {fileID: 0}
 --- !u!114 &5521520000271125297
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3298,6 +3345,18 @@ MonoBehaviour:
   rayMissColor: {r: 1, g: 1, b: 1, a: 1}
   m_StartVerticalOffset: 0
   m_EndVerticalOffset: 0
+--- !u!114 &6222863677864963968
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6721724369476882580}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36b2555b2a74e1f40a4c1aff6d48a10b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6787570228028082462
 GameObject:
   m_ObjectHideFlags: 0

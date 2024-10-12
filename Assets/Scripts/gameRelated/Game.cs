@@ -4,7 +4,6 @@ using System.IO;
 using UnityEngine;
 using static Tile;
 using System.Linq;
-using UnityEditor.Experimental.GraphView;
 
 public class Game : MonoBehaviour
 {
@@ -343,12 +342,13 @@ public class Game : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!GetIsTrainingOn())
+        if (!GetIsTrainingOn() || GetPlayer().GetComponent<MLPlayerAgent>().spectating)
         {
-            if (Input.GetKeyDown(KeyCode.Escape))
-                UpdatePauseMenu();
-
+            
             UpdateMiniMapUI();
         }
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+            UpdatePauseMenu();
     }
 }

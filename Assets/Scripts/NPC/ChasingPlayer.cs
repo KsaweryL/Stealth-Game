@@ -197,12 +197,17 @@ public class ChasingPlayer : MonoBehaviour
             {
                 ChaseAfterPlayer();
                 InflictDamage();
+
             }
             else
                 damageWasInflicted = false;
 
             npcMovement.UpdateChasePlayerStatusNPCMovement(chasePlayer);
             npcFOV.UpdateChasePlayerStatusNPCFOV(chasePlayer);
+            GetComponent<AnimationStateControllerNPC>().UpdateRunningStatusAnimationSCNPC(chasePlayer && !waitBeforePlayersCover);
+            GetComponent<AnimationStateControllerNPC>().UpdateWaitAnimationSCNPC(waitBeforePlayersCover && agent.isStopped);
+
+            
         }
 
         
@@ -214,5 +219,13 @@ public class ChasingPlayer : MonoBehaviour
         //only when agent is enabled
         if (agent.enabled)
             CheckIfPlayerHidden();
+
+        //apply sound
+        if (!GetComponentInParent<Game>().GetIsTrainingOn())
+        {
+            SoundFXManager.instance.ApplyRunningSound(1, 1, chasePlayer && !waitBeforePlayersCover, false, -1, GetComponentInParent<NPC_allScript>().GetComponentInChildren<RunningAudioSource>().GetComponent<AudioSource>(), chasePlayer && !waitBeforePlayersCover);
+            //update walking sound as well
+            SoundFXManager.instance.ApplyWalkingSound(1, 1, false, false, -1, GetComponentInParent<NPC_allScript>().GetComponentInChildren<WalkingAudioSource>().GetComponent<AudioSource>(), !waitBeforePlayersCover);
+        }
     }
 }

@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using Cinemachine;
 using UnityEngine.SceneManagement;
+using Unity.MLAgents;
 
 public class PauseMenu : MonoBehaviour
 {
@@ -48,7 +49,8 @@ public class PauseMenu : MonoBehaviour
         camCinemachine = GetComponentInParent<Game>().GetComponentInChildren<CinemachineFreeLook>();
         camCinemachine.enabled = false;
 
-
+        //disable mlagent
+        GetComponentInParent<Game>().GetPlayer().GetComponent<MLPlayerAgent>().isPauseOn = true;
     }
 
     void UnfreezeTheGame()
@@ -73,6 +75,10 @@ public class PauseMenu : MonoBehaviour
         //cam
         camCinemachine = GetComponentInParent<Game>().GetComponentInChildren<CinemachineFreeLook>();
         camCinemachine.enabled = true;
+
+        //enable mlagent
+        GetComponentInParent<Game>().GetPlayer().GetComponent<MLPlayerAgent>().isPauseOn = false;
+
     }
 
 
@@ -95,6 +101,8 @@ public class PauseMenu : MonoBehaviour
     }
     public void BackToMainMenu()
     {
+        GetComponentInParent<Game>().GetPlayer().GetComponent<MLPlayerAgent>().isPauseOn = false;
+
         SceneManager.LoadScene("Scenes/StartingMenu");
     }
 }

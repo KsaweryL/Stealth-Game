@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class Diamond : MonoBehaviour
 {
@@ -79,7 +80,9 @@ public class Diamond : MonoBehaviour
             
 
             //initially there was "randomIndexSpawn"
-            transform.position = playerSpawnPoints[randomIndexSpawn].transform.position;
+            //change position if we don't try to overfit or spectate
+            if(!GetComponentInParent<Game>().GetPlayer().GetComponent<MLPlayerAgent>().overfit && !GetComponentInParent<Game>().GetPlayer().GetComponent<MLPlayerAgent>().spectating)
+                transform.position = playerSpawnPoints[randomIndexSpawn].transform.position;
             
 
         }
@@ -105,6 +108,10 @@ public class Diamond : MonoBehaviour
             gameObject.SetActive(false);
 
             playerInventory.DiamondCollected();
+
+            //play audio whenever diamond is collected
+            if (!GetComponentInParent<Game>().GetIsTrainingOn())
+                SoundFXManager.instance.SinglePlayAudio(GetComponentInParent<Game>().GetPlayer().GetComponentInChildren<GettingDiamondAudioSource>().GetComponent<AudioSource>());
 
 
         }

@@ -266,10 +266,10 @@ public class ThirdPersonMovement : MonoBehaviour
         //apply sound
         if (!GetComponentInParent<Game>().GetIsTrainingOn())
         {
-            SoundFXManager.instance.ApplyRunningSound(horizontal, vertical, isSprintEnabled, isSneaking, ySpeed, GetComponentInChildren<RunningAudioSource>().GetComponent<AudioSource>());
+            SoundFXManager.instance.ApplyRunningSound(horizontal, vertical, isSprintEnabled, isSneaking, ySpeed, GetComponentInChildren<RunningAudioSource>().GetComponent<AudioSource>(), true);
             SoundFXManager.instance.ApplySneakingSound(horizontal, vertical, isSprintEnabled, isSneaking, ySpeed, GetComponentInChildren<SneakingAudioSource>().GetComponent<AudioSource>());
             SoundFXManager.instance.ApplySneakingRunningSound(horizontal, vertical, isSprintEnabled, isSneaking, ySpeed, GetComponentInChildren<SneakingRunningAudioSource>().GetComponent<AudioSource>());
-            SoundFXManager.instance.ApplyWalkingSound(horizontal, vertical, isSneaking, isSprintEnabled, ySpeed, GetComponentInChildren<WalkingAudioSource>().GetComponent<AudioSource>());
+            SoundFXManager.instance.ApplyWalkingSound(horizontal, vertical, isSneaking, isSprintEnabled, ySpeed, GetComponentInChildren<WalkingAudioSource>().GetComponent<AudioSource>(), true);
             SoundFXManager.instance.ApplyJumpingSound(jump, GetComponentInChildren<JumpingAudioSource>().GetComponent<AudioSource>(), controller.isGrounded);
         }
         //apply movement only when game is not paused

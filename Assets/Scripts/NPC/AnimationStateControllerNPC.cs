@@ -17,6 +17,20 @@ public class AnimationStateControllerNPC : MonoBehaviour
 
     public int numberOfPoints;
 
+    //condition needed for sprinting
+    public bool runningEnabled;
+    public bool wait;
+
+    public void UpdateRunningStatusAnimationSCNPC(bool runningEnabledVar)
+    {
+        runningEnabled = runningEnabledVar;
+    }
+
+    public void UpdateWaitAnimationSCNPC(bool waitVar)
+    {
+        wait = waitVar;
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -32,10 +46,14 @@ public class AnimationStateControllerNPC : MonoBehaviour
     void Update()
     {
         isNPCMovingForward = animator.GetBool("isNPCMovingForward");
-
         animator.SetBool("isNPCMovingForward", true);
-
         PathPoints = NPCmovement.GetPathPoints();
+
+        if (wait == true)
+            animator.SetBool("isNPCMovingForward", false);
+        else
+            animator.SetBool("isNPCMovingForward", true);
+
         //find if any of the points were reached
         for (int i = 0; i < numberOfPoints; i++) {
             if (NPC.transform.position.x == PathPoints[i].transform.position.x &&
@@ -47,5 +65,12 @@ public class AnimationStateControllerNPC : MonoBehaviour
             }
         }
         
+        if(runningEnabled)
+            animator.SetBool("isNPCRunning", true);
+        else
+            animator.SetBool("isNPCRunning", false);
+
+        
+
     }
 }

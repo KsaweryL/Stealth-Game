@@ -19,34 +19,43 @@ public class HeartBeatAudioSource : MonoBehaviour
     {
         //get currently detected time from NPC
         NPCMovement[] npcs = GetComponentInParent<Game>().GetNPCmovements();
-        NPCFieldOfView chosenNPC = npcs[0].GetComponent<NPCFieldOfView>();
-
-        foreach (NPCMovement npc in npcs) {
-            if (npc.GetComponent<NPCFieldOfView>().GetCurrentlyDetectedTimeNPCFOV() > chosenNPC.GetCurrentlyDetectedTimeNPCFOV())
-                chosenNPC = npc.GetComponent<NPCFieldOfView>();
-        }
-
-        timeToDetect = (int)Math.Round(chosenNPC.GetTimeToDetectNPCFOV() / 0.02);
-        currentlyDetectedTime = chosenNPC.GetCurrentlyDetectedTimeNPCFOV();
-
-        //if player stopped being chased, start turning down the music
-        if (beingDetectedSoundMultiplier != 0 && currentlyDetectedTime == 0)
+        if (npcs.Length > 0)
         {
-            if (beingDetectedSoundMultiplier > 0.5f)
+            NPCFieldOfView chosenNPC = npcs[0].GetComponent<NPCFieldOfView>();
+
+            foreach (NPCMovement npc in npcs)
             {
-                beingDetectedSoundMultiplier -= 0.002f;
-                SoundFXManager.instance.ApplyBeingDetectedSound(beingDetectedSoundMultiplier, GetComponentInParent<ThirdPersonMovement>().GetComponentInChildren<BeingDetectedMusic>().GetComponent<AudioSource>(), true);
-                SoundFXManager.instance.ApplyBeingDetectedSound(beingDetectedSoundMultiplier, GetComponent<AudioSource>(), true);
+                if (npc.GetComponent<NPCFieldOfView>().GetCurrentlyDetectedTimeNPCFOV() > chosenNPC.GetCurrentlyDetectedTimeNPCFOV())
+                    chosenNPC = npc.GetComponent<NPCFieldOfView>();
             }
+
+            timeToDetect = (int)Math.Round(chosenNPC.GetTimeToDetectNPCFOV() / 0.02);
+            currentlyDetectedTime = chosenNPC.GetCurrentlyDetectedTimeNPCFOV();
+
+            //if player stopped being chased, start turning down the music
+            if (beingDetectedSoundMultiplier != 0 && currentlyDetectedTime == 0)
+            {
+                if (beingDetectedSoundMultiplier > 0.5f)
+                {
+                    beingDetectedSoundMultiplier -= 0.002f;
+                    SoundFXManager.instance.ApplyBeingDetectedSound(beingDetectedSoundMultiplier, GetComponentInParent<ThirdPersonMovement>().GetComponentInChildren<BeingDetectedMusic>().GetComponent<AudioSource>(), true);
+                    SoundFXManager.instance.ApplyBeingDetectedSound(beingDetectedSoundMultiplier, GetComponent<AudioSource>(), true);
+                }
+                else
+                    beingDetectedSoundMultiplier = currentlyDetectedTime / timeToDetect;
+            }
+            //else, music starts playing
             else
+            {
                 beingDetectedSoundMultiplier = currentlyDetectedTime / timeToDetect;
+                SoundFXManager.instance.ApplyBeingDetectedSound(beingDetectedSoundMultiplier, GetComponent<AudioSource>(), false);
+                SoundFXManager.instance.ApplyBeingDetectedSound(beingDetectedSoundMultiplier * 0.3f, GetComponentInParent<ThirdPersonMovement>().GetComponentInChildren<BeingDetectedMusic>().GetComponent<AudioSource>(), true);
+            }
         }
-        //else, music starts playing
         else
         {
-            beingDetectedSoundMultiplier = currentlyDetectedTime / timeToDetect;
-            SoundFXManager.instance.ApplyBeingDetectedSound(beingDetectedSoundMultiplier, GetComponent<AudioSource>(), false);
-            SoundFXManager.instance.ApplyBeingDetectedSound(beingDetectedSoundMultiplier * 0.3f, GetComponentInParent<ThirdPersonMovement>().GetComponentInChildren<BeingDetectedMusic>().GetComponent<AudioSource>(), true);
+            SoundFXManager.instance.ApplyBeingDetectedSound(0, GetComponent<AudioSource>(), false);
+            SoundFXManager.instance.ApplyBeingDetectedSound(0, GetComponentInParent<ThirdPersonMovement>().GetComponentInChildren<BeingDetectedMusic>().GetComponent<AudioSource>(), false);
         }
     }
 }

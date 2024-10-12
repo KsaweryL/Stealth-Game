@@ -10,5 +10,20 @@ public class ChooseLevel : MonoBehaviour
         SceneManager.LoadScene("Scenes/Level1");
     }
 
+    public void PlayLevel1WithoutGuards()
+    {
+        SceneManager.LoadScene("Scenes/Level1WithoutGuards");
+    }
+
+    public void PlayLevel1WithoutGuardsSpectator()
+    {
+        SceneManager.LoadScene("Scenes/Mlagents/ScenesForSpectators/Level1-MlAgentsTraining-Spectating");
+    }
+
+    public void PlayLevel1WithGuardsSpectator()
+    {
+        SceneManager.LoadScene("Scenes/Mlagents/ScenesForSpectators/Level1-MlAgentsTraining-SpectatingWithGuards");
+    }
+
 
 }
