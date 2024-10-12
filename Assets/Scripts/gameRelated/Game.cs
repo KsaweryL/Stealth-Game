@@ -342,7 +342,7 @@ public class Game : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!GetIsTrainingOn())
+        if (!GetIsTrainingOn() || GetPlayer().GetComponent<MLPlayerAgent>().spectating)
         {
             
             UpdateMiniMapUI();
