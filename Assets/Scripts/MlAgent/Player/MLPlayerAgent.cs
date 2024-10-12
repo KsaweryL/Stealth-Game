@@ -513,6 +513,9 @@ public class MLPlayerAgent : Agent
             //else if (NPCmovement.Length == 0)
             //    Debug.Log("Therer are np NPC detected");
 
+            //we will also add observation whether the player is being spotted or not
+            bool playerIsSpotted = false;
+
             for (int npc = 0; npc < NPCmovement.Length; npc++)
             {
                 Vector3 difference_npc = (GetGamesTransformPosition(GetGamesTransformPosition(NPCmovement[npc].transform.position)) - GetGamesTransformPosition(transform.position)).normalized;
@@ -523,7 +526,18 @@ public class MLPlayerAgent : Agent
                 //add velocities of each guard
                 sensor.AddObservation(NPCmovement[npc].GetComponent<NavMeshAgent>().velocity.x);
                 sensor.AddObservation(NPCmovement[npc].GetComponent<NavMeshAgent>().velocity.z);
+
+                //update playerIsSpotted variable
+                //Debug.Log("npcfov " + NPCmovement[npc].GetComponent<NPCFieldOfView>().GetCanSeePlayerNPCFOV());
+                if (NPCmovement[npc].GetComponent<NPCFieldOfView>().GetCanSeePlayerNPCFOV())
+                {
+                    playerIsSpotted = true;
+                    Debug.Log("player was spotted");
+
+                }
             }
+
+            sensor.AddObservation(playerIsSpotted);
 
             //adding positions of the nearest hiding spot area
             if (hidingSpotAreas.Length > 15)
@@ -893,7 +907,6 @@ public class MLPlayerAgent : Agent
         if (canNPCSeePlayer)
         {
             SetReward(+NPCseePlayerReward);
-            Debug.Log("player was spotted");
         }
     }
 
