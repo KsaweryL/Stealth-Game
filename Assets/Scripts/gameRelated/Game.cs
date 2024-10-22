@@ -15,6 +15,7 @@ public class Game : MonoBehaviour
     public Barrier[] barriers;
     public Tile[] tiles;
     public HidingSpotArea[] hidingSpotAreas;
+    public HidingSpot[] hidingSpots;
     Tile currentlyTouchedTile;
 
     [Header("Minimap")]
@@ -58,6 +59,12 @@ public class Game : MonoBehaviour
     {
         hidingSpotAreas = GetComponentsInChildren<HidingSpotArea>();
         return hidingSpotAreas;
+    }
+
+    public HidingSpot[] GetHidingSpots()
+    {
+        hidingSpots = GetComponentsInChildren<HidingSpot>();
+        return hidingSpots;
     }
     public GameObject GetEndGameMenu()
     {
