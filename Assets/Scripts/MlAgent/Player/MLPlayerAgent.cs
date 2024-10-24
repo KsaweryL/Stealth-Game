@@ -213,6 +213,11 @@ public class MLPlayerAgent : Agent
         if (maxStepsForVelocityMeasurement == -1)
             maxStepsForVelocityMeasurement = 5;
 
+        //restart the time values
+        if(isTrainingOn)
+            if (GetComponent<Metrics>())
+                GetComponent<Metrics>().UpdateInitialValues();
+
 
         //needs reset after changing scenes
         isPauseOn = false;
@@ -940,8 +945,8 @@ public class MLPlayerAgent : Agent
             {
                 imageRender.color = winColor;
                 //update UI text
-                if(GetComponentInParent<Game>().GetComponentInChildren<AchievedTimeUI>())
-                    GetComponentInParent<Game>().GetComponentInChildren<AchievedTimeUI>().UpdateAchievedTimeText();
+                //if(GetComponentInParent<Game>().GetComponentInChildren<AchievedTimeUI>())
+                //    GetComponentInParent<Game>().GetComponentInChildren<AchievedTimeUI>().UpdateAchievedTimeText();
             }
         }
 

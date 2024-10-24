@@ -248,6 +248,16 @@ public class ThirdPersonMovement : MonoBehaviour
         isSneaking = false;
 
         SetStandardSpeedValues();
+
+        if (!GetComponentInParent<Game>().GetIsTrainingOn())
+        {
+            //if the training is off, initiate the timer here
+            if (GetComponentInParent<Game>().GetPlayer().GetComponent<Metrics>())
+            {
+                GetComponentInParent<Game>().GetPlayer().GetComponent<Metrics>().UpdateInitialValues();
+                GetComponentInParent<Game>().GetPlayer().GetComponent<Metrics>().UpdateStartTime();
+            }
+        }
     }
 
 

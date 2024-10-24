@@ -36,7 +36,6 @@ public class GameOver : MonoBehaviour
                 GetComponent<Game>().pauseMenu.GetComponent<PauseMenu>().FreezeTheGame();
                 GetComponent<Game>().GetEndGameMenu().GetComponentInChildren<EndGameText>();
                 GetComponent<Game>().GetEndGameMenu().GetComponentInChildren<EndGameText>().GetComponent<TextMeshProUGUI>().text = "You won!";
-                GetComponent<Game>().GetEndGameMenu().GetComponentInChildren<AchievedTimeUI>().UpdateAchievedTimeTextCustom("Achieved time: ");
             }
         }
 
@@ -65,8 +64,7 @@ public class GameOver : MonoBehaviour
             GetComponent<Game>().pauseMenu.GetComponent<PauseMenu>().FreezeTheGame();
             GetComponent<Game>().GetEndGameMenu().GetComponentInChildren<EndGameText>();
             GetComponent<Game>().GetEndGameMenu().GetComponentInChildren<EndGameText>().GetComponent<TextMeshProUGUI>().text = "You lost!";
-            if (GetComponent<Game>().GetEndGameMenu().GetComponentInChildren<AchievedTimeUI>())
-                GetComponent<Game>().GetEndGameMenu().GetComponentInChildren<AchievedTimeUI>().gameObject.SetActive(false);
+            
             
         }
     }
