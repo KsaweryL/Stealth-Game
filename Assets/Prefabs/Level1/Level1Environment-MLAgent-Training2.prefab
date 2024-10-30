@@ -31582,7 +31582,7 @@ MonoBehaviour:
   m_OverrideVoxelSize: 0
   m_VoxelSize: 0.16666667
   m_MinRegionArea: 2
-  m_NavMeshData: {fileID: 23800000, guid: bebfe3dca12a7dc4da996a00d9b17562, type: 2}
+  m_NavMeshData: {fileID: 23800000, guid: 43dfadf284c94d14ca2f5e7011b62c0c, type: 2}
   m_BuildHeightMesh: 0
 --- !u!1 &5457557412867742521
 GameObject:
@@ -55737,12 +55737,16 @@ PrefabInstance:
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6962053227386552900, guid: c8d8fe98bcc359c4aae102f8a6c83633, type: 3}
+      propertyPath: playerIschasedAfterReward
+      value: -10
+      objectReference: {fileID: 0}
+    - target: {fileID: 6962053227386552900, guid: c8d8fe98bcc359c4aae102f8a6c83633, type: 3}
       propertyPath: playerIschasenAfterReward
       value: -8
       objectReference: {fileID: 0}
     - target: {fileID: 6962053227386552900, guid: c8d8fe98bcc359c4aae102f8a6c83633, type: 3}
       propertyPath: distanceToClosestNPCReward
-      value: 0
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 6962053227386552900, guid: c8d8fe98bcc359c4aae102f8a6c83633, type: 3}
       propertyPath: nextNavMeshWaypointReached
@@ -56241,7 +56245,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1656014119903335525, guid: 856fe06e07b19d04e8806d64de8953ed, type: 3}
       propertyPath: timeToDetect
-      value: 0.1
+      value: 0.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 3051281340373714612, guid: 856fe06e07b19d04e8806d64de8953ed, type: 3}
+      propertyPath: speed
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 3051281340373714612, guid: 856fe06e07b19d04e8806d64de8953ed, type: 3}
       propertyPath: PathPoints.Array.size
@@ -56249,7 +56257,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3051281340373714612, guid: 856fe06e07b19d04e8806d64de8953ed, type: 3}
       propertyPath: timeToWaitWhenPatrolling
-      value: 1.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3638485069091369240, guid: 856fe06e07b19d04e8806d64de8953ed, type: 3}
       propertyPath: m_IsActive
@@ -59056,11 +59064,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1193178733924346814, guid: 856fe06e07b19d04e8806d64de8953ed, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.9
+      value: -0.24
       objectReference: {fileID: 0}
     - target: {fileID: 1193178733924346814, guid: 856fe06e07b19d04e8806d64de8953ed, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 3.3
+      value: 3.79
+      objectReference: {fileID: 0}
+    - target: {fileID: 1193178733924346814, guid: 856fe06e07b19d04e8806d64de8953ed, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.9486704
+      objectReference: {fileID: 0}
+    - target: {fileID: 1193178733924346814, guid: 856fe06e07b19d04e8806d64de8953ed, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.3162666
+      objectReference: {fileID: 0}
+    - target: {fileID: 1193178733924346814, guid: 856fe06e07b19d04e8806d64de8953ed, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -36.875
       objectReference: {fileID: 0}
     - target: {fileID: 1656014119903335525, guid: 856fe06e07b19d04e8806d64de8953ed, type: 3}
       propertyPath: radius
@@ -59068,7 +59088,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1656014119903335525, guid: 856fe06e07b19d04e8806d64de8953ed, type: 3}
       propertyPath: timeToDetect
-      value: 0.1
+      value: 0.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 3051281340373714612, guid: 856fe06e07b19d04e8806d64de8953ed, type: 3}
+      propertyPath: speed
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 3051281340373714612, guid: 856fe06e07b19d04e8806d64de8953ed, type: 3}
       propertyPath: player
@@ -59080,7 +59104,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3051281340373714612, guid: 856fe06e07b19d04e8806d64de8953ed, type: 3}
       propertyPath: timeToWaitWhenPatrolling
-      value: 4
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3638485069091369240, guid: 856fe06e07b19d04e8806d64de8953ed, type: 3}
       propertyPath: m_IsActive
@@ -59096,7 +59120,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4644496496201928279, guid: 856fe06e07b19d04e8806d64de8953ed, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -2.02
+      value: -2.8
       objectReference: {fileID: 0}
     - target: {fileID: 4644496496201928279, guid: 856fe06e07b19d04e8806d64de8953ed, type: 3}
       propertyPath: m_LocalPosition.y
@@ -59104,7 +59128,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4644496496201928279, guid: 856fe06e07b19d04e8806d64de8953ed, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 2.3
+      value: 3.8
       objectReference: {fileID: 0}
     - target: {fileID: 5042156684333070011, guid: 856fe06e07b19d04e8806d64de8953ed, type: 3}
       propertyPath: m_LocalPosition.x
@@ -59168,7 +59192,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7536443433363508458, guid: 856fe06e07b19d04e8806d64de8953ed, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.73
+      value: 7.4
       objectReference: {fileID: 0}
     - target: {fileID: 7536443433363508458, guid: 856fe06e07b19d04e8806d64de8953ed, type: 3}
       propertyPath: m_LocalPosition.y
@@ -59176,7 +59200,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7536443433363508458, guid: 856fe06e07b19d04e8806d64de8953ed, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 3.44
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 8686760595725847055, guid: 856fe06e07b19d04e8806d64de8953ed, type: 3}
       propertyPath: m_IsActive
@@ -62351,7 +62375,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1656014119903335525, guid: 856fe06e07b19d04e8806d64de8953ed, type: 3}
       propertyPath: timeToDetect
-      value: 0.1
+      value: 0.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 3051281340373714612, guid: 856fe06e07b19d04e8806d64de8953ed, type: 3}
+      propertyPath: speed
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 3051281340373714612, guid: 856fe06e07b19d04e8806d64de8953ed, type: 3}
       propertyPath: PathPoints.Array.size

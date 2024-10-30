@@ -91,7 +91,7 @@ public class MLPlayerAgent : Agent
     public float smallVelocityReward;
     public float NPCseePlayerReward;
     public float playerIsHiddenReward;
-    public float playerIschasenAfterReward;
+    public float playerIschasedAfterReward;
     public float distanceToClosestNPCReward;
     public float nextNavMeshWaypointReached;
     public float waypointDistanceReward;
@@ -986,7 +986,7 @@ public class MLPlayerAgent : Agent
 
     public void PlayerIsChasenAfter()
     {
-        SetReward(+playerIschasenAfterReward);
+        SetReward(+playerIschasedAfterReward);
         EndEpisode();
     }
 
