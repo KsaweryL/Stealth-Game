@@ -2086,7 +2086,7 @@ GameObject:
   - component: {fileID: 204955127}
   - component: {fileID: 204955126}
   m_Layer: 5
-  m_Name: SpectatorLevel1AI
+  m_Name: SpectatorLevel3AI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2158,7 +2158,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1452921266}
         m_TargetAssemblyTypeName: ChooseLevel, Assembly-CSharp
-        m_MethodName: PlayLevel1WithoutGuardsSpectator
+        m_MethodName: PlayLevel3Spectator
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2498,7 +2498,7 @@ GameObject:
   - component: {fileID: 232939816}
   - component: {fileID: 232939815}
   m_Layer: 5
-  m_Name: SpectatorLevel2AIWithGuards
+  m_Name: SpectatorLevel2AI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2570,7 +2570,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1452921266}
         m_TargetAssemblyTypeName: ChooseLevel, Assembly-CSharp
-        m_MethodName: PlayLevel1WithGuardsSpectator
+        m_MethodName: PlayLevel2Spectator
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -8768,7 +8768,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &701340359
 RectTransform:
   m_ObjectHideFlags: 0
@@ -13263,7 +13263,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1048319638
 RectTransform:
   m_ObjectHideFlags: 0
@@ -14850,7 +14850,7 @@ GameObject:
   - component: {fileID: 1175507348}
   - component: {fileID: 1175507347}
   m_Layer: 5
-  m_Name: Level1CollectingOnly
+  m_Name: Level3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -14922,7 +14922,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1452921266}
         m_TargetAssemblyTypeName: ChooseLevel, Assembly-CSharp
-        m_MethodName: PlayLevel1WithoutGuards
+        m_MethodName: PlayLevel3
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -14983,7 +14983,7 @@ GameObject:
   - component: {fileID: 1189094352}
   - component: {fileID: 1189094351}
   m_Layer: 5
-  m_Name: SpectatorLevel1AIWithGuards
+  m_Name: SpectatorLevel1AI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -15055,7 +15055,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1452921266}
         m_TargetAssemblyTypeName: ChooseLevel, Assembly-CSharp
-        m_MethodName: PlayLevel1WithGuardsSpectator
+        m_MethodName: PlayLevel1Spectator
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -17776,7 +17776,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Spectate AI for Level 1 Without Guards
+  m_text: 'Spectate AI for Level 3
 
 
 '
@@ -18905,22 +18905,10 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1452921264}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 1485178965}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
+      - m_Target: {fileID: 1452921266}
+        m_TargetAssemblyTypeName: ChooseLevel, Assembly-CSharp
+        m_MethodName: PlayLevel2
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -21108,7 +21096,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Level 1 - Without Guards
+  m_text: 'Level 3
 
 
 '

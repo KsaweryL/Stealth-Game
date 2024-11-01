@@ -31582,7 +31582,7 @@ MonoBehaviour:
   m_OverrideVoxelSize: 0
   m_VoxelSize: 0.16666667
   m_MinRegionArea: 2
-  m_NavMeshData: {fileID: 23800000, guid: 43dfadf284c94d14ca2f5e7011b62c0c, type: 2}
+  m_NavMeshData: {fileID: 23800000, guid: a46fd6ed7a5bc5845b55e6548df33fc5, type: 2}
   m_BuildHeightMesh: 0
 --- !u!1 &5457557412867742521
 GameObject:
@@ -56249,7 +56249,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3051281340373714612, guid: 856fe06e07b19d04e8806d64de8953ed, type: 3}
       propertyPath: speed
-      value: 5
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 3051281340373714612, guid: 856fe06e07b19d04e8806d64de8953ed, type: 3}
       propertyPath: PathPoints.Array.size
@@ -59092,7 +59092,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3051281340373714612, guid: 856fe06e07b19d04e8806d64de8953ed, type: 3}
       propertyPath: speed
-      value: 5
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 3051281340373714612, guid: 856fe06e07b19d04e8806d64de8953ed, type: 3}
       propertyPath: player
@@ -62379,7 +62379,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3051281340373714612, guid: 856fe06e07b19d04e8806d64de8953ed, type: 3}
       propertyPath: speed
-      value: 5
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 3051281340373714612, guid: 856fe06e07b19d04e8806d64de8953ed, type: 3}
       propertyPath: PathPoints.Array.size
