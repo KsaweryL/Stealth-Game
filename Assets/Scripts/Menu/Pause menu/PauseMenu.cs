@@ -92,6 +92,7 @@ public class PauseMenu : MonoBehaviour
         {
             transform.gameObject.SetActive(false);
             UnfreezeTheGame();
+            
         }
         else
         {

@@ -316,12 +316,16 @@ public class Game : MonoBehaviour
             if (pauseMenuIsoOn)
             {
                 pauseMenuIsoOn = false;
+                //locking the cursor during the gameplay
+                LockCursor.Instance.LockTheCursor();
             }
             else
             {
                 pauseMenuIsoOn = true;
+                //unlocking the cursor in the menu
+                LockCursor.Instance.UnlockTheCursor();
             }
-            pauseMenu.GetComponentInChildren<PauseMenu>().UpdatePauseMenu(pauseMenuIsoOn);
+        pauseMenu.GetComponentInChildren<PauseMenu>().UpdatePauseMenu(pauseMenuIsoOn);
 
         
 

@@ -36,6 +36,8 @@ public class GameOver : MonoBehaviour
                 GetComponent<Game>().pauseMenu.GetComponent<PauseMenu>().FreezeTheGame();
                 GetComponent<Game>().GetEndGameMenu().GetComponentInChildren<EndGameText>();
                 GetComponent<Game>().GetEndGameMenu().GetComponentInChildren<EndGameText>().GetComponent<TextMeshProUGUI>().text = "You won!";
+                //unlock the cursor
+                LockCursor.Instance.UnlockTheCursor();
             }
         }
 
@@ -64,8 +66,10 @@ public class GameOver : MonoBehaviour
             GetComponent<Game>().pauseMenu.GetComponent<PauseMenu>().FreezeTheGame();
             GetComponent<Game>().GetEndGameMenu().GetComponentInChildren<EndGameText>();
             GetComponent<Game>().GetEndGameMenu().GetComponentInChildren<EndGameText>().GetComponent<TextMeshProUGUI>().text = "You lost!";
-            
-            
+            //unlock the cursor
+            LockCursor.Instance.UnlockTheCursor();
+
+
         }
     }
 }
