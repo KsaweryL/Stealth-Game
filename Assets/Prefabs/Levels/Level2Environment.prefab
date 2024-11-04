@@ -2026,6 +2026,7 @@ GameObject:
   - component: {fileID: 4212385086572474581}
   - component: {fileID: 1886536870362489750}
   - component: {fileID: 6694985626490902052}
+  - component: {fileID: 5015027621415589473}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -2137,6 +2138,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   AchievedTimeText: {fileID: 4764750888584357890}
   AchievedTimeTextEndOfGame: {fileID: 2206611196071077596}
+--- !u!114 &5015027621415589473
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 332195655275943646}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6500a9d1e0b6654f8f96da6ffb8eb91, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &378725185336910485
 GameObject:
   m_ObjectHideFlags: 0
@@ -15756,7 +15769,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2910439503743561459}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.09252102, y: -0.000000017659854, z: 0.0000000016409462, w: 0.99571073}
+  m_LocalRotation: {x: 0.09252102, y: 0.00000001765986, z: -0.0000000016409466, w: 0.99571073}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0

@@ -8720,7 +8720,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1691835265550871270}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.09252102, y: 0.000000017659854, z: -0.0000000016409462, w: 0.99571073}
+  m_LocalRotation: {x: 0.09252102, y: -0.00000001765986, z: 0.0000000016409466, w: 0.99571073}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -12900,8 +12900,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: -603.05096, y: 219.872}
-  m_SizeDelta: {x: 1772.776, y: 725.152}
+  m_AnchoredPosition: {x: -603.05096, y: 126.798}
+  m_SizeDelta: {x: 1772.776, y: 632.078}
   m_Pivot: {x: 0, y: 1}
 --- !u!222 &7914700341647760323
 CanvasRenderer:
@@ -40370,7 +40370,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.000020980835, y: 437}
+  m_AnchoredPosition: {x: 0.000020980835, y: 352}
   m_SizeDelta: {x: 692.872, y: 126.056}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6990136330981222750
@@ -46112,6 +46112,7 @@ GameObject:
   - component: {fileID: 7000091137001338292}
   - component: {fileID: 3057963052056176480}
   - component: {fileID: 7310292546595588057}
+  - component: {fileID: 1102987390444273504}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -46224,6 +46225,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   AchievedTimeText: {fileID: 8734469844177155444}
   AchievedTimeTextEndOfGame: {fileID: 0}
+--- !u!114 &1102987390444273504
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7870748151606516341}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6500a9d1e0b6654f8f96da6ffb8eb91, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7903121624962979103
 GameObject:
   m_ObjectHideFlags: 0
@@ -54486,7 +54499,7 @@ PrefabInstance:
     - target: {fileID: 5521520000271125297, guid: c8d8fe98bcc359c4aae102f8a6c83633, type: 3}
       propertyPath: m_Model
       value: 
-      objectReference: {fileID: 5022602860645237092, guid: 1cdbd7b551407bf49bba415d57061ac2, type: 3}
+      objectReference: {fileID: 5022602860645237092, guid: 3dae48e2b7ec70540ade9579aada6e92, type: 3}
     - target: {fileID: 5521520000271125297, guid: c8d8fe98bcc359c4aae102f8a6c83633, type: 3}
       propertyPath: m_BehaviorType
       value: 2

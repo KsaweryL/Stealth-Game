@@ -235,6 +235,9 @@ public class Game : MonoBehaviour
         NPCmovement = GetComponentsInChildren<NPCMovement>();
 
         allDiamondsNumber = allDiamonds.Length;
+
+        //lock the cursor upon loading the game
+        LockCursor.Instance.LockTheCursor();
     }
 
     public void ResetDiamonds()

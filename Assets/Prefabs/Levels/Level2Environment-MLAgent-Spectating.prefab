@@ -11235,7 +11235,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.000020980835, y: 437}
+  m_AnchoredPosition: {x: 0.000020980835, y: 347}
   m_SizeDelta: {x: 692.872, y: 126.056}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7350821333069057406
@@ -17557,6 +17557,7 @@ GameObject:
   - component: {fileID: 4999765108625690544}
   - component: {fileID: 3020732912414465875}
   - component: {fileID: 2136554167273502714}
+  - component: {fileID: 4024823377076368046}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -17669,6 +17670,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   AchievedTimeText: {fileID: 6433457257920658228}
   AchievedTimeTextEndOfGame: {fileID: 0}
+--- !u!114 &4024823377076368046
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3140031273110990114}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6500a9d1e0b6654f8f96da6ffb8eb91, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3142886542288888410
 GameObject:
   m_ObjectHideFlags: 0
@@ -33769,8 +33782,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: -603.05096, y: 219.872}
-  m_SizeDelta: {x: 1772.776, y: 725.152}
+  m_AnchoredPosition: {x: -603.05096, y: 121.158}
+  m_SizeDelta: {x: 1772.776, y: 626.438}
   m_Pivot: {x: 0, y: 1}
 --- !u!222 &5185819051399514640
 CanvasRenderer:
@@ -43776,7 +43789,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7703747336194869621}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.09252102, y: -0.000000017659858, z: 0.0000000016409465, w: 0.99571073}
+  m_LocalRotation: {x: 0.09252102, y: 0.000000017659856, z: -0.0000000016409463, w: 0.99571073}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -56177,7 +56190,7 @@ PrefabInstance:
     - target: {fileID: 5521520000271125297, guid: c8d8fe98bcc359c4aae102f8a6c83633, type: 3}
       propertyPath: m_Model
       value: 
-      objectReference: {fileID: 5022602860645237092, guid: 70ef3c7b297e5e746ad21dda07589baa, type: 3}
+      objectReference: {fileID: 5022602860645237092, guid: 3dae48e2b7ec70540ade9579aada6e92, type: 3}
     - target: {fileID: 5521520000271125297, guid: c8d8fe98bcc359c4aae102f8a6c83633, type: 3}
       propertyPath: m_BehaviorType
       value: 2

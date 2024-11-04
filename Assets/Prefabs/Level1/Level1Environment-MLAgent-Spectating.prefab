@@ -2383,7 +2383,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 527006139462170062}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.04763198, y: 0.0000000021483566, z: -1.02446746e-10, w: 0.99886495}
+  m_LocalRotation: {x: 0.04763198, y: -0.0000000021483566, z: 1.02446746e-10, w: 0.99886495}
   m_LocalPosition: {x: 3.6900024, y: 3.26, z: -39.24}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -6943,7 +6943,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1555265414165529172}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.047631975, y: 0.0000000021483564, z: -1.02446746e-10, w: 0.99886495}
+  m_LocalRotation: {x: 0.047631975, y: -0.0000000021483564, z: 1.02446746e-10, w: 0.99886495}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -23820,7 +23820,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.000020980835, y: 437}
+  m_AnchoredPosition: {x: 0.000020980835, y: 338}
   m_SizeDelta: {x: 692.872, y: 126.056}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3888175292759907901
@@ -24177,6 +24177,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AchievedTimeText: {fileID: 0}
+  AchievedTimeTextEndOfGame: {fileID: 0}
 --- !u!1 &4358339929308184957
 GameObject:
   m_ObjectHideFlags: 0
@@ -45347,8 +45348,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: -603.05096, y: 219.872}
-  m_SizeDelta: {x: 1772.776, y: 725.152}
+  m_AnchoredPosition: {x: -603.05096, y: 118.448}
+  m_SizeDelta: {x: 1772.776, y: 623.728}
   m_Pivot: {x: 0, y: 1}
 --- !u!222 &4019393718607582062
 CanvasRenderer:
@@ -48059,6 +48060,7 @@ GameObject:
   - component: {fileID: 7654282942590531978}
   - component: {fileID: 1760347696893066788}
   - component: {fileID: 2002096828778096337}
+  - component: {fileID: 2432656175837456087}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -48170,6 +48172,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AchievedTimeText: {fileID: 6313855067283940373}
+  AchievedTimeTextEndOfGame: {fileID: 0}
+--- !u!114 &2432656175837456087
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8409077605792281374}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6500a9d1e0b6654f8f96da6ffb8eb91, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8438777330597255509
 GameObject:
   m_ObjectHideFlags: 0
@@ -61588,7 +61603,7 @@ PrefabInstance:
     - target: {fileID: 5521520000271125297, guid: c8d8fe98bcc359c4aae102f8a6c83633, type: 3}
       propertyPath: m_Model
       value: 
-      objectReference: {fileID: 5022602860645237092, guid: 70ef3c7b297e5e746ad21dda07589baa, type: 3}
+      objectReference: {fileID: 5022602860645237092, guid: 3dae48e2b7ec70540ade9579aada6e92, type: 3}
     - target: {fileID: 5521520000271125297, guid: c8d8fe98bcc359c4aae102f8a6c83633, type: 3}
       propertyPath: m_BehaviorType
       value: 2
