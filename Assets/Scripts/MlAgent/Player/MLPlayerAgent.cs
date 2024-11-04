@@ -251,11 +251,12 @@ public class MLPlayerAgent : Agent
             //Debug.Log(currentlyChosenDiamond.gameObject.name + " and " + currentlyChosenDiamond.transform.localPosition);
             //pathCorners = path.corners;
 
+            int divideNumberOfCorners = 1;
             pathCorners = new List<Vector3>();
 
             if (path.corners.Length > 1)
             {
-                for (int corner = 1; corner < path.corners.Length; corner += 1)
+                for (int corner = 1; corner < path.corners.Length; corner += divideNumberOfCorners)
                 {
                     pathCorners.Add(path.corners[corner]);
                 }
@@ -268,7 +269,7 @@ public class MLPlayerAgent : Agent
                 pathCorners.Add(path.corners[0]);
 
             //for initial training
-            //pathCorners = new Vector3[] { currentlyChosenDiamond.transform.position };
+            //pathCorners = new List<Vector3>() { currentlyChosenDiamond.transform.position };
 
             //Debug.Log("path corners length " + pathCorners.Length);
 

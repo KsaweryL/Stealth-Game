@@ -413,6 +413,14 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 722125057886164798, guid: f09c3a25c18b7d64d9f370e9c42e8ff6, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 632.078
+      objectReference: {fileID: 0}
+    - target: {fileID: 722125057886164798, guid: f09c3a25c18b7d64d9f370e9c42e8ff6, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 126.798
+      objectReference: {fileID: 0}
     - target: {fileID: 2313669613699296814, guid: f09c3a25c18b7d64d9f370e9c42e8ff6, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -469,6 +477,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4555211104776358390, guid: f09c3a25c18b7d64d9f370e9c42e8ff6, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0.000020980835
+      objectReference: {fileID: 0}
+    - target: {fileID: 4555211104776358390, guid: f09c3a25c18b7d64d9f370e9c42e8ff6, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 352
+      objectReference: {fileID: 0}
     - target: {fileID: 5022332976678425181, guid: f09c3a25c18b7d64d9f370e9c42e8ff6, type: 3}
       propertyPath: m_Name
       value: Level3Environment-MLAgent-Spectating
@@ -477,9 +493,21 @@ PrefabInstance:
       propertyPath: m_Model
       value: 
       objectReference: {fileID: 5022602860645237092, guid: 3dae48e2b7ec70540ade9579aada6e92, type: 3}
+    - target: {fileID: 6493381820529728017, guid: f09c3a25c18b7d64d9f370e9c42e8ff6, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6510301139128563622, guid: f09c3a25c18b7d64d9f370e9c42e8ff6, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8850943393373192140, guid: f09c3a25c18b7d64d9f370e9c42e8ff6, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9054165336964632118, guid: f09c3a25c18b7d64d9f370e9c42e8ff6, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
