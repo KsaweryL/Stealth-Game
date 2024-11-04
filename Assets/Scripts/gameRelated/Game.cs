@@ -237,7 +237,8 @@ public class Game : MonoBehaviour
         allDiamondsNumber = allDiamonds.Length;
 
         //lock the cursor upon loading the game
-        LockCursor.Instance.LockTheCursor();
+        if(!(isTrainingOn && !GetPlayer().GetComponent<MLPlayerAgent>().spectating))
+            LockCursor.Instance.LockTheCursor();
     }
 
     public void ResetDiamonds()
@@ -320,13 +321,15 @@ public class Game : MonoBehaviour
             {
                 pauseMenuIsoOn = false;
                 //locking the cursor during the gameplay
-                LockCursor.Instance.LockTheCursor();
+                if(!(isTrainingOn && !GetPlayer().GetComponent<MLPlayerAgent>().spectating))
+                    LockCursor.Instance.LockTheCursor();
             }
             else
             {
                 pauseMenuIsoOn = true;
                 //unlocking the cursor in the menu
-                LockCursor.Instance.UnlockTheCursor();
+                if (!(isTrainingOn && !GetPlayer().GetComponent<MLPlayerAgent>().spectating))
+                    LockCursor.Instance.UnlockTheCursor();
             }
         pauseMenu.GetComponentInChildren<PauseMenu>().UpdatePauseMenu(pauseMenuIsoOn);
 
@@ -337,15 +340,18 @@ public class Game : MonoBehaviour
     void UpdateMiniMapUI()
     {
 
-        if (Input.GetKey(KeyCode.M))
+        if (!(isTrainingOn && !GetPlayer().GetComponent<MLPlayerAgent>().spectating))
         {
-            minimapIsOn = true;
-            minimap.SetActive(true);
-        }
-        else
-        {
-            minimapIsOn = false;
-            minimap.SetActive(false);
+            if (Input.GetKey(KeyCode.M))
+            {
+                minimapIsOn = true;
+                minimap.SetActive(true);
+            }
+            else
+            {
+                minimapIsOn = false;
+                minimap.SetActive(false);
+            }
         }
         
 
