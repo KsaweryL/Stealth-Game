@@ -21,13 +21,11 @@ public class LockCursor : MonoBehaviour
     {
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
-        Debug.Log("cursor locked");
     }
 
     public void UnlockTheCursor()
     {
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
-        Debug.Log("cursor unlocked");
     }
 }

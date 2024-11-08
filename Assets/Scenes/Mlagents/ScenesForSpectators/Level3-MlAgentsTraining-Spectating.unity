@@ -473,6 +473,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Level3Environment-MLAgent-Spectating
       objectReference: {fileID: 0}
+    - target: {fileID: 5447117316414908235, guid: f09c3a25c18b7d64d9f370e9c42e8ff6, type: 3}
+      propertyPath: m_Model
+      value: 
+      objectReference: {fileID: 5022602860645237092, guid: 7358d315411910a4e86e0aa2125e74e6, type: 3}
     - target: {fileID: 8850943393373192140, guid: f09c3a25c18b7d64d9f370e9c42e8ff6, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
