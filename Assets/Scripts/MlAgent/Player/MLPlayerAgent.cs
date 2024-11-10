@@ -951,6 +951,9 @@ public class MLPlayerAgent : Agent
             }
         }
 
+        //update the round in metric script
+        GetComponent<Metrics>().UpdateTheround();
+
         EndEpisode();
         
     }
@@ -973,8 +976,10 @@ public class MLPlayerAgent : Agent
                 imageRender.color = loseColor;
         }
 
+        //update the round in metric script
+        GetComponent<Metrics>().UpdateTheround();
+
         EndEpisode() ;
-        
     }
 
     public void PlayerDetectionCheck(bool canNPCSeePlayer)
@@ -988,6 +993,10 @@ public class MLPlayerAgent : Agent
     public void PlayerIsChasenAfter()
     {
         SetReward(+playerIschasedAfterReward);
+
+        //update the round in metric script
+        GetComponent<Metrics>().UpdateTheround();
+
         EndEpisode();
     }
 

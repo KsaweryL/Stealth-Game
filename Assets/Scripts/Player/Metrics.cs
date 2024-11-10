@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class Metrics : MonoBehaviour
 {
@@ -15,10 +16,18 @@ public class Metrics : MonoBehaviour
     Dictionary<Diamond, System.DateTime> reachiongDiamondsEndTimes;
     Dictionary<Diamond, System.TimeSpan> reachiongDiamondsTotalElapsedTimes;
 
+    //related to % of obtaining the diamond
+    Dictionary<Diamond, float> diamondAquisitionRate;
+    Dictionary<Diamond, int> howManyTimesWasDiamondObtained;
+    int round;
+
 
     private void Start()
     {
         startTime = System.DateTime.UtcNow;
+        diamondAquisitionRate = new Dictionary<Diamond, float>();
+        howManyTimesWasDiamondObtained = new Dictionary<Diamond, int>();
+        round = 1;
     }
 
     public Dictionary<Diamond, System.TimeSpan> GetElapsedTimes()
@@ -54,10 +63,15 @@ public class Metrics : MonoBehaviour
     public System.TimeSpan UpdateTimeOnDiamond(Diamond diamond)
     {
         System.DateTime currentTime = System.DateTime.UtcNow;
-        if (reachiongDiamondsTotalElapsedTimes.ContainsKey(diamond))
+        
+        if (diamondAquisitionRate.ContainsKey(diamond))
         {
-            reachiongDiamondsEndTimes[diamond] = currentTime;
-            reachiongDiamondsTotalElapsedTimes[diamond] = currentTime - startTime;
+            //we will update the time only if its better
+            if ((currentTime - startTime) < reachiongDiamondsTotalElapsedTimes[diamond])
+            {
+                reachiongDiamondsEndTimes[diamond] = currentTime;
+                reachiongDiamondsTotalElapsedTimes[diamond] = currentTime - startTime;
+            }
         }
         else
         {
@@ -76,6 +90,59 @@ public class Metrics : MonoBehaviour
         return totalElapsedTime;
     }
 
-    
+    public System.TimeSpan GetBiggestDiamondAcquisitionTime()
+    {
+        return reachiongDiamondsTotalElapsedTimes.Values.Max();
+    }
+
+    public float UpdateDiamondAquisitionRate(Diamond diamond, bool updateDiamondsCounter)
+    {
+        float diamondAquisitionRateVar = 0.0f;
+
+        if (diamondAquisitionRate.ContainsKey(diamond))
+        {
+            if(updateDiamondsCounter)
+                howManyTimesWasDiamondObtained[diamond] += 1;
+            diamondAquisitionRate[diamond] = (float) howManyTimesWasDiamondObtained[diamond] / round;
+            
+        }
+        else
+        {   
+            if(updateDiamondsCounter == false)
+                return diamondAquisitionRateVar;
+
+            howManyTimesWasDiamondObtained.Add(diamond, 1);
+            diamondAquisitionRate.Add(diamond, (float) 1 /round);
+        }
+
+        diamondAquisitionRateVar = diamondAquisitionRate[diamond];
+
+        return diamondAquisitionRateVar;
+    }
+
+    public Dictionary<Diamond, float> GetDiamondAquisitionRate()
+    {
+        return diamondAquisitionRate;
+    }
+
+    public void UpdateTheround()
+    {
+        UpdateAllDiamondAcquisitionRates();
+
+        round++;
+        
+    }
+
+    public void UpdateAllDiamondAcquisitionRates()
+    {
+        //update all diamonds
+        //we can't do it directly, we need to copy the dictionary
+        Dictionary<Diamond, float> diamondAquisitionRateCopy = new Dictionary<Diamond, float>(diamondAquisitionRate);
+
+        foreach (KeyValuePair<Diamond, float> pair in diamondAquisitionRateCopy)
+        {
+            UpdateDiamondAquisitionRate(pair.Key, false);
+        }
+    }
 
 }

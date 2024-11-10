@@ -29,14 +29,16 @@ public class AchievedTimeUI : MonoBehaviour
     public void UpdateDiamondText(Diamond diamond, string text)
     {
         System.TimeSpan timeToGetDiamond = GetComponentInParent<Game>().GetPlayer().GetComponent<Metrics>().UpdateTimeOnDiamond(diamond);
+        GetComponentInParent<Game>().GetPlayer().GetComponent<Metrics>().UpdateDiamondAquisitionRate(diamond, true);
 
         Metrics metrics = GetComponentInParent<Game>().GetPlayer().GetComponent<Metrics>();
 
         AchievedTimeText.text = text;
         collectedDiamonds++;
-        if (collectedDiamonds == allDiamonds.Length)
+        if (collectedDiamonds == allDiamonds.Length || GetComponentInParent<Game>().GetIsTrainingOn())
         {
-            AchievedTimeText.text = AchievedTimeText.text + "\nTotal time: " + metrics.UpdateElapsedTime();
+            //AchievedTimeText.text = AchievedTimeText.text + "\nTotal time: " + metrics.UpdateElapsedTime();
+            AchievedTimeText.text = AchievedTimeText.text + "\nTotal time: " + metrics.GetBiggestDiamondAcquisitionTime();
             collectedDiamonds = 0;
         }
 
@@ -44,9 +46,17 @@ public class AchievedTimeUI : MonoBehaviour
          //we will need to rewrite the text
             
             Dictionary<Diamond, System.TimeSpan> reachiongDiamondsTotalElapsedTimes = metrics.GetElapsedTimes();
+            Dictionary<Diamond, float> diamondsAquisitionRate = metrics.GetDiamondAquisitionRate();
+
             foreach (KeyValuePair<Diamond, System.TimeSpan> pair in reachiongDiamondsTotalElapsedTimes)
             {
                 AchievedTimeText.text = AchievedTimeText.text + "\n" + pair.Key.name + " " + pair.Value;
+
+                //update the percentage of chances that AI reaches the diamond in UI text
+                //maybe later
+                //if (diamondsAquisitionRate.ContainsKey(pair.Key) && GetComponentInParent<Game>().GetIsTrainingOn())
+                //    AchievedTimeText.text = AchievedTimeText.text + ", acquisition rate: " + diamondsAquisitionRate[pair.Key]*100 + "%";
+                
             }
 
         //if there is end of game screen, update it as well
