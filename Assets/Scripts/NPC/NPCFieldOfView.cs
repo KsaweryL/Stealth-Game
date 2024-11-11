@@ -47,7 +47,7 @@ public class NPCFieldOfView : MonoBehaviour
     }
     public void UpdateHiddenStatusNPCFOV()
     {
-        playerIsHidden = player.GetComponent<DetectingPlayerInHidingSpot>().IsPlayerHidden(); ;
+        playerIsHidden = player.GetComponent<DetectingPlayerInHidingSpot>().IsPlayerHidden();
     }
 
     public int GetCurrentlyDetectedTimeReversedNPCFOV()
@@ -115,6 +115,55 @@ public class NPCFieldOfView : MonoBehaviour
             canSeePlayer = false;
 
 
+    }
+
+    public bool IsPlayerWithinFOV()
+    {
+        bool isPlayerWithinFOV = false;
+
+        Collider[] rangeChecks = Physics.OverlapSphere(transform.position, radius, targetMask);
+
+        if (rangeChecks.Length != 0)
+        {
+            //since we can opnly detect 1 plr, we will set target to the 0th member of the array
+            Transform target = rangeChecks[0].transform;
+            Vector3 directionToTarget = (target.position - transform.position).normalized;
+            distnaceToTarget = Vector3.Distance(transform.position, target.position);
+
+            //if the player is within our sight
+            if (Vector3.Angle(transform.forward, directionToTarget) < angle / 2)
+            {
+
+                //our raycast would differ depending on whether player is crouching or not
+
+                //for every obstructionMask
+                for (int obstructionMask = 0; obstructionMask < obstructionMasks.Length; obstructionMask++)
+                {
+                    //returns false if the ray intersects with the collider (any obstruction) or if distance to target is 0
+                    if (!Physics.Raycast(transform.position, directionToTarget, distnaceToTarget, obstructionMasks[obstructionMask]) || distnaceToTarget < 2)
+                    {
+                        //if it's a "not full barrier" and player is crouching, we can't see the player
+                        if (Physics.Raycast(transform.position, directionToTarget, distnaceToTarget, notFullBarrier) && player.GetComponent<ThirdPersonMovement>().GetIsSneaking())
+                        {
+                            isPlayerWithinFOV = false;
+                        }
+                        else
+                            isPlayerWithinFOV = true;
+                    }
+                    else
+                    {
+                        isPlayerWithinFOV = false;
+                    }
+                }
+            }
+            //if it's outside our sight and is not diorectly onto us
+            else if (distnaceToTarget >= 2)
+                isPlayerWithinFOV = false;
+        }
+        else if (canSeePlayer == true && distnaceToTarget >= 2)
+            isPlayerWithinFOV = false;
+
+        return isPlayerWithinFOV;
     }
 
     public void UpdateDetectedTime()

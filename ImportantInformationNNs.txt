@@ -50,6 +50,28 @@ mlagents-learn config/collectAllDiamonds-4V.yaml --initialize-from=playerMlAgent
 5.47.3 - also smaller learning rate, later added more difficult npcs - had some troubles 
 5.47.4 - even smaller learning rate e-05, potential for growth, not perfect, but comes up with interesting tactics
 
+5.47.6 - continuation of 5.47.4 but with various NPCS, can't seem to upgrade
+
+5.47.7 - added bushes to current npcs, didn't help
+
+5.47.8 - bushes to npc with bigger learning rate e-05, something got broken after resume around 400k (??)
+
+5.47.9 - from 5.47.5 - bushesh to npc, with ven bigge rlearnign rate e-04, but here it doesn't seem to work
+
+5.47.10 - from 5.47.7 - bushesh to npc, with ven bigger learnign rate e-04, but here it doesn't seem to work either
+
+5.48 - from 5.47.5 - learning rate e-05, bushes to npc, Lvl2NPCS - pretty easy ones. It reached some point (which is better than 5.47.8), but idk
+if it's because of npcs or hiding spots that are bushes
+
+5.48.2 - 5.48 with bigger learning rate (e-04), bushes to npcs, LVL2NPCS (easy ones) - also didn't progress
+
+5.49 - from 5.32 with initiial learning rate (e-04),  bushes to npcs, LVL2NPCS (easy ones), rewards for
+simply being in hiding spots - not much progress
+
+5.50 - from 5.32 ..
+
+
+
 
 6.2 - bigger rewards, but slow progress
 6.3 - smaller rewards, seems to work pretty well

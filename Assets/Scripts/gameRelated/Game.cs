@@ -359,6 +359,17 @@ public class Game : MonoBehaviour
 
     }
 
+    public bool IsPlayerWithinNPCFOV()
+    {
+        NPCFieldOfView[] NPCfovs = GetComponentsInChildren<NPCFieldOfView>();
+
+        foreach(NPCFieldOfView npc in NPCfovs)
+            if (npc.IsPlayerWithinFOV())
+                return true;
+
+        return false;
+    }
+
     // Update is called once per frame
     void Update()
     {

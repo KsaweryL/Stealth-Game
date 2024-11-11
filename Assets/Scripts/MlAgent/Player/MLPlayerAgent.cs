@@ -65,6 +65,7 @@ public class MLPlayerAgent : Agent
     public int maxStepsBeforePenalty;
     List<float> allDistancesToDiamond;
     List<float> allDistancesToNPC;
+    List<float> allDistancesToHidingSpot;
 
     [Header("Velocity check")]
     public int maxStepsForVelocityMeasurement;
@@ -91,8 +92,10 @@ public class MLPlayerAgent : Agent
     public float smallVelocityReward;
     public float NPCseePlayerReward;
     public float playerIsHiddenReward;
+    public float playerIsHiddenAndWithinNPCFOVReward;
     public float playerIschasedAfterReward;
     public float distanceToClosestNPCReward;
+    public float distanceToClosestHidingSpotReward;
     public float nextNavMeshWaypointReached;
     public float waypointDistanceReward;
     public float waypointInreasingDistanceReward;
@@ -122,6 +125,8 @@ public class MLPlayerAgent : Agent
     public HidingSpot[] hidingSpots;
     public HidingSpotArea chosenHidingSpotArea;
     public HidingSpot chosenHidingSpot;
+    public float minDistanceToHidingSpot;
+    
 
     [Header("Diamond")]
     public Diamond chosenDiamond;
@@ -381,6 +386,7 @@ public class MLPlayerAgent : Agent
 
                 allDistancesToDiamond = new List<float>();
                 allDistancesToNPC = new List<float>();
+                allDistancesToHidingSpot = new List<float>();
 
             }
 
@@ -616,22 +622,22 @@ public class MLPlayerAgent : Agent
                     if (i >= hidingSpots.Length)
                         break;
 
-                    chosenHidingSpot = hidingSpots[0];
+                    HidingSpot chosenHidingSpotVar = hidingSpots[0];
 
                     foreach (HidingSpot hidingSpot in hidingSpots)
                     {
                         if (!excludedHidingSpots.ContainsKey(hidingSpot))
-                            if (Vector3.Distance(hidingSpot.transform.position, transform.position) < Vector3.Distance(chosenHidingSpot.transform.position, transform.position))
-                                chosenHidingSpot = hidingSpot;
+                            if (Vector3.Distance(hidingSpot.transform.position, transform.position) < Vector3.Distance(chosenHidingSpotVar.transform.position, transform.position))
+                                chosenHidingSpotVar = hidingSpot;
                     }
 
-                    Vector3 difference_hidingSpot = (GetGamesTransformPosition(GetGamesTransformPosition(chosenHidingSpot.transform.position)) - GetGamesTransformPosition(transform.position)).normalized;
+                    Vector3 difference_hidingSpot = (GetGamesTransformPosition(GetGamesTransformPosition(chosenHidingSpotVar.transform.position)) - GetGamesTransformPosition(transform.position)).normalized;
 
                     sensor.AddObservation(difference_hidingSpot.x);
                     sensor.AddObservation(difference_hidingSpot.z);
 
 
-                    excludedHidingSpots[chosenHidingSpot] = true;
+                    excludedHidingSpots[chosenHidingSpotVar] = true;
                 }
 
                 //add information whether player is hidden
@@ -775,6 +781,43 @@ public class MLPlayerAgent : Agent
         }
     }
 
+    void DistanceToClosestHidingSpotUpdate()
+    {
+        hidingSpots = GetComponentInParent<Game>().GetHidingSpots();
+
+        if (hidingSpots.Length > 0)
+        {
+            //choose the closest hiding spot
+            HidingSpot currentlyChosenHidingSpot = chosenHidingSpot;
+            chosenHidingSpot = hidingSpots[0];
+
+            foreach (HidingSpot hidingSpot in hidingSpots)
+            {
+                //exclude hidingspots distance to which is smaller than 2
+                if(Vector3.Distance(hidingSpot.transform.position, transform.position) >= 2)
+                    if (Vector3.Distance(hidingSpot.transform.position, transform.position) < Vector3.Distance(chosenHidingSpot.transform.position, transform.position))
+                        chosenHidingSpot = hidingSpot;
+            }
+
+            if (chosenHidingSpot != currentlyChosenHidingSpot)
+                allDistancesToHidingSpot = new List<float>();
+
+
+            //reward for making the distance to HidingSpot smaller
+            float newDistanceHidingSpot = Vector3.Distance(chosenHidingSpot.transform.position, transform.position);
+            if (allDistancesToHidingSpot.Count == 0)
+                allDistancesToHidingSpot.Add(newDistanceHidingSpot);
+
+            if (newDistanceHidingSpot < allDistancesToHidingSpot.Min())
+            {
+                allDistancesToHidingSpot.Add(newDistanceHidingSpot);
+
+                SetReward(+distanceToClosestHidingSpotReward);
+                minDistanceToHidingSpot = newDistanceHidingSpot;
+            }
+        }
+    }
+
     void MaxStepsReachedRewardUpdate()
     {
         //if the reward wasn't collected during the episode, reset it
@@ -806,6 +849,14 @@ public class MLPlayerAgent : Agent
         if (playerIsHidden)
         {
             SetReward(+playerIsHiddenReward);
+        }
+    }
+
+    void CheckIfPlayerIsHiddenAndWithinNPCSFov()
+    {
+        if (GetComponentInParent<Game>().IsPlayerWithinNPCFOV() && GetComponentInParent<Game>().GetPlayer().GetComponent<DetectingPlayerInHidingSpot>().IsPlayerHidden())
+        {
+            SetReward(+playerIsHiddenAndWithinNPCFOVReward);
         }
     }
 
@@ -868,7 +919,9 @@ public class MLPlayerAgent : Agent
             {
                 DistanceToDiamondRewardUpdate();
                 DistanceToClosestNPCRewardUpdate();
+                DistanceToClosestHidingSpotUpdate();
                 CheckIfPlayerHiddenUpdate();
+                CheckIfPlayerIsHiddenAndWithinNPCSFov();
                 NavMeshUpdateWaypointIndex();
                 
             }
