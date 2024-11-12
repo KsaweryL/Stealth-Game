@@ -28,9 +28,9 @@ TagManager:
   - water
   - tile
   - Camera
-  - 
-  - 
-  - 
+  - whatIsCamBarrier
+  - Icon
+  - minimapCantSee
   - 
   - 
   - 

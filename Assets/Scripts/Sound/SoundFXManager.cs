@@ -87,7 +87,7 @@ public class SoundFXManager : MonoBehaviour
             float maxDistanceOfSound = 7;
             float minDistanceOfSound = 3;
 
-            bool conditionToCheck = (horizontal != 0f || vertical != 0) && (!sprint && !sneakingButton) && additionaCondition;
+            bool conditionToCheck = (horizontal != 0 || vertical != 0) && (!sprint && !sneakingButton) && additionaCondition;
 
             CheckDistance(conditionToCheck, maxDistanceOfSound, minDistanceOfSound, audioSource, additionaCondition);
 

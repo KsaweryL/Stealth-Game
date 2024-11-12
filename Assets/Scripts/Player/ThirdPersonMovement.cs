@@ -132,7 +132,7 @@ public class ThirdPersonMovement : MonoBehaviour
 
         return moveDir;
     }
-    public void ApplyMovement(float horizontal, float vertical, bool jump, bool sprint, bool sneakingButton, bool enableCam, float speedMultiplier)
+    public void ApplyMovement(float horizontal, float vertical, bool jump, bool sprint, bool sneakingButton, bool enableCam, float speedMultiplier, bool sprintByHolding)
     {
         //reset x and z movement
         moveDir.x = 0f;
@@ -187,15 +187,29 @@ public class ThirdPersonMovement : MonoBehaviour
         //sprinting
         if (sprint) {
 
-            //sprinting is being turned off
-            if (isSprintEnabled) {
-                if (isSneaking)
-                    speed = crouchingSpeed;
+            //if sprint by pressing is enables
+            if (sprintByHolding == false)
+            {
+                //sprinting is being turned off
+                if (isSprintEnabled)
+                {
+                    if (isSneaking)
+                        speed = crouchingSpeed;
+                    else
+                        speed = walkingSpeed;
+                    isSprintEnabled = false;
+                }
+                //sprinting is being turned on
                 else
-                    speed = walkingSpeed;
-                isSprintEnabled = false;
+                {
+                    if (isSneaking)
+                        speed = crouchingSprintingSpeed;
+                    else
+                        speed = sprintingSpeed;
+
+                    isSprintEnabled = true;
+                }
             }
-            //sprinting is being turned on
             else
             {
                 if (isSneaking)
@@ -206,6 +220,15 @@ public class ThirdPersonMovement : MonoBehaviour
                 isSprintEnabled = true;
             }
                 
+        }
+        else if (sprintByHolding)
+        {
+            if (isSneaking)
+                speed = crouchingSpeed;
+            else
+                speed = walkingSpeed;
+
+            isSprintEnabled = false;
         }
 
         moveDir.y = ySpeed;
@@ -218,7 +241,7 @@ public class ThirdPersonMovement : MonoBehaviour
             controller.Move(moveDir.normalized * speed * speedMultiplier * Time.deltaTime);
 
 
-        GetComponentInChildren<AnimationStateController>().UpdateMovement(horizontal, vertical, jump, sprint, sneakingButton);
+        GetComponentInChildren<AnimationStateController>().UpdateMovement(horizontal, vertical, jump, sprint, sneakingButton, sprintByHolding);
 
     }
 
@@ -270,8 +293,9 @@ public class ThirdPersonMovement : MonoBehaviour
         float vertical = Input.GetAxisRaw("Vertical");
 
         bool jump = Input.GetKeyDown(KeyCode.Space);
-        bool sprint = Input.GetKeyDown(KeyCode.LeftShift);
-        bool sneakingButton = Input.GetKeyDown(KeyCode.LeftControl);
+        bool sprint = Input.GetKey(KeyCode.LeftShift);      //only when holding
+        //bool sneakingButton = Input.GetKeyDown(KeyCode.LeftControl);
+        bool sneakingButton = Input.GetKeyDown(KeyCode.E);
 
         //apply sound
         if (!GetComponentInParent<Game>().GetIsTrainingOn())
@@ -284,7 +308,7 @@ public class ThirdPersonMovement : MonoBehaviour
         }
         //apply movement only when game is not paused
         if (!GetComponentInParent<Game>().GetIsPauseMenuOn() && !GetComponentInParent<GameOver>().GetGameOver())
-            ApplyMovement(horizontal, vertical, jump, sprint, sneakingButton, true, 1f);
+            ApplyMovement(horizontal, vertical, jump, sprint, sneakingButton, true, 1f, true);
 
         
 

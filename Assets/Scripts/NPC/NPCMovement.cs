@@ -74,7 +74,9 @@ public class NPCMovement : MonoBehaviour
             currentlyWaitingTime = (int)Math.Round(timeToWaitWhenPatrolling / 0.02);
         }
         else
+        {
             currentlyWaitingTime--;
+        }
     }
 
     void NPCPatrolling()
@@ -84,22 +86,28 @@ public class NPCMovement : MonoBehaviour
         agent.speed = speed;
 
         //update only when the NPC reaches a point
-        if (actualPosition == agent.destination && currentlyWaitingTime == 0)
+        if (actualPosition == agent.destination)
         {
-            if (pointNr != numberOfPoints - 1)
-                pointNr++;
-            else if (pointNr == numberOfPoints - 1)
-                pointNr = 0;
+            if (currentlyWaitingTime == (int)Math.Round(timeToWaitWhenPatrolling / 0.02))
+            {
+                if (pointNr != numberOfPoints - 1)
+                    pointNr++;
+                else if (pointNr == numberOfPoints - 1)
+                    pointNr = 0;
+            }
+
+            UpdateWaitingTime();
 
         }
-        else
+
+        //apply sound
+        if (!GetComponentInParent<Game>().GetIsTrainingOn())
         {
-            //apply sound
-            if(!GetComponentInParent<Game>().GetIsTrainingOn())
+            if (Vector3.Distance(actualPosition, agent.destination) < 1.5f)
+               SoundFXManager.instance.ApplyWalkingSound(0, 0, false, false, -1, GetComponentInParent<NPC_allScript>().GetComponentInChildren<WalkingAudioSource>().GetComponent<AudioSource>(), true);
+            else
                 SoundFXManager.instance.ApplyWalkingSound(1, 1, false, false, -1, GetComponentInParent<NPC_allScript>().GetComponentInChildren<WalkingAudioSource>().GetComponent<AudioSource>(), true);
         }
-
-        UpdateWaitingTime();
     }
 
     public bool IsPlayerBeingDetected()

@@ -18,14 +18,25 @@ public class DetectingPlayerInHidingSpot : MonoBehaviour
     {
         return playerIsHidden;
     }
-    private void OnTriggerEnter(Collider other)
+
+    private void OnTriggerStay(Collider other)
     {
         if (other.gameObject.layer == hidingSpot)
         {
             //Debug.Log(other.gameObject.layer);
             playerIsTouchingHidingSpot = true;
+
+            //visual indication to the player - increase the light of the hiding spot
+            if (GetComponent<ThirdPersonMovement>().GetIsSneaking())
+                other.gameObject.GetComponentInChildren<Light>().intensity = 1;
+            else
+                other.gameObject.GetComponentInChildren<Light>().intensity = 0.7f;
         }
-        
+        else
+        {
+            playerIsTouchingHidingSpot = false;
+        }
+
     }
 
     private void OnTriggerExit(Collider other)
@@ -33,6 +44,7 @@ public class DetectingPlayerInHidingSpot : MonoBehaviour
         if (other.gameObject.layer == hidingSpot)
         {
             playerIsTouchingHidingSpot = false;
+            other.gameObject.GetComponentInChildren<Light>().intensity = 0.7f;
         }
     }
 

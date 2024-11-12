@@ -912,7 +912,7 @@ public class MLPlayerAgent : Agent
             //Debug.Log("Discrete action: " + actions.ContinuousActions[2]);
 
             //simply apply movement from ThirdPersonMovement
-            GetComponent<ThirdPersonMovement>().ApplyMovement(moveX, moveZ, jump, sprint, sneak, false, 1f);
+            GetComponent<ThirdPersonMovement>().ApplyMovement(moveX, moveZ, jump, sprint, sneak, false, 1f, false);
 
             //getting closer to diamond
             if (isTrainingOn)
