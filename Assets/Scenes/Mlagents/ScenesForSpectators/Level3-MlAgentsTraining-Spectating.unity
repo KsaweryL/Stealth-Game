@@ -16787,11 +16787,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 504256011508315190, guid: f09c3a25c18b7d64d9f370e9c42e8ff6, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.000000017659858
+      value: 0.000000017659856
       objectReference: {fileID: 0}
     - target: {fileID: 504256011508315190, guid: f09c3a25c18b7d64d9f370e9c42e8ff6, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.0000000016409465
+      value: -0.0000000016409463
       objectReference: {fileID: 0}
     - target: {fileID: 535658633353670145, guid: f09c3a25c18b7d64d9f370e9c42e8ff6, type: 3}
       propertyPath: m_AnchorMax.y
@@ -16991,6 +16991,18 @@ PrefabInstance:
       objectReference: {fileID: 5022602860645237092, guid: 3dae48e2b7ec70540ade9579aada6e92, type: 3}
     - target: {fileID: 5450224857165815030, guid: f09c3a25c18b7d64d9f370e9c42e8ff6, type: 3}
       propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6203224614872572111, guid: f09c3a25c18b7d64d9f370e9c42e8ff6, type: 3}
+      propertyPath: m_YAxis.m_MaxSpeed
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6203224614872572111, guid: f09c3a25c18b7d64d9f370e9c42e8ff6, type: 3}
+      propertyPath: m_XAxis.m_InvertInput
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6203224614872572111, guid: f09c3a25c18b7d64d9f370e9c42e8ff6, type: 3}
+      propertyPath: m_YAxis.m_InvertInput
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6493381820529728017, guid: f09c3a25c18b7d64d9f370e9c42e8ff6, type: 3}

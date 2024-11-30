@@ -3554,6 +3554,18 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 17
       objectReference: {fileID: 0}
+    - target: {fileID: 1249449887895533582, guid: a674ed33bb1bb6048ac784e826fe3081, type: 3}
+      propertyPath: m_YAxis.m_MaxSpeed
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1249449887895533582, guid: a674ed33bb1bb6048ac784e826fe3081, type: 3}
+      propertyPath: m_XAxis.m_InvertInput
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1249449887895533582, guid: a674ed33bb1bb6048ac784e826fe3081, type: 3}
+      propertyPath: m_YAxis.m_InvertInput
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1273265173108824168, guid: a674ed33bb1bb6048ac784e826fe3081, type: 3}
       propertyPath: m_Layer
       value: 17

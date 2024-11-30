@@ -16751,11 +16751,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1579917130250519060, guid: 8cf162f87695a0f4a9c7685e7c6a0a8f, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.0000000021483566
+      value: 0.0000000021483566
       objectReference: {fileID: 0}
     - target: {fileID: 1579917130250519060, guid: 8cf162f87695a0f4a9c7685e7c6a0a8f, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 1.02446746e-10
+      value: -1.02446746e-10
       objectReference: {fileID: 0}
     - target: {fileID: 1716983368762902678, guid: 8cf162f87695a0f4a9c7685e7c6a0a8f, type: 3}
       propertyPath: m_LocalPosition.x
@@ -16795,6 +16795,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1716983368762902678, guid: 8cf162f87695a0f4a9c7685e7c6a0a8f, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1865548550904473661, guid: 8cf162f87695a0f4a9c7685e7c6a0a8f, type: 3}
+      propertyPath: m_YAxis.m_MaxSpeed
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1865548550904473661, guid: 8cf162f87695a0f4a9c7685e7c6a0a8f, type: 3}
+      propertyPath: m_XAxis.m_InvertInput
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1865548550904473661, guid: 8cf162f87695a0f4a9c7685e7c6a0a8f, type: 3}
+      propertyPath: m_YAxis.m_InvertInput
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2437660436878733903, guid: 8cf162f87695a0f4a9c7685e7c6a0a8f, type: 3}
@@ -16859,11 +16871,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6332769811908955500, guid: 8cf162f87695a0f4a9c7685e7c6a0a8f, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.0000000021483564
+      value: 0.0000000021483564
       objectReference: {fileID: 0}
     - target: {fileID: 6332769811908955500, guid: 8cf162f87695a0f4a9c7685e7c6a0a8f, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 1.02446746e-10
+      value: -1.02446746e-10
       objectReference: {fileID: 0}
     - target: {fileID: 6433457257920658228, guid: 8cf162f87695a0f4a9c7685e7c6a0a8f, type: 3}
       propertyPath: m_fontSize

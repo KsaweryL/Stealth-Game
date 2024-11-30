@@ -15007,7 +15007,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3472561382844931894, guid: 51d01ed2985ae3b47995e9d4796d294f, type: 3}
       propertyPath: m_YAxis.m_MaxSpeed
-      value: 1
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3472561382844931894, guid: 51d01ed2985ae3b47995e9d4796d294f, type: 3}
+      propertyPath: m_XAxis.m_InvertInput
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3472561382844931894, guid: 51d01ed2985ae3b47995e9d4796d294f, type: 3}
+      propertyPath: m_YAxis.m_InvertInput
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4523779714219583119, guid: 51d01ed2985ae3b47995e9d4796d294f, type: 3}
       propertyPath: m_IsActive
