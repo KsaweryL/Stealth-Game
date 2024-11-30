@@ -9,6 +9,7 @@ TagManager:
   - NPCTag
   - HidingSpotTag
   - NavMeshWaypoint
+  - NotFullBarrier
   layers:
   - Default
   - TransparentFX
@@ -27,9 +28,9 @@ TagManager:
   - water
   - tile
   - Camera
-  - 
-  - 
-  - 
+  - whatIsCamBarrier
+  - Icon
+  - minimapCantSee
   - 
   - 
   - 

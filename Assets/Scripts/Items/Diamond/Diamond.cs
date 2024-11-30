@@ -107,11 +107,21 @@ public class Diamond : MonoBehaviour
             //    //ResetPosition();
             gameObject.SetActive(false);
 
-            playerInventory.DiamondCollected();
 
             //play audio whenever diamond is collected
             if (!GetComponentInParent<Game>().GetIsTrainingOn())
                 SoundFXManager.instance.SinglePlayAudio(GetComponentInParent<Game>().GetPlayer().GetComponentInChildren<GettingDiamondAudioSource>().GetComponent<AudioSource>());
+
+            //update the score
+            if (GetComponentInParent<Game>().GetComponentInChildren<AchievedTimeUI>())
+            {
+                string textToPut = "Achieved Times: ";
+                if (GetComponentInParent<Game>().GetIsTrainingOn())
+                    textToPut = "Previously achieved times: ";
+                GetComponentInParent<Game>().GetComponentInChildren<AchievedTimeUI>().UpdateDiamondText(GetComponent<Diamond>(), textToPut);
+            }
+
+            playerInventory.DiamondCollected();
 
 
         }

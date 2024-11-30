@@ -9,6 +9,7 @@ using System.Linq;
 using UnityEngine.AI;
 using Unity.VisualScripting;
 using UnityEngine.UI;
+using static UnityEngine.UI.GridLayoutGroup;
 
 public class MLPlayerAgent : Agent
 {
@@ -64,6 +65,7 @@ public class MLPlayerAgent : Agent
     public int maxStepsBeforePenalty;
     List<float> allDistancesToDiamond;
     List<float> allDistancesToNPC;
+    List<float> allDistancesToHidingSpot;
 
     [Header("Velocity check")]
     public int maxStepsForVelocityMeasurement;
@@ -90,8 +92,10 @@ public class MLPlayerAgent : Agent
     public float smallVelocityReward;
     public float NPCseePlayerReward;
     public float playerIsHiddenReward;
-    public float playerIschasenAfterReward;
+    public float playerIsHiddenAndWithinNPCFOVReward;
+    public float playerIschasedAfterReward;
     public float distanceToClosestNPCReward;
+    public float distanceToClosestHidingSpotReward;
     public float nextNavMeshWaypointReached;
     public float waypointDistanceReward;
     public float waypointInreasingDistanceReward;
@@ -118,7 +122,11 @@ public class MLPlayerAgent : Agent
 
     [Header("Hiding spot")]
     public HidingSpotArea[] hidingSpotAreas;
+    public HidingSpot[] hidingSpots;
     public HidingSpotArea chosenHidingSpotArea;
+    public HidingSpot chosenHidingSpot;
+    public float minDistanceToHidingSpot;
+    
 
     [Header("Diamond")]
     public Diamond chosenDiamond;
@@ -126,7 +134,7 @@ public class MLPlayerAgent : Agent
     [Header("NavMesh")]
     public NavMeshAgent navMeshAgent;
     public int currentWaypointIndex = 0;
-    public Vector3[] pathCorners;
+    public List<Vector3> pathCorners;
     public float navMeshWaypointDistance;
     Vector3 nextWaypoint;
     List<float> allDistancesToWaypoint;
@@ -210,6 +218,11 @@ public class MLPlayerAgent : Agent
         if (maxStepsForVelocityMeasurement == -1)
             maxStepsForVelocityMeasurement = 5;
 
+        //restart the time values
+        if(isTrainingOn)
+            if (GetComponent<Metrics>())
+                GetComponent<Metrics>().UpdateInitialValues();
+
 
         //needs reset after changing scenes
         isPauseOn = false;
@@ -241,12 +254,32 @@ public class MLPlayerAgent : Agent
             navMeshAgent.CalculatePath(currentlyChosenDiamond.transform.position, path);
 
             //Debug.Log(currentlyChosenDiamond.gameObject.name + " and " + currentlyChosenDiamond.transform.localPosition);
-            pathCorners = path.corners; 
-            Debug.Log("path corners length " + pathCorners.Length);
+            //pathCorners = path.corners;
 
-            //pathCorners = new Vector3[] { currentlyChosenDiamond.transform.position };
-            currentWaypointIndex = 0;
+            int divideNumberOfCorners = 1;
+            pathCorners = new List<Vector3>();
+
             if (path.corners.Length > 1)
+            {
+                for (int corner = 1; corner < path.corners.Length; corner += divideNumberOfCorners)
+                {
+                    pathCorners.Add(path.corners[corner]);
+                }
+
+                //add the last one if it's not added
+                if (path.corners[path.corners.Length-1] != pathCorners[pathCorners.Count-1])
+                    pathCorners.Add(path.corners[path.corners.Length - 1]);
+            }
+            else
+                pathCorners.Add(path.corners[0]);
+
+            //for initial training
+            //pathCorners = new List<Vector3>() { currentlyChosenDiamond.transform.position };
+
+            //Debug.Log("path corners length " + pathCorners.Length);
+
+            currentWaypointIndex = 0;
+            if (pathCorners.Count > 1)
                 currentWaypointIndex = 1;
             else { currentWaypointIndex = 0; }
 
@@ -312,10 +345,10 @@ public class MLPlayerAgent : Agent
                 randomIndexSpawn = Random.Range(0, playerSpawningPoints.Length);
 
                 //initially I had "randomIndexSpawn'
-                //randomIndexSpawn = 1;
-                //randomIndexSpawn = Random.Range(0, 3);
-                //if (randomIndexSpawn == 1) randomIndexSpawn = 4;
-                //if (randomIndexSpawn == 2) randomIndexSpawn = 3;
+                //randomIndexSpawn = 5;
+                randomIndexSpawn = Random.Range(0, 2);
+                if (randomIndexSpawn == 0) randomIndexSpawn = 5;
+                if (randomIndexSpawn == 1) randomIndexSpawn = 2;
                 //else if (randomIndexSpawn == 2) randomIndexSpawn = 5;
 
 
@@ -353,6 +386,7 @@ public class MLPlayerAgent : Agent
 
                 allDistancesToDiamond = new List<float>();
                 allDistancesToNPC = new List<float>();
+                allDistancesToHidingSpot = new List<float>();
 
             }
 
@@ -366,6 +400,7 @@ public class MLPlayerAgent : Agent
 
         //update navmesh
         navMeshAgent = GetComponent<NavMeshAgent>();
+        GetComponent<NavMeshAgent>().enabled = false;
         GetComponent<NavMeshAgent>().enabled = true;
 
         if (allDiamonds.Length == 0)
@@ -396,7 +431,8 @@ public class MLPlayerAgent : Agent
             barrierPointReached = false;
 
         //for line renderer
-        SetInitialValuesLineRenderer();
+        if(GetComponent<LineRenderer>())
+            SetInitialValuesLineRenderer();
 
         
 
@@ -471,6 +507,7 @@ public class MLPlayerAgent : Agent
         allCurrentDiamonds = GetComponentInParent<Game>().GetDiamonds();
         NPCmovement = GetComponentInParent<Game>().GetNPCmovements();
         hidingSpotAreas = GetComponentInParent<Game>().GetHidingSpotAreas();
+        hidingSpots  =GetComponentInParent<Game>().GetHidingSpots();
 
         if (allCurrentDiamonds.Length > 0)
         {
@@ -486,7 +523,7 @@ public class MLPlayerAgent : Agent
             //sensor.AddObservation(difference.z);
 
             //update navmesh
-            if (chosenDiamond != null && pathCorners.Length > 1)
+            if (chosenDiamond != null && pathCorners.Count > 1)
                 nextWaypoint = pathCorners[currentWaypointIndex];
             else
                 nextWaypoint = chosenDiamond.transform.position;
@@ -545,20 +582,63 @@ public class MLPlayerAgent : Agent
             //else if (hidingSpotAreas.Length == 0)
             //    Debug.Log("Therer are np hiding spot areas detected");
 
-            if (hidingSpotAreas.Length > 0)
+            //if (hidingSpotAreas.Length > 0)
+            //{
+            //    //add 3 nearest hiding spots areas
+            //    Dictionary<HidingSpotArea, bool> excludedHidingSpotAreas = new Dictionary<HidingSpotArea, bool>();
+            //    for (int i = 0; i < 3; i++)
+            //    {
+            //        chosenHidingSpotArea = hidingSpotAreas[0];
+
+            //        foreach (HidingSpotArea hidingSpotArea in hidingSpotAreas)
+            //        {
+            //            if(!excludedHidingSpotAreas.ContainsKey(hidingSpotArea))
+            //            if (Vector3.Distance(hidingSpotArea.transform.position, transform.position) < Vector3.Distance(chosenHidingSpotArea.transform.position, transform.position))
+            //                chosenHidingSpotArea = hidingSpotArea;
+            //        }
+
+            //        Vector3 difference_hidingSpotArea = (GetGamesTransformPosition(GetGamesTransformPosition(chosenHidingSpotArea.transform.position)) - GetGamesTransformPosition(transform.position)).normalized;
+
+            //        sensor.AddObservation(difference_hidingSpotArea.x);
+            //        sensor.AddObservation(difference_hidingSpotArea.z);
+
+            //        Debug.Log("distance to bush: " + difference_hidingSpotArea);
+
+            //        excludedHidingSpotAreas[chosenHidingSpotArea] = true;
+            //    }
+
+            //    //add information whether player is hidden
+            //    bool playerIsHidden = GetComponentInParent<Game>().GetPlayer().GetComponent<DetectingPlayerInHidingSpot>().IsPlayerHidden();
+            //    sensor.AddObservation(playerIsHidden);
+            //}
+
+            if (hidingSpots.Length > 0)
             {
-                chosenHidingSpotArea = hidingSpotAreas[0];
-
-                foreach (HidingSpotArea hidingSpotArea in hidingSpotAreas)
+                //add 5 nearest hiding spots
+                Dictionary<HidingSpot, bool> excludedHidingSpots = new Dictionary<HidingSpot, bool>();
+                for (int i = 0; i < 5; i++)
                 {
-                    if (Vector3.Distance(hidingSpotArea.transform.position, transform.position) < Vector3.Distance(chosenHidingSpotArea.transform.position, transform.position))
-                        chosenHidingSpotArea = hidingSpotArea;
+                    //if there are fever hiding spots - quit
+                    if (i >= hidingSpots.Length)
+                        break;
+
+                    HidingSpot chosenHidingSpotVar = hidingSpots[0];
+
+                    foreach (HidingSpot hidingSpot in hidingSpots)
+                    {
+                        if (!excludedHidingSpots.ContainsKey(hidingSpot))
+                            if (Vector3.Distance(hidingSpot.transform.position, transform.position) < Vector3.Distance(chosenHidingSpotVar.transform.position, transform.position))
+                                chosenHidingSpotVar = hidingSpot;
+                    }
+
+                    Vector3 difference_hidingSpot = (GetGamesTransformPosition(GetGamesTransformPosition(chosenHidingSpotVar.transform.position)) - GetGamesTransformPosition(transform.position)).normalized;
+
+                    sensor.AddObservation(difference_hidingSpot.x);
+                    sensor.AddObservation(difference_hidingSpot.z);
+
+
+                    excludedHidingSpots[chosenHidingSpotVar] = true;
                 }
-
-                Vector3 difference_hidingSpotArea = (GetGamesTransformPosition(GetGamesTransformPosition(chosenHidingSpotArea.transform.position)) - GetGamesTransformPosition(transform.position)).normalized;
-
-                sensor.AddObservation(difference_hidingSpotArea.x);
-                sensor.AddObservation(difference_hidingSpotArea.z);
 
                 //add information whether player is hidden
                 bool playerIsHidden = GetComponentInParent<Game>().GetPlayer().GetComponent<DetectingPlayerInHidingSpot>().IsPlayerHidden();
@@ -701,6 +781,43 @@ public class MLPlayerAgent : Agent
         }
     }
 
+    void DistanceToClosestHidingSpotUpdate()
+    {
+        hidingSpots = GetComponentInParent<Game>().GetHidingSpots();
+
+        if (hidingSpots.Length > 0)
+        {
+            //choose the closest hiding spot
+            HidingSpot currentlyChosenHidingSpot = chosenHidingSpot;
+            chosenHidingSpot = hidingSpots[0];
+
+            foreach (HidingSpot hidingSpot in hidingSpots)
+            {
+                //exclude hidingspots distance to which is smaller than 2
+                if(Vector3.Distance(hidingSpot.transform.position, transform.position) >= 2)
+                    if (Vector3.Distance(hidingSpot.transform.position, transform.position) < Vector3.Distance(chosenHidingSpot.transform.position, transform.position))
+                        chosenHidingSpot = hidingSpot;
+            }
+
+            if (chosenHidingSpot != currentlyChosenHidingSpot)
+                allDistancesToHidingSpot = new List<float>();
+
+
+            //reward for making the distance to HidingSpot smaller
+            float newDistanceHidingSpot = Vector3.Distance(chosenHidingSpot.transform.position, transform.position);
+            if (allDistancesToHidingSpot.Count == 0)
+                allDistancesToHidingSpot.Add(newDistanceHidingSpot);
+
+            if (newDistanceHidingSpot < allDistancesToHidingSpot.Min())
+            {
+                allDistancesToHidingSpot.Add(newDistanceHidingSpot);
+
+                SetReward(+distanceToClosestHidingSpotReward);
+                minDistanceToHidingSpot = newDistanceHidingSpot;
+            }
+        }
+    }
+
     void MaxStepsReachedRewardUpdate()
     {
         //if the reward wasn't collected during the episode, reset it
@@ -735,10 +852,18 @@ public class MLPlayerAgent : Agent
         }
     }
 
+    void CheckIfPlayerIsHiddenAndWithinNPCSFov()
+    {
+        if (GetComponentInParent<Game>().IsPlayerWithinNPCFOV() && GetComponentInParent<Game>().GetPlayer().GetComponent<DetectingPlayerInHidingSpot>().IsPlayerHidden())
+        {
+            SetReward(+playerIsHiddenAndWithinNPCFOVReward);
+        }
+    }
+
     void NavMeshUpdateWaypointIndex()
     {
 
-        if (currentWaypointIndex < pathCorners.Length-1)
+        if (currentWaypointIndex < pathCorners.Count-1)
         {
             
             // Check if the agent is close enough to the waypoint
@@ -765,12 +890,13 @@ public class MLPlayerAgent : Agent
         }
         else if (newDistanceToWaypoint > allDistancesToWaypoint.Min())
             SetReward(+waypointInreasingDistanceReward);
+
     }
     public override void OnActionReceived(ActionBuffers actions)
     {
 
         //in case sth wasn't loaded
-        if (pathCorners.Length == 0)
+        if (pathCorners.Count == 0)
         {
             Start();
         }
@@ -786,14 +912,16 @@ public class MLPlayerAgent : Agent
             //Debug.Log("Discrete action: " + actions.ContinuousActions[2]);
 
             //simply apply movement from ThirdPersonMovement
-            GetComponent<ThirdPersonMovement>().ApplyMovement(moveX, moveZ, jump, sprint, sneak, false, 1f);
+            GetComponent<ThirdPersonMovement>().ApplyMovement(moveX, moveZ, jump, sprint, sneak, false, 1f, false);
 
             //getting closer to diamond
             if (isTrainingOn)
             {
                 DistanceToDiamondRewardUpdate();
                 DistanceToClosestNPCRewardUpdate();
+                DistanceToClosestHidingSpotUpdate();
                 CheckIfPlayerHiddenUpdate();
+                CheckIfPlayerIsHiddenAndWithinNPCSFov();
                 NavMeshUpdateWaypointIndex();
                 
             }
@@ -871,10 +999,13 @@ public class MLPlayerAgent : Agent
             {
                 imageRender.color = winColor;
                 //update UI text
-                if(GetComponentInParent<Game>().GetComponentInChildren<AchievedTimeUI>())
-                    GetComponentInParent<Game>().GetComponentInChildren<AchievedTimeUI>().UpdateAchievedTimeText();
+                //if(GetComponentInParent<Game>().GetComponentInChildren<AchievedTimeUI>())
+                //    GetComponentInParent<Game>().GetComponentInChildren<AchievedTimeUI>().UpdateAchievedTimeText();
             }
         }
+
+        //update the round in metric script
+        GetComponent<Metrics>().UpdateTheround();
 
         EndEpisode();
         
@@ -898,8 +1029,10 @@ public class MLPlayerAgent : Agent
                 imageRender.color = loseColor;
         }
 
+        //update the round in metric script
+        GetComponent<Metrics>().UpdateTheround();
+
         EndEpisode() ;
-        
     }
 
     public void PlayerDetectionCheck(bool canNPCSeePlayer)
@@ -912,7 +1045,11 @@ public class MLPlayerAgent : Agent
 
     public void PlayerIsChasenAfter()
     {
-        SetReward(+playerIschasenAfterReward);
+        SetReward(+playerIschasedAfterReward);
+
+        //update the round in metric script
+        GetComponent<Metrics>().UpdateTheround();
+
         EndEpisode();
     }
 
@@ -1106,8 +1243,8 @@ public class MLPlayerAgent : Agent
             PlayerHasLost();
         }
 
-        if(!stopLineRendering)
-            UpdateLineRendererPath();
+        if(!stopLineRendering && GetComponent<LineRenderer>())
+                UpdateLineRendererPath();
 
     }
 }

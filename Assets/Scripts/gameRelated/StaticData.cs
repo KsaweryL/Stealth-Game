@@ -12,4 +12,7 @@ public class StaticData : MonoBehaviour
     public static float masterVolumeSliderValue = 0.4f;
     public static float musicVolumeSliderValue = 0.4f;
 
+    //for camera sensitivity
+    public static float camSensitivityXAxis = 120.0f;
+
 }

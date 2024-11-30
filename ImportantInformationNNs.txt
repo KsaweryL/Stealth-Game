@@ -1,0 +1,82 @@
+mlagents-learn config/collectAllDiamonds-4V.yaml --initialize-from=playerMlAgentFifthTest5.32 --run-id=playerMlAgentFifthTest5.37 -> 83 not bad, 86 busted
+
+94 - new start from 83 with more observations
+96 - with hiding spots
+
+97 - good without hiding spots
+
+105 - a new one from 97
+
+2.1 - fresh start
+
+2.7 - ok
+2.8 - ok
+2.9 - trying with navmesh
+
+4.1 - with navmesh, from 3.1
+4.2 - with navmesh, new
+
+4.23 - with 4-3V
+
+5.19 - works well with 4V and 6 rays
+5.20 also
+5.21 - with actual barriers
+
+5.22 - needs more testing...
+
+5.25.3 - really good with navmesh
+5.28 - tried going without navmesh, went terrible
+
+5.29 - 5.25.3 upgrade with 3 diamonds and more spawning points
+
+5.32 - more penalty for meeting enemy
+
+5.34 - ok, but works without NotFullBarrier and Hiding spot tag
+
+(5.34 - 5.36 - some of them got brain damage, don't use them!!)
+
+5.37 - started from 5.32 - fewer checkpoints, changed rewards - but now agent doesn't want to move at all
+
+5.38 - unchanged rewards from 5.32 - hard to say, seems slightly better
+5.41 - extesnion of 5.38 with hiding spots and guards - pretty bad
+
+5.42 - 5.32 with bushes and npc - also bad
+
+5.45 - 5.32 with rewards for close distances to npcs + greater penalty for being detected - bad
+5.46 - 5.45 but bigger learning rate - bad
+
+5.47 - pretty ok
+5.47.2 - smaller learnign rate, started learning quite a bit. 
+5.47.3 - also smaller learning rate, later added more difficult npcs - had some troubles 
+5.47.4 - even smaller learning rate e-05, potential for growth, not perfect, but comes up with interesting tactics
+
+5.47.6 - continuation of 5.47.4 but with various NPCS, can't seem to upgrade
+
+5.47.7 - added bushes to current npcs, didn't help
+
+5.47.8 - bushes to npc with bigger learning rate e-05, something got broken after resume around 400k (??)
+
+5.47.9 - from 5.47.5 - bushesh to npc, with ven bigge rlearnign rate e-04, but here it doesn't seem to work
+
+5.47.10 - from 5.47.7 - bushesh to npc, with ven bigger learnign rate e-04, but here it doesn't seem to work either
+
+5.48 - from 5.47.5 - learning rate e-05, bushes to npc, Lvl2NPCS - pretty easy ones. It reached some point (which is better than 5.47.8), but idk
+if it's because of npcs or hiding spots that are bushes
+
+5.48.2 - 5.48 with bigger learning rate (e-04), bushes to npcs, LVL2NPCS (easy ones) - also didn't progress
+
+5.49 - from 5.32 with initiial learning rate (e-04),  bushes to npcs, LVL2NPCS (easy ones), rewards for
+simply being in hiding spots - not much progress
+
+5.50 - from 5.32 ..
+
+
+
+
+6.2 - bigger rewards, but slow progress
+6.3 - smaller rewards, seems to work pretty well
+
+6.5 - from 6.3 to all random spawn - really bad
+6.6 - 2 random spawns, started with initialize from
+
+6.7 - copied 6.3 - pretty bad - 2 spawning points, relatively small rewards

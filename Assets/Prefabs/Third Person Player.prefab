@@ -1,5 +1,89 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &226169820268576018
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3322155811891334887}
+  - component: {fileID: 2294244443164907759}
+  m_Layer: 18
+  m_Name: PlayerIcon
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3322155811891334887
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 226169820268576018}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.5, y: -0.5, z: -0.5, w: 0.5}
+  m_LocalPosition: {x: 0, y: 17.14, z: 0}
+  m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1626139289685480428}
+  m_LocalEulerAnglesHint: {x: -90, y: 0, z: -90}
+--- !u!212 &2294244443164907759
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 226169820268576018}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_Sprite: {fileID: 21300000, guid: 909f9cf039b8efe4f899a85d67dc1387, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 1, y: 1}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0
+  m_SpriteSortPoint: 0
 --- !u!1 &495093435082071988
 GameObject:
   m_ObjectHideFlags: 0
@@ -3007,6 +3091,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4473620131558799886}
+  - {fileID: 3322155811891334887}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: -175.12, z: 0}
 --- !u!143 &864003654408045218
@@ -3128,7 +3213,7 @@ Light:
   m_Type: 2
   m_Shape: 0
   m_Color: {r: 0.9747301, g: 0.9811321, b: 0.8114394, a: 1}
-  m_Intensity: 1
+  m_Intensity: 0.5
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -3207,6 +3292,7 @@ MonoBehaviour:
   controller: {fileID: 0}
   animationStateController: {fileID: 0}
   minDistanceToDiamond: 0
+  isPauseOn: 0
   startingPlayerPosition: {x: 0, y: 0, z: 0}
   moveDir: {x: 0, y: 0, z: 0}
   ySpeed: 0
@@ -3241,8 +3327,10 @@ MonoBehaviour:
   smallVelocityReward: 0
   NPCseePlayerReward: 0
   playerIsHiddenReward: 0
-  playerIschasenAfterReward: 0
+  playerIsHiddenAndWithinNPCFOVReward: 0
+  playerIschasedAfterReward: 0
   distanceToClosestNPCReward: 0
+  distanceToClosestHidingSpotReward: 0
   nextNavMeshWaypointReached: 0
   waypointDistanceReward: 0
   waypointInreasingDistanceReward: 0
@@ -3251,10 +3339,19 @@ MonoBehaviour:
   loseMaterial: {fileID: 0}
   neutralMaterial: {fileID: 0}
   floorMeshRender: {fileID: 0}
+  imageRender: {fileID: 0}
+  winColor: {r: 0, g: 1, b: 0, a: 1}
+  neutralColor: {r: 1, g: 1, b: 1, a: 1}
+  loseColor: {r: 1, g: 0, b: 0, a: 1}
+  spectating: 0
+  overfit: 0
   chosenNPC: {fileID: 0}
   minDistanceToNPC: 0
   hidingSpotAreas: []
+  hidingSpots: []
   chosenHidingSpotArea: {fileID: 0}
+  chosenHidingSpot: {fileID: 0}
+  minDistanceToHidingSpot: 0
   chosenDiamond: {fileID: 0}
   navMeshAgent: {fileID: 0}
   currentWaypointIndex: 0
@@ -3262,6 +3359,9 @@ MonoBehaviour:
   navMeshWaypointDistance: 0
   minDistanceToWaypoint: 0
   objectToSpawn: {fileID: 0}
+  enableLineRendering: 0
+  currentLine: 0
+  numberOfLineRendererPoints: 2
 --- !u!114 &5521520000271125297
 MonoBehaviour:
   m_ObjectHideFlags: 0

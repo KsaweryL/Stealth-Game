@@ -19,7 +19,7 @@ public class AnimationStateController : MonoBehaviour
     }
 
 
-    public void UpdateMovement(float horizontal, float vertical, bool jump, bool sprint, bool sneakingButton)
+    public void UpdateMovement(float horizontal, float vertical, bool jump, bool sprint, bool sneakingButton, bool sprintByHolding)
     {
         //Debug.Log("Animation");
 
@@ -61,11 +61,18 @@ public class AnimationStateController : MonoBehaviour
         //walking/crouching to running
         if (sprint)
         {
-
-            if (isRunning)
+            if (!sprintByHolding)
             {
-                animator.SetBool("isRunning", false);
-                isRunning = false;
+                if (isRunning)
+                {
+                    animator.SetBool("isRunning", false);
+                    isRunning = false;
+                }
+                else
+                {
+                    animator.SetBool("isRunning", true);
+                    isRunning = true;
+                }
             }
             else
             {
@@ -73,6 +80,11 @@ public class AnimationStateController : MonoBehaviour
                 isRunning = true;
             }
 
+        }
+        else if (sprintByHolding)
+        {
+            animator.SetBool("isRunning", false);
+            isRunning = false;
         }
 
         //jumping
