@@ -357,11 +357,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2038079327749456050, guid: e2aa03974195c8f429eb87426ad04f18, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.0000000021483564
+      value: -0.0000000021483564
       objectReference: {fileID: 0}
     - target: {fileID: 2038079327749456050, guid: e2aa03974195c8f429eb87426ad04f18, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -1.02446746e-10
+      value: 1.02446746e-10
       objectReference: {fileID: 0}
     - target: {fileID: 2370947097535780314, guid: e2aa03974195c8f429eb87426ad04f18, type: 3}
       propertyPath: m_Name
@@ -761,11 +761,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4270201649471784570, guid: e2aa03974195c8f429eb87426ad04f18, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.0000000021483566
+      value: -0.0000000021483566
       objectReference: {fileID: 0}
     - target: {fileID: 4270201649471784570, guid: e2aa03974195c8f429eb87426ad04f18, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -1.02446746e-10
+      value: 1.02446746e-10
       objectReference: {fileID: 0}
     - target: {fileID: 4286194252380959304, guid: e2aa03974195c8f429eb87426ad04f18, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1418,6 +1418,10 @@ PrefabInstance:
     - target: {fileID: 8945948889638734025, guid: e2aa03974195c8f429eb87426ad04f18, type: 3}
       propertyPath: m_XAxis.m_MaxSpeed
       value: 150
+      objectReference: {fileID: 0}
+    - target: {fileID: 8945948889638734025, guid: e2aa03974195c8f429eb87426ad04f18, type: 3}
+      propertyPath: m_XAxis.m_MaxValue
+      value: 180
       objectReference: {fileID: 0}
     - target: {fileID: 8945948889638734025, guid: e2aa03974195c8f429eb87426ad04f18, type: 3}
       propertyPath: m_YAxis.m_MaxSpeed
