@@ -14158,11 +14158,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2952044897821628742, guid: a16498c7e3315194c9727e90b3a83e36, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.0000000021483566
+      value: 0.0000000021483566
       objectReference: {fileID: 0}
     - target: {fileID: 2952044897821628742, guid: a16498c7e3315194c9727e90b3a83e36, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 1.02446746e-10
+      value: -1.02446746e-10
       objectReference: {fileID: 0}
     - target: {fileID: 2956159522579990867, guid: a16498c7e3315194c9727e90b3a83e36, type: 3}
       propertyPath: m_LocalPosition.x
@@ -14290,11 +14290,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5930780475280581699, guid: a16498c7e3315194c9727e90b3a83e36, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.00000001765986
+      value: -0.000000017659854
       objectReference: {fileID: 0}
     - target: {fileID: 5930780475280581699, guid: a16498c7e3315194c9727e90b3a83e36, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.0000000016409466
+      value: 0.0000000016409462
       objectReference: {fileID: 0}
     - target: {fileID: 6028450890529440263, guid: a16498c7e3315194c9727e90b3a83e36, type: 3}
       propertyPath: m_AnchorMax.y
@@ -14326,11 +14326,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7715949899248491636, guid: a16498c7e3315194c9727e90b3a83e36, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.0000000021483564
+      value: 0.0000000021483564
       objectReference: {fileID: 0}
     - target: {fileID: 7715949899248491636, guid: a16498c7e3315194c9727e90b3a83e36, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 1.02446746e-10
+      value: -1.02446746e-10
       objectReference: {fileID: 0}
     - target: {fileID: 8215734188107751112, guid: a16498c7e3315194c9727e90b3a83e36, type: 3}
       propertyPath: m_LocalPosition.x
@@ -14350,7 +14350,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8519498190869481555, guid: a16498c7e3315194c9727e90b3a83e36, type: 3}
       propertyPath: m_YAxis.m_MaxSpeed
-      value: 0.5
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 8519498190869481555, guid: a16498c7e3315194c9727e90b3a83e36, type: 3}
       propertyPath: m_XAxis.m_InvertInput
