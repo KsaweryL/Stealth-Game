@@ -56,7 +56,6 @@ public class MLPlayerAgent : Agent
     public bool checkInitialTile;
     public float distanceToNextTile;
     public bool properTileWasHit;
-    public List<Tile> djikstraPath;
     public int currentPathTile;
 
     [Header("Steps")]
@@ -87,7 +86,6 @@ public class MLPlayerAgent : Agent
     public float eachStepTakenReward;
     public float timePenaltyMultiplierReward;
     public float newTileFoundReward;
-    public float djikstraPathFindingReward;
     public float gettingDamageReward;
     public float smallVelocityReward;
     public float NPCseePlayerReward;
@@ -171,7 +169,6 @@ public class MLPlayerAgent : Agent
         if (reachingMaxStepReward == -1) reachingMaxStepReward = -850f;
         if (timePenaltyMultiplierReward == -1) timePenaltyMultiplierReward = -1.5f;
         if (newTileFoundReward == -1) newTileFoundReward = 1f;
-        if (djikstraPathFindingReward == -1) djikstraPathFindingReward = 40f;
         if (reachingMaxStepBeforePenaltyReward == 1) reachingMaxStepBeforePenaltyReward = -10f;
         if (NPCseePlayerReward == 1) NPCseePlayerReward = -0.01f;
     }
@@ -370,20 +367,6 @@ public class MLPlayerAgent : Agent
                             tiles[tile].GetComponentInChildren<MeshRenderer>().material = gridMaterial;
                     }
 
-                //for the djikstra pathfinding
-                //we need this position to fix issues related to the update of the next tile to go to
-                //apparently, collision doesn't work properly when the episode starts
-                if (GetComponentInParent<Game>().GetEnableDjikstraPathFinding())
-                {
-
-                    initialNextTileToGoTo = GetComponentInParent<Game>().GetNextTileToGoTo();
-                    startingPlayerPosition = transform.position;
-                    currentPathTile = 0;
-                    checkInitialTile = true;
-
-                    UpdateNextTileToGoTo(true);
-                }
-
                 allDistancesToDiamond = new List<float>();
                 allDistancesToNPC = new List<float>();
                 allDistancesToHidingSpot = new List<float>();
@@ -438,63 +421,6 @@ public class MLPlayerAgent : Agent
 
     }
 
-    void UpdateNextTileToGoTo(bool additionalCondition)
-    {
-        //update the color
-        if(djikstraPath.Count > 0)
-        {
-            foreach(Tile tile in djikstraPath)
-                if (tile.GetComponentInChildren<MeshRenderer>())
-                    tile.GetComponentInChildren<MeshRenderer>().material = game.pathMaterial;
-        }
-
-        List<Tile> djikstraPathVar = GetComponentInParent<Game>().CreateDjikstraPath();
-
-        if (djikstraPathVar.Count > 0)
-        {
-
-            if (initialNextTileToGoTo != null)
-            {
-                //if the distance bewteen the initial position of the player and current next tile is greater than 5, immediately change
-                //the next tile
-                if (checkInitialTile && Vector3.Distance(startingPlayerPosition, initialNextTileToGoTo.transform.position) > 5)
-                {
-                    djikstraPath = new List<Tile>();
-                    djikstraPath = djikstraPathVar;
-
-                    if (djikstraPath.Count > 0)
-                        if (Vector3.Distance(transform.position, djikstraPath[0].transform.position) < 3)
-                        {
-                            checkInitialTile = false;
-                            currentPathTile = 0;
-                            nextTileToGoTo = djikstraPath[currentPathTile];
-                        }
-
-                    return;
-                }
-            }
-            else
-            {
-                djikstraPath = new List<Tile>();
-                djikstraPath = djikstraPathVar;
-                if (djikstraPath.Count > 0)
-                    initialNextTileToGoTo = djikstraPath[0];
-            }
-
-
-        }
-
-        if (additionalCondition)
-        {
-            djikstraPath = new List<Tile>();
-            djikstraPath = djikstraPathVar;
-        }
-
-        if(djikstraPath.Count > 0)
-            nextTileToGoTo = djikstraPath[currentPathTile];
-
-
-    }
     public Vector3 GetGamesTransformPosition(Vector3 position)
     {
         game = GetComponentInParent<Game>();
@@ -645,30 +571,7 @@ public class MLPlayerAgent : Agent
                 sensor.AddObservation(playerIsHidden);
             }
 
-            //add the tiles from Djikstra path finding
-            if (GetComponentInParent<Game>().GetEnableDjikstraPathFinding())
-            {
-                //we need to make sure that all Tiles has executed OnTriggeEnter before we proceed
-                //or just create a new Djikstra Method that will start with current position, update all Tiles and then proceed:
-                // - find the tile where the player is
-                //- find the tiles where diamonds are
-                //- get the path
-                //- get the next tile in the path
-
-                UpdateNextTileToGoTo(false);
-
-                float distanceToCurrentTile = Vector3.Distance(nextTileToGoTo.transform.position, transform.position);
-                sensor.AddObservation(GetGamesTransformPosition(nextTileToGoTo.transform.position));
-                sensor.AddObservation(distanceToCurrentTile);
-                distanceToNextTile = distanceToCurrentTile;     //for debugging
-
-                //else
-                //{
-                //    float distance = Vector3.Distance(allDiamonds[0].transform.position, transform.position);
-                //    sensor.AddObservation(GetGamesTransformPosition(allDiamonds[0].transform.position));
-                //    sensor.AddObservation(distance);
-                //}
-            }
+            
         }
 
         
@@ -1127,23 +1030,6 @@ public class MLPlayerAgent : Agent
                     SetReward(+newTileFoundReward);
 
                     //Debug.Log("Tile reward " + tile);
-                }
-            }
-
-            //for Enabled Djikstra path finding
-            //when next proper Tile was hit
-            if (nextTileToGoTo != null)
-            {
-                if (GetComponentInParent<Game>().GetEnableDjikstraPathFinding() && other.gameObject.transform.position == nextTileToGoTo.transform.position)
-                {
-                    Debug.Log("Proper Tile hit");
-                    SetReward(+djikstraPathFindingReward);
-                    properTileWasHit = true;
-
-                    //if the tile that was hit isn't last, increase the number
-                    if (djikstraPath[currentPathTile] != djikstraPath.Last())
-                        currentPathTile++;
-
                 }
             }
             
