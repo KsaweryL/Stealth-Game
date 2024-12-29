@@ -5320,7 +5320,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: "Your main goal is to collect all of the diamonds.\r\n\r\nYou can move
     the character around via wasd keys, jump by pressing space, crouch by pressing
-    ctrl and sprint by holding left shift.\r\nYou can also move faster when sneaking,
+    E key and sprint by holding left shift.\r\nYou can also move faster when sneaking,
     by holding left shift when in crouch position.\r\n\r\nWatch out for guards! If
     they see you for too long, you'll be detected and chased. Guards will try to
     catch and kill you.\r\n\r\nIn order to avoid detection, try crouching, avoiding
