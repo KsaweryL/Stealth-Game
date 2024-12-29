@@ -143,6 +143,7 @@ public class ThirdPersonMovement : MonoBehaviour
 
         //jumping
         //jump only when one is not sneaking
+        //troDO - delete is grounded later for non mlagent
         bool shouldGroundedBeIncluded = false;
         if(GetComponentInParent<Game>().GetIsTrainingOn())
             shouldGroundedBeIncluded = true;

@@ -530,12 +530,18 @@ public class MLPlayerAgent : Agent
 
             Vector3 differenceToNextWaypoint = (GetGamesTransformPosition(nextWaypoint) - GetGamesTransformPosition(transform.position)).normalized;
 
+            //debug
+            //Debug.Log("Waypoint location " + GetGamesTransformPosition(nextWaypoint));
+
             objectToSpawn.transform.position = new Vector3(nextWaypoint.x, 1f, nextWaypoint.z);
             navMeshWaypointDistance = Vector3.Distance(transform.position, nextWaypoint);
 
 
             sensor.AddObservation(differenceToNextWaypoint.x);
             sensor.AddObservation(differenceToNextWaypoint.z);
+
+            //sensor.AddObservation(GetGamesTransformPosition(transform.position));
+            //sensor.AddObservation(GetGamesTransformPosition(nextWaypoint));
 
 
             //adding position of NPCS
@@ -576,6 +582,36 @@ public class MLPlayerAgent : Agent
             //else if (hidingSpotAreas.Length == 0)
             //    Debug.Log("Therer are np hiding spot areas detected");
 
+            //if (hidingSpotAreas.Length > 0)
+            //{
+            //    //add 3 nearest hiding spots areas
+            //    Dictionary<HidingSpotArea, bool> excludedHidingSpotAreas = new Dictionary<HidingSpotArea, bool>();
+            //    for (int i = 0; i < 3; i++)
+            //    {
+            //        chosenHidingSpotArea = hidingSpotAreas[0];
+
+            //        foreach (HidingSpotArea hidingSpotArea in hidingSpotAreas)
+            //        {
+            //            if(!excludedHidingSpotAreas.ContainsKey(hidingSpotArea))
+            //            if (Vector3.Distance(hidingSpotArea.transform.position, transform.position) < Vector3.Distance(chosenHidingSpotArea.transform.position, transform.position))
+            //                chosenHidingSpotArea = hidingSpotArea;
+            //        }
+
+            //        Vector3 difference_hidingSpotArea = (GetGamesTransformPosition(GetGamesTransformPosition(chosenHidingSpotArea.transform.position)) - GetGamesTransformPosition(transform.position)).normalized;
+
+            //        sensor.AddObservation(difference_hidingSpotArea.x);
+            //        sensor.AddObservation(difference_hidingSpotArea.z);
+
+            //        Debug.Log("distance to bush: " + difference_hidingSpotArea);
+
+            //        excludedHidingSpotAreas[chosenHidingSpotArea] = true;
+            //    }
+
+            //    //add information whether player is hidden
+            //    bool playerIsHidden = GetComponentInParent<Game>().GetPlayer().GetComponent<DetectingPlayerInHidingSpot>().IsPlayerHidden();
+            //    sensor.AddObservation(playerIsHidden);
+            //}
+
             if (hidingSpots.Length > 0)
             {
                 //add 5 nearest hiding spots
@@ -609,6 +645,30 @@ public class MLPlayerAgent : Agent
                 sensor.AddObservation(playerIsHidden);
             }
 
+            //add the tiles from Djikstra path finding
+            if (GetComponentInParent<Game>().GetEnableDjikstraPathFinding())
+            {
+                //we need to make sure that all Tiles has executed OnTriggeEnter before we proceed
+                //or just create a new Djikstra Method that will start with current position, update all Tiles and then proceed:
+                // - find the tile where the player is
+                //- find the tiles where diamonds are
+                //- get the path
+                //- get the next tile in the path
+
+                UpdateNextTileToGoTo(false);
+
+                float distanceToCurrentTile = Vector3.Distance(nextTileToGoTo.transform.position, transform.position);
+                sensor.AddObservation(GetGamesTransformPosition(nextTileToGoTo.transform.position));
+                sensor.AddObservation(distanceToCurrentTile);
+                distanceToNextTile = distanceToCurrentTile;     //for debugging
+
+                //else
+                //{
+                //    float distance = Vector3.Distance(allDiamonds[0].transform.position, transform.position);
+                //    sensor.AddObservation(GetGamesTransformPosition(allDiamonds[0].transform.position));
+                //    sensor.AddObservation(distance);
+                //}
+            }
         }
 
         
@@ -849,6 +909,7 @@ public class MLPlayerAgent : Agent
 
         if (!isPauseOn)
         {
+            //Debug.Log("Discrete action: " + actions.ContinuousActions[2]);
 
             //simply apply movement from ThirdPersonMovement
             GetComponent<ThirdPersonMovement>().ApplyMovement(moveX, moveZ, jump, sprint, sneak, false, 1f, false);
