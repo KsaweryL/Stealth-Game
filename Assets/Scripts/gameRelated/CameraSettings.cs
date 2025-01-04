@@ -13,14 +13,25 @@ public class CameraSettings : MonoBehaviour
     public void UpdateCinemachineXSpeed(float speed)
     {
         if (GetComponent<CinemachineFreeLook>())
+        {
             cinemachineCam.m_XAxis.m_MaxSpeed = speed;
+            float maxYSpeed = 1.3f;
+            if (speed > 220.0f)
+                cinemachineCam.m_YAxis.m_MaxSpeed = maxYSpeed * speed / mouseSensitivitySlider.maxValue;
+            else
+                cinemachineCam.m_YAxis.m_MaxSpeed = 0.0f;
+
+        }
     }
 
     private void Start()
     {
         mouseSensitivitySlider.value = StaticData.camSensitivityXAxis;
-        if(GetComponent<CinemachineFreeLook>())
+        mouseSensitivitySlider.maxValue = 250.0f;
+        if (GetComponent<CinemachineFreeLook>())
+        {
             cinemachineCam = GetComponent<CinemachineFreeLook>();
+        }
 
     }
     private void Update()

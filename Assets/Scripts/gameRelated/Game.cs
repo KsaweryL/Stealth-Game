@@ -40,12 +40,12 @@ public class Game : MonoBehaviour
     public int testNr;
 
     [Header("Djikstra path finding")]
-    public List<Tile> djikstraPath;
-    public bool enableDjikstraPathFinding;
-    public TileType[] excludedTypes;
+    private List<Tile> djikstraPath;
+    //public bool enableDjikstraPathFinding;
+    private TileType[] excludedTypes;
     List<Tile> diamondTiles;
-    public Material pathMaterial;
-    public float radiusForFindingObjects;
+    private Material pathMaterial;
+    private float radiusForFindingObjects;
 
 
     [Header("Layers")]
@@ -209,10 +209,6 @@ public class Game : MonoBehaviour
         return nextTileToGoTo;
     }
 
-    public bool GetEnableDjikstraPathFinding()
-    {
-        return enableDjikstraPathFinding;
-    }
     public void UpdateDjikstraPath(List<Tile> djikstraPathVar)
     {
         djikstraPath = new List<Tile>();
