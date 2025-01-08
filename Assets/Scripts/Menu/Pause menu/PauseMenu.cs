@@ -35,15 +35,7 @@ public class PauseMenu : MonoBehaviour
         playerAnimationSpeed = player.GetComponentInChildren<Animator>().speed;
         player.GetComponentInChildren<Animator>().speed = 0;
 
-        for (int npc = 0; npc < npcs.Length; npc++)
-        {
-            NavMeshAgent agent = npcs[npc].GetNavMeshAgent();
-            agent.enabled = false;
-
-            //freeze the animation
-            npcsSpeed.Add(npcs[npc], npcs[npc].gameObject.GetComponent<Animator>().speed);
-            npcs[npc].gameObject.GetComponent<Animator>().speed = 0;
-        }
+        Time.timeScale = 0f;
 
         //cam
         camCinemachine = GetComponentInParent<Game>().GetComponentInChildren<CinemachineFreeLook>();
@@ -60,17 +52,7 @@ public class PauseMenu : MonoBehaviour
         //unfreeze the player
         player.GetComponentInChildren<Animator>().speed = playerAnimationSpeed;
 
-        for (int npc = 0; npc < npcs.Length; npc++)
-        {
-            NavMeshAgent agent = npcs[npc].GetNavMeshAgent();
-
-            //unfreeze the animation
-            npcs[npc].gameObject.GetComponent<Animator>().speed = npcsSpeed[npcs[npc]];
-
-            agent.enabled = true;
-
-            
-        }
+        Time.timeScale = 1f;
 
         //cam
         camCinemachine = GetComponentInParent<Game>().GetComponentInChildren<CinemachineFreeLook>();
