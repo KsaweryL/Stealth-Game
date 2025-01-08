@@ -508,36 +508,6 @@ public class MLPlayerAgent : Agent
             //else if (hidingSpotAreas.Length == 0)
             //    Debug.Log("Therer are np hiding spot areas detected");
 
-            //if (hidingSpotAreas.Length > 0)
-            //{
-            //    //add 3 nearest hiding spots areas
-            //    Dictionary<HidingSpotArea, bool> excludedHidingSpotAreas = new Dictionary<HidingSpotArea, bool>();
-            //    for (int i = 0; i < 3; i++)
-            //    {
-            //        chosenHidingSpotArea = hidingSpotAreas[0];
-
-            //        foreach (HidingSpotArea hidingSpotArea in hidingSpotAreas)
-            //        {
-            //            if(!excludedHidingSpotAreas.ContainsKey(hidingSpotArea))
-            //            if (Vector3.Distance(hidingSpotArea.transform.position, transform.position) < Vector3.Distance(chosenHidingSpotArea.transform.position, transform.position))
-            //                chosenHidingSpotArea = hidingSpotArea;
-            //        }
-
-            //        Vector3 difference_hidingSpotArea = (GetGamesTransformPosition(GetGamesTransformPosition(chosenHidingSpotArea.transform.position)) - GetGamesTransformPosition(transform.position)).normalized;
-
-            //        sensor.AddObservation(difference_hidingSpotArea.x);
-            //        sensor.AddObservation(difference_hidingSpotArea.z);
-
-            //        Debug.Log("distance to bush: " + difference_hidingSpotArea);
-
-            //        excludedHidingSpotAreas[chosenHidingSpotArea] = true;
-            //    }
-
-            //    //add information whether player is hidden
-            //    bool playerIsHidden = GetComponentInParent<Game>().GetPlayer().GetComponent<DetectingPlayerInHidingSpot>().IsPlayerHidden();
-            //    sensor.AddObservation(playerIsHidden);
-            //}
-
             if (hidingSpots.Length > 0)
             {
                 //add 5 nearest hiding spots

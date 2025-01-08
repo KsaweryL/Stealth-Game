@@ -310,8 +310,5 @@ public class ThirdPersonMovement : MonoBehaviour
         if (!GetComponentInParent<Game>().GetIsPauseMenuOn() && !GetComponentInParent<GameOver>().GetGameOver())
             ApplyMovement(horizontal, vertical, jump, sprint, sneakingButton, true, 1f, true);
 
-        
-
-
     }
 }
