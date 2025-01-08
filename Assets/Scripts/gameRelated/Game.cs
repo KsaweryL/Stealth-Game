@@ -235,6 +235,9 @@ public class Game : MonoBehaviour
         //lock the cursor upon loading the game
         if(!(isTrainingOn && !GetPlayer().GetComponent<MLPlayerAgent>().spectating))
             LockCursor.Instance.LockTheCursor();
+
+        //in case the time is frozen, unfreeze it
+        Time.timeScale = 1f;
     }
 
     public void ResetDiamonds()
