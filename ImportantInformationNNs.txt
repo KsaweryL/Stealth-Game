@@ -1,4 +1,4 @@
-mlagents-learn config/collectAllDiamonds-4V.yaml --initialize-from=playerMlAgentFifthTest5.32 --run-id=playerMlAgentFifthTest5.37 -> 83 not bad, 86 busted
+mlagents-learn config/collectAllDiamonds-4V.yaml --initialize-from=playerMlAgentFifthTest5.32 --run-id=playerMlAgentFifthTest5.37 -> 83 not bad, 86 bad
 
 94 - new start from 83 with more observations
 96 - with hiding spots
