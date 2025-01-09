@@ -33,7 +33,7 @@ mlagents-learn config/collectAllDiamonds-4V.yaml --initialize-from=playerMlAgent
 
 5.34 - ok, but works without NotFullBarrier and Hiding spot tag
 
-(5.34 - 5.36 - some of them got brain damage, don't use them!!)
+(5.34 - 5.36 - some of them got damaged, don't use them!!)
 
 5.37 - started from 5.32 - fewer checkpoints, changed rewards - but now agent doesn't want to move at all
 
